@@ -95,7 +95,7 @@ ItemView不是view而是view生成器,对应Adapter的onCreate与onBind方法,�
         }
 
 
-**详情用法请看dome**
+**详细用法请看dome**
 
 
 
