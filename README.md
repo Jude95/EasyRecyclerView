@@ -6,7 +6,7 @@
 
 
 ##依赖
-'compile 'com.jude:easyrecyclerview:1.0.0'
+`compile 'com.jude:easyrecyclerview:1.0.0'`
 
 ##EasyRecyclerView的使用
 
@@ -69,7 +69,7 @@ ItemView不是view而是view生成器,对应Adapter的onCreate与onBind方法,�
 `void setMore(final View view,OnLoadMoreListener listener)`  
 
 
-##BaseViewHolder<M>
+##BaseViewHolder\<M\>
 这个ViewHolder将每个item与adapter解耦。adapter只管实例化对应ViewHolder.每个Item的view生成,findviewbyid,UI修改都由viewHolder自己管理。  
 列如:
 
