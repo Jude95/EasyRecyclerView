@@ -16,7 +16,7 @@
           app:layout_progress="@layout/view_progress"
           />
 
-layout_empty 与 layout_progress 若不指定将不会出现。并且只能在xml被指定。
+平常这样就好。layout_empty 与 layout_progress 需自行指定，若不指定将不会出现。并且只能在xml被指定。
 
 属性列表
 
