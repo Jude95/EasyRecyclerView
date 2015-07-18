@@ -54,8 +54,8 @@
 `void addHeader(ItemView view)`  
 `void addFooter(ItemView view)`  
 ItemView不是view而是view生成器,对应Adapter的onCreate与onBind方法,所以onCreate后会多次onBind。  
-建议数据加载完毕后再add。onCreate里初始化UI。不使用onBind。
-添加过后需手动`notifyDataSetChanged();`
+建议数据加载完毕后再add。onCreate里初始化UI。不使用onBind。  
+添加过后需手动`notifyDataSetChanged();`  
 
         public interface ItemView {
              View onCreateView(ViewGroup parent);
@@ -64,8 +64,8 @@ ItemView不是view而是view生成器,对应Adapter的onCreate与onBind方法,�
 
 
 **支持加载更多**  
-在adapter里实现更加自然,第一个参数为底部提示view。注意写好高度。
-`void setMore(final int res,OnLoadMoreListener listener)`  
+在adapter里实现更加自然,第一个参数为底部提示view。注意写好高度。  
+`void setMore(final int res,OnLoadMoreListener listener)`    
 `void setMore(final View view,OnLoadMoreListener listener)`  
 
 
