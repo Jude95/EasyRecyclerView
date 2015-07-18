@@ -6,6 +6,7 @@
 
 
 ##依赖
+'compile 'com.jude:easyrecyclerview:1.0.0'
 
 ##EasyRecyclerView的使用
 
