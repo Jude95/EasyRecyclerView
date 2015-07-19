@@ -67,7 +67,7 @@ ItemView不是view而是view生成器,对应Adapter的onCreate与onBind方法,�
 在adapter里实现更加自然,第一个参数为底部提示view。注意写好高度。  
 `void setMore(final int res,OnLoadMoreListener listener)`    
 `void setMore(final View view,OnLoadMoreListener listener)`  
-
+注意一定要在最后一页调用`adapter.stopMore();`  
 
 ##BaseViewHolder\<M\>
 这个ViewHolder将每个item与adapter解耦。adapter只管实例化对应ViewHolder.每个Item的view生成,findviewbyid,UI修改都由viewHolder自己管理。  
