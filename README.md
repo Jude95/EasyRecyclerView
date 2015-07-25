@@ -72,7 +72,7 @@ ItemView不是view而是view生成器,对应Adapter的onCreate与onBind方法,�
 **支持没有更多**  
 在adapter里设置，当停止加载后就会显示在最后一个。注意写好高度。  
 `void setNoMore(final int res)`  
-`public void setNoMore(final View view)`  
+`void setNoMore(final View view)`  
 
 
 ##BaseViewHolder\<M\>
