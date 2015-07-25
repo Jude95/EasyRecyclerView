@@ -115,7 +115,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      * @param objects The objects to represent in the ListView.
      */
     public RecyclerArrayAdapter(Context context, List<T> objects) {
-        init(context,  objects);
+        init(context, objects);
     }
 
 
@@ -165,13 +165,13 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     }
 
     public void addHeader(ItemView view){
-        headers.add(view);
-        //notifyDataSetChanged();
+        if (view!=null)
+            headers.add(view);
     }
 
     public void addFooter(ItemView view){
-        footers.add(view);
-        //notifyDataSetChanged();
+        if (view!=null)
+            footers.add(view);
     }
 
     public void removeHeader(ItemView view){
@@ -187,9 +187,17 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     private void addData(){
         isLoadingMore = false;
         if (isProgressShow) {
-            footers.add(moreView);
+            //当不加载更多时。直接把nomor显示上去
+            if (moreView == null&&noMoreView != null){
+                footers.add(noMoreView);
+            }
+
+            if (moreView!=null)
+                footers.add(moreView);
             isProgressShow = false;
         }
+
+
     }
 
     public void setMore(final int res, final OnLoadMoreListener listener){
@@ -266,8 +274,10 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
 
     public void stopMore(){
         isLoadingMore = false;
-        footers.remove(moreView);
-        footers.add(noMoreView);
+        if (moreView!=null)
+            footers.remove(moreView);
+        if (noMoreView!=null)
+            footers.add(noMoreView);
         notifyDataSetChanged();
     }
 

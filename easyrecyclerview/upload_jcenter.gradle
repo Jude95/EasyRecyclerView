@@ -1,10 +1,10 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-def siteUrl = 'https://github.com/Jude95/RollViewPager'      // 项目的主页
-def gitUrl = 'https://github.com/Jude95/RollViewPager'   // Git仓库的url
+def siteUrl = 'https://github.com/Jude95/EasyRecyclerView'      // 项目的主页
+def gitUrl = 'https://github.com/Jude95/EasyRecyclerView'   // Git仓库的url
 
-version = "1.0.0"
+version = "1.0.1"
 group = "com.jude"
 
 install {
@@ -82,8 +82,8 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "maven"
-        name = "rollviewpager"    //发布到JCenter上的项目名字
-        desc = "a viewpager can auto roll"
+        name = "easyrecyclerview"    //发布到JCenter上的项目名字
+        desc = "a super recyclerview"
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]

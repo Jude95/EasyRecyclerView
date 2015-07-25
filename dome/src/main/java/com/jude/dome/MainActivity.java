@@ -30,7 +30,7 @@ public class MainActivity extends ActionBarActivity implements RecyclerArrayAdap
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapterWithProgress(adapter = new PersonAdapter(this));
-        adapter.setMore(R.layout.view_more, this);
+        //adapter.setMore(R.layout.view_more, this);
         adapter.setNoMore(R.layout.view_nomore);
         recyclerView.setRefreshListener(this);
         handler = new Handler();
