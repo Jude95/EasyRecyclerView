@@ -304,6 +304,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      */
     public void clear() {
         footers.remove(noMoreView);
+        footers.remove(moreView);
         isProgressShow = true;
         synchronized (mLock) {
             mObjects.clear();
