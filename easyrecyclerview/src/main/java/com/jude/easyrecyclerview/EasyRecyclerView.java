@@ -92,16 +92,19 @@ public class EasyRecyclerView extends FrameLayout {
 
         //生成进度条View
         mProgress = (ViewStub) v.findViewById(android.R.id.progress);
-        if (mProgressId != 0)
-        mProgress.setLayoutResource(mProgressId);
-        mProgressView = mProgress.inflate();
+        if (mProgressId != 0){
+            mProgress.setLayoutResource(mProgressId);
+            mProgressView = mProgress.inflate();
+        }
+
 
         //生成空白View
         mEmpty = (ViewStub) v.findViewById(R.id.empty);
         mEmpty.setLayoutResource(mEmptyId);
-        if (mEmptyId != 0)
+        if (mEmptyId != 0){
             mEmptyView = mEmpty.inflate();
-        mEmpty.setVisibility(View.GONE);
+            mEmpty.setVisibility(View.GONE);
+        }
 
         initRecyclerView(v);
     }
