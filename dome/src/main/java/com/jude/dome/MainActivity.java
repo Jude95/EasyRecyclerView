@@ -31,6 +31,7 @@ public class MainActivity extends ActionBarActivity implements RecyclerArrayAdap
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapterWithProgress(adapter = new PersonAdapter(this));
         adapter.setMore(R.layout.view_more, this);
+        adapter.setNoMore(R.layout.view_nomore);
         recyclerView.setRefreshListener(this);
         handler = new Handler();
         addPerson();
@@ -62,6 +63,7 @@ public class MainActivity extends ActionBarActivity implements RecyclerArrayAdap
                 arr.add(new Person("http://i2.hdslb.com/52_52/user/46230/4623018/myface.jpg", "じ★ve↘魅惑", "开头吾王裙子被撩起来怎么回事！→_→"));
                 arr.add(new Person("http://i2.hdslb.com/52_52/user/66723/6672394/myface.jpg", "道尘一梦", "@伪 · 卫宫士郎"));
                 if (ipage == 1)adapter.clear();
+                if (ipage == 5)adapter.stopMore();
                 adapter.addAll(arr);
             }
         }, 3000);
