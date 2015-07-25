@@ -1,8 +1,8 @@
 # EasyRecyclerView
 这个库使用了部分[Malinskiy/SuperRecyclerView](https://github.com/Malinskiy/SuperRecyclerView)的代码，并参考[wanglg/SuperRecyclerView](https://github.com/wanglg/SuperRecyclerView)。
 去掉了不常用的Swipe包。将加载更多交给了adapter实现。  
-重点在Adapter与viewholder的封装。他们之间彻底解耦。adapter工作更少，viewholder将可以到处复用.  
-支持数据管理，Header与Footer添加，加载更多.  
+重点在Adapter与viewholder的封装。他们之间彻底解耦。adapter工作更少，viewholder将可以到处复用。并不会影响效率。  
+支持数据管理，Header与Footer添加，加载更多。没有更多。  
 
 
 ##依赖
@@ -69,7 +69,7 @@ ItemView不是view而是view生成器,对应Adapter的onCreate与onBind方法,�
 `void setMore(final View view,OnLoadMoreListener listener)`  
 注意一定要在最后一页调用`adapter.stopMore();`  
 
-**支持没有更多**
+**支持没有更多**  
 在adapter里设置，当停止加载后就会显示在最后一个。注意写好高度。 
 `void setNoMore(final int res)`  
 `public void setNoMore(final View view)`
