@@ -59,7 +59,7 @@ ItemView不是view而是view生成器,对应Adapter的onCreate与onBind方法,�
 
         public interface ItemView {
              View onCreateView(ViewGroup parent);
-             void onBindView(View headerView);
+             void onBindView(View itemView);
         }
 
 
