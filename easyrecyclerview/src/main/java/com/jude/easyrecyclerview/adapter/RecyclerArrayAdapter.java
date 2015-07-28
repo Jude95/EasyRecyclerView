@@ -188,7 +188,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         isLoadingMore = false;
         if (isProgressShow) {
             //当不加载更多时。直接把nomor显示上去
-            if (moreView == null&&noMoreView != null){
+            if (moreView == null&&noMoreView != null&&!footers.contains(noMoreView)){
                 footers.add(noMoreView);
             }
 
@@ -196,8 +196,6 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
                 footers.add(moreView);
             isProgressShow = false;
         }
-
-
     }
 
     public void setMore(final int res, final OnLoadMoreListener listener){
@@ -276,7 +274,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         isLoadingMore = false;
         if (moreView!=null)
             footers.remove(moreView);
-        if (noMoreView!=null)
+        if (noMoreView!=null&&!footers.contains(noMoreView))
             footers.add(noMoreView);
         notifyDataSetChanged();
     }
