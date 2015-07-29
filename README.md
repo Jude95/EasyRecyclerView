@@ -8,6 +8,9 @@
 ##依赖
 `compile 'com.jude:easyrecyclerview:1.0.3'`
 
+
+##示例
+![recycler.gif](recycler3.gif)
 ##EasyRecyclerView的使用
 
         <com.jude.easyrecyclerview.EasyRecyclerView
