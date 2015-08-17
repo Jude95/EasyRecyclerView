@@ -6,7 +6,7 @@
 
 
 ##依赖
-`compile 'com.jude:easyrecyclerview:1.0.3'`
+`compile 'com.jude:easyrecyclerview:1.0.4'`
 
 
 ##示例

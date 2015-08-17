@@ -48,6 +48,7 @@ public class EasyRecyclerView extends FrameLayout {
 
     public EasyRecyclerView(Context context) {
         super(context);
+        mSuperRecyclerViewMainLayout = R.layout.layout_progress_recyclerview;
         initView();
     }
 
