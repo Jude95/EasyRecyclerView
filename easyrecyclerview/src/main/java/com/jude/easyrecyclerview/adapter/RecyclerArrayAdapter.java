@@ -21,6 +21,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,19 +50,10 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      * The content of this list is referred to as "the array" in the documentation.
      */
     private List<T> mObjects;
+    private EventDelegate mEventDelegate;
+    ArrayList<ItemView> headers = new ArrayList<>();
+    ArrayList<ItemView> footers = new ArrayList<>();
 
-    private ArrayList<ItemView> headers = new ArrayList<>();
-    private ArrayList<ItemView> footers = new ArrayList<>();
-    //加载更多的View
-    private ItemView moreView;
-    //没有更多的View
-    private ItemView noMoreView;
-    private OnLoadMoreListener onLoadMoreListener;
-
-    private boolean isLoadingMore = false;
-
-    //progress显示时不应该loadMore，默认为true，因为一开始在progress
-    private boolean isProgressShow = true;
 
     public interface ItemView {
          View onCreateView(ViewGroup parent);
@@ -70,7 +62,6 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     public interface OnLoadMoreListener{
         void onLoadMore();
     }
-
 
     /**
      * Lock used to modify the content of {@link #mObjects}. Any write operation
@@ -119,13 +110,19 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     }
 
 
+    private void init(Context context , List<T> objects) {
+        mContext = context;
+        mObjects = objects;
+        mEventDelegate = new DefaultEventDelegate(this);
+    }
+
     /**
      * Adds the specified object at the end of the array.
      *
      * @param object The object to add at the end of the array.
      */
     public void add(T object) {
-        addData();
+        mEventDelegate.addData(object == null ? 0 : 1);
         synchronized (mLock) {
             mObjects.add(object);
         }
@@ -137,7 +134,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      * @param collection The Collection to add at the end of the array.
      */
     public void addAll(Collection<? extends T> collection) {
-        addData();
+        mEventDelegate.addData(collection == null ? 0 : collection.size());
         if (collection==null||collection.size()==0){
             return;
         }
@@ -152,138 +149,91 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      *
      * @param items The items to add at the end of the array.
      */
-    public void addAll(T ... items) {
-        addData();
+    public void addAll(T... items) {
+        mEventDelegate.addData(items==null?0:items.length);
         if (items==null||items.length==0){
             return;
         }
         synchronized (mLock) {
             Collections.addAll(mObjects, items);
-
         }
         if (mNotifyOnChange) notifyDataSetChanged();
     }
 
+
+    public void stopMore(){
+        mEventDelegate.stopLoadMore();
+    }
+
+    public void pauseMore(){
+        mEventDelegate.pauseLoadMore();
+    }
+
+    public void resumeMore(){
+        mEventDelegate.resumeLoadMore();
+    }
+
+
     public void addHeader(ItemView view){
-        if (view!=null)
-            headers.add(view);
+        if (view==null)throw new NullPointerException("ItemView can't be null");
+        headers.add(view);
     }
 
     public void addFooter(ItemView view){
-        if (view!=null)
-            footers.add(view);
+        if (view==null)throw new NullPointerException("ItemView can't be null");
+        footers.add(view);
     }
 
     public void removeHeader(ItemView view){
         headers.remove(view);
-        notifyDataSetChanged();
     }
 
     public void removeFooter(ItemView view){
         footers.remove(view);
-        notifyDataSetChanged();
-    }
-
-    private void addData(){
-        isLoadingMore = false;
-        if (isProgressShow) {
-            //当不加载更多时。直接把nomor显示上去
-            if (moreView == null&&noMoreView != null&&!footers.contains(noMoreView)){
-                footers.add(noMoreView);
-            }
-
-            if (moreView!=null)
-                footers.add(moreView);
-            isProgressShow = false;
-        }
-    }
-
-    public void setMore(final int res, final OnLoadMoreListener listener){
-        setMore(new RecyclerArrayAdapter.ItemView() {
-            @Override
-            public View onCreateView(ViewGroup parent) {
-                return LayoutInflater.from(getContext()).inflate(res, parent, false);
-            }
-
-            @Override
-            public void onBindView(View headerView) {
-                askMoreView();
-            }
-        }, listener);
-    }
-
-    public void setMore(final View view,OnLoadMoreListener listener){
-        setMore(new RecyclerArrayAdapter.ItemView() {
-            @Override
-            public View onCreateView(ViewGroup parent) {
-                return view;
-            }
-
-            @Override
-            public void onBindView(View headerView) {
-                askMoreView();
-            }
-        }, listener);
     }
 
 
-    private void setMore(ItemView view,OnLoadMoreListener listener){
-        this.moreView = view;
-        this.onLoadMoreListener = listener;
+    public View setMore(final int res, final OnLoadMoreListener listener){
+        FrameLayout container = new FrameLayout(getContext());
+        container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        LayoutInflater.from(getContext()).inflate(res, container);
+        mEventDelegate.setMore(container, listener);
+        return container;
     }
 
-    public void setNoMore(final int res) {
-        setNoMore(new RecyclerArrayAdapter.ItemView() {
-            @Override
-            public View onCreateView(ViewGroup parent) {
-                return LayoutInflater.from(getContext()).inflate(res, parent, false);
-            }
-
-            @Override
-            public void onBindView(View headerView) {
-            }
-        });
+    public View setMore(final View view,OnLoadMoreListener listener){
+        mEventDelegate.setMore(view, listener);
+        return view;
     }
 
-    public void setNoMore(final View view) {
-        setNoMore(new RecyclerArrayAdapter.ItemView() {
-            @Override
-            public View onCreateView(ViewGroup parent) {
-                return view;
-            }
-
-            @Override
-            public void onBindView(View headerView) {
-            }
-        });
+    public View setNoMore(final int res) {
+        FrameLayout container = new FrameLayout(getContext());
+        container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        LayoutInflater.from(getContext()).inflate(res, container);
+        mEventDelegate.setNoMore(container);
+        return container;
     }
 
-
-    private void setNoMore(ItemView view){
-        this.noMoreView = view;
+    public View setNoMore(final View view) {
+        mEventDelegate.setNoMore(view);
+        return view;
     }
 
-    private void askMoreView(){
-        if (moreView !=null & !isLoadingMore){
-            isLoadingMore = true;
-            onLoadMoreListener.onLoadMore();
-        }
+    public View setError(final int res) {
+        FrameLayout container = new FrameLayout(getContext());
+        container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        LayoutInflater.from(getContext()).inflate(res, container);
+        mEventDelegate.setErrorMore(container);
+        return container;
     }
 
-    public void stopMore(){
-        isLoadingMore = false;
-        if (moreView!=null)
-            footers.remove(moreView);
-        if (noMoreView!=null&&!footers.contains(noMoreView))
-            footers.add(noMoreView);
-        notifyDataSetChanged();
+    public View setError(final View view) {
+        mEventDelegate.setErrorMore(view);
+        return view;
     }
-
-
-
 
     /**
-     * Inserts the specified object at the specified index in the array.
+     * 插入，不会触发任何事情
      *
      * @param object The object to insert into the array.
      * @param index The index at which the object must be inserted.
@@ -296,7 +246,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     }
 
     /**
-     * Removes the specified object from the array.
+     * 删除，不会触发任何事情
      *
      * @param object The object to remove.
      */
@@ -308,12 +258,10 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     }
 
     /**
-     * Remove all elements from the list.
+     * 触发清空
      */
     public void clear() {
-        footers.remove(noMoreView);
-        footers.remove(moreView);
-        isProgressShow = true;
+        mEventDelegate.clear();
         synchronized (mLock) {
             mObjects.clear();
         }
@@ -352,10 +300,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         mNotifyOnChange = notifyOnChange;
     }
 
-    private void init(Context context , List<T> objects) {
-        mContext = context;
-        mObjects = objects;
-    }
+
 
 
     /**

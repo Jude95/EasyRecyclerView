@@ -6,28 +6,31 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/ptr_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray">
 
         <android.support.v7.widget.RecyclerView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="invisible" />
+            android:background="@android:color/holo_red_light" />
+
 
     </android.support.v4.widget.SwipeRefreshLayout>
-
-    <ViewStub
+    <FrameLayout
         android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:visibility="gone" />
+        android:background="@android:color/holo_green_light"
+        />
 
-    <ViewStub
-        android:id="@android:id/progress"
+    <FrameLayout
+        android:id="@+id/progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:visibility="gone" />
+        android:background="@android:color/holo_blue_light"
+        />
 
 </FrameLayout>

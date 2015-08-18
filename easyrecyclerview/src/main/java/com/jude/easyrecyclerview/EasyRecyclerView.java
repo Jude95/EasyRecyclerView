@@ -8,17 +8,15 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewStub;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 
 public class EasyRecyclerView extends FrameLayout {
 
     protected RecyclerView mRecycler;
-    protected ViewStub mProgress;
-    protected ViewStub mEmpty;
-    protected View mProgressView;
-    protected View mEmptyView;
+    protected ViewGroup mProgressView;
+    protected ViewGroup mEmptyView;
 
     protected boolean mClipToPadding;
     protected int mPadding;
@@ -35,7 +33,6 @@ public class EasyRecyclerView extends FrameLayout {
 
     protected SwipeRefreshLayout mPtrLayout;
 
-    protected int mSuperRecyclerViewMainLayout;
     private int mProgressId;
 
     public SwipeRefreshLayout getSwipeToRefresh() {
@@ -48,7 +45,6 @@ public class EasyRecyclerView extends FrameLayout {
 
     public EasyRecyclerView(Context context) {
         super(context);
-        mSuperRecyclerViewMainLayout = R.layout.layout_progress_recyclerview;
         initView();
     }
 
@@ -67,7 +63,6 @@ public class EasyRecyclerView extends FrameLayout {
     protected void initAttrs(AttributeSet attrs) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.superrecyclerview);
         try {
-            mSuperRecyclerViewMainLayout = a.getResourceId(R.styleable.superrecyclerview_mainLayoutId, R.layout.layout_progress_recyclerview);
             mClipToPadding = a.getBoolean(R.styleable.superrecyclerview_recyclerClipToPadding, false);
             mPadding = (int) a.getDimension(R.styleable.superrecyclerview_recyclerPadding, -1.0f);
             mPaddingTop = (int) a.getDimension(R.styleable.superrecyclerview_recyclerPaddingTop, 0.0f);
@@ -87,39 +82,33 @@ public class EasyRecyclerView extends FrameLayout {
             return;
         }
         //生成主View
-        View v = LayoutInflater.from(getContext()).inflate(mSuperRecyclerViewMainLayout, this);
+        View v = LayoutInflater.from(getContext()).inflate(R.layout.layout_progress_recyclerview, this);
         mPtrLayout = (SwipeRefreshLayout) v.findViewById(R.id.ptr_layout);
         mPtrLayout.setEnabled(false);
 
-        //生成进度条View
-        mProgress = (ViewStub) v.findViewById(android.R.id.progress);
-        if (mProgressId != 0){
-            mProgress.setLayoutResource(mProgressId);
-            mProgressView = mProgress.inflate();
-        }
-
-
-        //生成空白View
-        mEmpty = (ViewStub) v.findViewById(R.id.empty);
-        mEmpty.setLayoutResource(mEmptyId);
-        if (mEmptyId != 0){
-            mEmptyView = mEmpty.inflate();
-            mEmpty.setVisibility(View.GONE);
-        }
+        mProgressView = (ViewGroup) v.findViewById(R.id.progress);
+        LayoutInflater.from(getContext()).inflate(mProgressId,mProgressView);
+        mEmptyView = (ViewGroup) v.findViewById(R.id.empty);
+        LayoutInflater.from(getContext()).inflate(mEmptyId,mEmptyView);
 
         initRecyclerView(v);
+    }
+
+    public void setEmptyView(View emptyView){
+        mEmptyView.removeAllViews();
+        mEmptyView.addView(emptyView);
+    }
+    public void setProgressView(View progressView){
+        mProgressView.removeAllViews();
+        mProgressView.addView(progressView);
     }
 
     /**
      * Implement this method to customize the AbsListView
      */
     protected void initRecyclerView(View view) {
-        View recyclerView = view.findViewById(android.R.id.list);
+        mRecycler = (RecyclerView) view.findViewById(android.R.id.list);
 
-        if (recyclerView instanceof RecyclerView)
-            mRecycler = (RecyclerView) recyclerView;
-        else
-            throw new IllegalArgumentException("SuperRecyclerView works with a RecyclerView!");
 
         if (mRecycler != null) {
             mRecycler.setHasFixedSize(true);
@@ -207,9 +196,9 @@ public class EasyRecyclerView extends FrameLayout {
             }
 
             private void update() {
-                if (mRecycler.getAdapter().getItemCount() == 0 ) {
+                if (mRecycler.getAdapter().getItemCount() == 0) {
                     showEmpty();
-                }else{
+                } else {
                     showRecycler();
                 }
             }
@@ -260,9 +249,9 @@ public class EasyRecyclerView extends FrameLayout {
             }
 
             private void update() {
-                if (mRecycler.getAdapter().getItemCount() == 0 ) {
+                if (mRecycler.getAdapter().getItemCount() == 0) {
                     showEmpty();
-                }else{
+                } else {
                     showRecycler();
                 }
             }
@@ -278,8 +267,8 @@ public class EasyRecyclerView extends FrameLayout {
 
 
     private void hideAll(){
-        if (mEmptyId != 0) mEmpty.setVisibility(View.GONE);
-        if (mProgressId != 0) mProgress.setVisibility(View.GONE);
+        mEmptyView.setVisibility(View.GONE);
+        mProgressView.setVisibility(View.GONE);
         mPtrLayout.setRefreshing(false);
         mRecycler.setVisibility(View.GONE);
     }
@@ -289,8 +278,7 @@ public class EasyRecyclerView extends FrameLayout {
      */
     public void showEmpty() {
         hideAll();
-        if (mEmptyId != 0)mEmpty.setVisibility(View.VISIBLE);
-        else mRecycler.setVisibility(View.VISIBLE);
+        mEmptyView.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -298,8 +286,7 @@ public class EasyRecyclerView extends FrameLayout {
      */
     public void showProgress() {
         hideAll();
-        if (mProgressId != 0)mProgress.setVisibility(View.VISIBLE);
-        else mRecycler.setVisibility(View.VISIBLE);
+        mProgressView.setVisibility(View.VISIBLE);
     }
 
     /**
