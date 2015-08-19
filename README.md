@@ -21,7 +21,7 @@
           app:layout_progress="@layout/view_progress"
           />
 
-平常这样就好。layout_empty 与 layout_progress 需自行指定，若不指定将不会出现。并且只能在xml被指定。  
+平常这样就好。
 
 属性列表
 
@@ -55,6 +55,8 @@ xml中
 `void showRecycler() `  
 
 ##RecyclerArrayAdapter<T>  
+这个Adapter与本RecyclerView没有任何耦合。你可以使用其他adapter。也可以把本adapter用于其他RecyclerView  
+
 **整合了数据增删的功能**  
 `void add(T object) `  
 `void addAll(Collection<? extends T> collection)`  
