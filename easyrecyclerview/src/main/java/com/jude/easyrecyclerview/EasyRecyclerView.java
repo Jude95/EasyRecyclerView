@@ -6,6 +6,7 @@ import android.support.annotation.ColorRes;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,9 +88,9 @@ public class EasyRecyclerView extends FrameLayout {
         mPtrLayout.setEnabled(false);
 
         mProgressView = (ViewGroup) v.findViewById(R.id.progress);
-        LayoutInflater.from(getContext()).inflate(mProgressId,mProgressView);
+        if (mProgressId!=0)LayoutInflater.from(getContext()).inflate(mProgressId,mProgressView);
         mEmptyView = (ViewGroup) v.findViewById(R.id.empty);
-        LayoutInflater.from(getContext()).inflate(mEmptyId,mEmptyView);
+        if (mEmptyId!=0)LayoutInflater.from(getContext()).inflate(mEmptyId,mEmptyView);
 
         initRecyclerView(v);
     }
@@ -249,6 +250,7 @@ public class EasyRecyclerView extends FrameLayout {
             }
 
             private void update() {
+                Log.i("recycler","update");
                 if (mRecycler.getAdapter().getItemCount() == 0) {
                     showEmpty();
                 } else {
