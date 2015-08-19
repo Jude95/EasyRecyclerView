@@ -44,6 +44,14 @@
 最后一个属性请看源码理解再使用。  
 注意EasyRecyclerView并不是一个RecyclerView
 
+**设置空白View与加载View**
+xml中
+`app:layout_empty="@layout/view_empty"`
+`app:layout_progress="@layout/view_progress"`
+代码中
+`void setEmptyView(View emptyView)`
+`void setProgressView(View progressView)`
+
 ##RecyclerArrayAdapter<T>
 **整合了数据增删的功能**  
 `void add(T object) `  
@@ -52,11 +60,13 @@
 `void insert(T object, int index)`  
 `void remove(T object)`  
 `void clear()`  
-  
+
+
 **整合的Header与Footer的实现**  
 `void addHeader(ItemView view)`  
 `void addFooter(ItemView view)`  
-ItemView不是view而是view生成器,对应Adapter的onCreate与onBind方法,所以onCreate后会多次onBind。  
+ItemView不是view而是view生成器
+对应Adapter的onCreate与onBind方法,所以onCreate后会多次onBind。
 建议数据加载完毕后再add。onCreate里初始化UI。不使用onBind。  
 添加过后需手动`notifyDataSetChanged();`  
 
@@ -66,17 +76,24 @@ ItemView不是view而是view生成器,对应Adapter的onCreate与onBind方法,�
         }
 
 
-**支持加载更多**  
-在adapter里实现更加自然,第一个参数为底部提示view。注意写好高度。  
-`void setMore(final int res,OnLoadMoreListener listener)`    
-`void setMore(final View view,OnLoadMoreListener listener)`  
-注意一定要在最后一页调用`adapter.stopMore();`  
+###下面的功能在adapter最后添加一个footer。来显示各种状态。
 
-**支持没有更多**  
-在adapter里设置，当停止加载后就会显示在最后一个。注意写好高度。  
+**加载更多**
+`void setMore(final int res,OnLoadMoreListener listener)`
+`void setMore(final View view,OnLoadMoreListener listener)`
+注意一定当添加0条数据或null时,会结束加载更多,显示没有更多。
+也可以在最后一页手动调用`adapter.stopMore();`
+
+**加载错误**
+`View setError(final int res)`
+`View setError(final View view)`
+`adapter.pauseMore()`暂停加载更多，显示错误View。暂停时如果再次添加数据。自动恢复加载更多。
+`adapter.resumeMore()`继续加载更多，显示加载更多View，并立即回调加载更多。
+
+**没有更多**
+在adapter里设置，当停止加载后就会显示在最后一个。
 `void setNoMore(final int res)`  
 `void setNoMore(final View view)`  
-
 
 ##BaseViewHolder\<M\>
 这个ViewHolder将每个item与adapter解耦。adapter只管实例化对应ViewHolder.每个Item的view生成,findviewbyid,UI修改都由viewHolder自己管理。  
