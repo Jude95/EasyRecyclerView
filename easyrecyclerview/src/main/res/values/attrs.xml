@@ -16,8 +16,6 @@
             <flag name="outsideOverlay" value="0x02000000" />
             <flag name="outsideInset" value="0x03000000" />
         </attr>
-
-        <attr name="mainLayoutId" format="reference" />
     </declare-styleable>
 
 
