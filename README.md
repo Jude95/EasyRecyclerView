@@ -44,7 +44,7 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 
 注意EasyRecyclerView本质并不是一个RecyclerView
 
-**设置空白View与加载View**
+**设置空白View与加载View**  
 xml中  
 `app:layout_empty="@layout/view_empty"`  
 `app:layout_progress="@layout/view_progress"`  
