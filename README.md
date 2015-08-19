@@ -72,7 +72,7 @@ xml中
 ItemView不是view而是view生成器  
 对应Adapter的onCreate与onBind方法,所以onCreate后会多次onBind。  
 建议数据加载完毕后再add。onCreate里初始化UI。不使用onBind。  
-添加过后需手动`notifyDataSetChanged();`  
+添加删除过后都需手动`notifyDataSetChanged();`  
 
         public interface ItemView {
              View onCreateView(ViewGroup parent);
