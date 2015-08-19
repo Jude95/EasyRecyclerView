@@ -64,7 +64,7 @@ xml中
 `void insert(T object, int index)`  
 `void remove(T object)`  
 `void clear()`  
-
+`void sort(Comparator<? super T> comparator)`  
 
 **整合的Header与Footer的实现**  
 `void addHeader(ItemView view)`  
