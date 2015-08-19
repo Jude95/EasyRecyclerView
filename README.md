@@ -91,8 +91,11 @@ ItemView不是view而是view生成器
 **加载错误**  
 `View setError(final int res)`  
 `View setError(final View view)`  
-`adapter.pauseMore()`暂停加载更多，显示错误View。暂停时如果再次添加数据。自动恢复加载更多。  
+`adapter.pauseMore()`暂停加载更多，显示错误View。  
+暂停时如果再次添加数据。自动恢复加载更多。  
+当错误View再次被显示时。会恢复成加载更多view。并回掉加载更多;  
 `adapter.resumeMore()`继续加载更多，显示加载更多View，并立即回调加载更多。  
+比如你可以给错误View设置点击重试。点击调用resumeMore。  
 
 **没有更多**  
 在adapter里设置，当停止加载后就会显示在最后一个。  
