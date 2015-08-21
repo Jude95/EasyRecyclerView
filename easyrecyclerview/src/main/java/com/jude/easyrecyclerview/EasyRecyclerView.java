@@ -3,14 +3,15 @@ package com.jude.easyrecyclerview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorRes;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import com.jude.easyrecyclerview.swipe.SwipeRefreshLayout;
 
 
 public class EasyRecyclerView extends FrameLayout {
@@ -18,6 +19,10 @@ public class EasyRecyclerView extends FrameLayout {
     protected RecyclerView mRecycler;
     protected ViewGroup mProgressView;
     protected ViewGroup mEmptyView;
+    protected ViewGroup mErrorView;
+    private int mProgressId;
+    private int mEmptyId;
+    private int mErrorId;
 
     protected boolean mClipToPadding;
     protected int mPadding;
@@ -26,7 +31,7 @@ public class EasyRecyclerView extends FrameLayout {
     protected int mPaddingLeft;
     protected int mPaddingRight;
     protected int mScrollbarStyle;
-    protected int mEmptyId;
+
 
 
     protected RecyclerView.OnScrollListener mInternalOnScrollListener;
@@ -34,7 +39,7 @@ public class EasyRecyclerView extends FrameLayout {
 
     protected SwipeRefreshLayout mPtrLayout;
 
-    private int mProgressId;
+
 
     public SwipeRefreshLayout getSwipeToRefresh() {
         return mPtrLayout;
@@ -73,6 +78,7 @@ public class EasyRecyclerView extends FrameLayout {
             mScrollbarStyle = a.getInt(R.styleable.superrecyclerview_scrollbarStyle, -1);
             mEmptyId = a.getResourceId(R.styleable.superrecyclerview_layout_empty, 0);
             mProgressId = a.getResourceId(R.styleable.superrecyclerview_layout_progress, 0);
+            mErrorId = a.getResourceId(R.styleable.superrecyclerview_layout_error, 0);
         } finally {
             a.recycle();
         }
@@ -91,8 +97,14 @@ public class EasyRecyclerView extends FrameLayout {
         if (mProgressId!=0)LayoutInflater.from(getContext()).inflate(mProgressId,mProgressView);
         mEmptyView = (ViewGroup) v.findViewById(R.id.empty);
         if (mEmptyId!=0)LayoutInflater.from(getContext()).inflate(mEmptyId,mEmptyView);
-
+        mErrorView = (ViewGroup) v.findViewById(R.id.error);
+        if (mErrorId!=0)LayoutInflater.from(getContext()).inflate(mErrorId,mErrorView);
         initRecyclerView(v);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return mPtrLayout.dispatchTouchEvent(ev);
     }
 
     public void setEmptyView(View emptyView){
@@ -103,7 +115,22 @@ public class EasyRecyclerView extends FrameLayout {
         mProgressView.removeAllViews();
         mProgressView.addView(progressView);
     }
-
+    public void setErrorView(View errorView){
+        mErrorView.removeAllViews();
+        mErrorView.addView(errorView);
+    }
+    public void setEmptyView(int emptyView){
+        mEmptyView.removeAllViews();
+        LayoutInflater.from(getContext()).inflate(emptyView,mEmptyView);
+    }
+    public void setProgressView(int progressView){
+        mProgressView.removeAllViews();
+        LayoutInflater.from(getContext()).inflate(progressView, mProgressView);
+    }
+    public void setErrorView(int errorView){
+        mErrorView.removeAllViews();
+        LayoutInflater.from(getContext()).inflate(errorView, mErrorView);
+    }
     /**
      * Implement this method to customize the AbsListView
      */
@@ -271,29 +298,29 @@ public class EasyRecyclerView extends FrameLayout {
     private void hideAll(){
         mEmptyView.setVisibility(View.GONE);
         mProgressView.setVisibility(View.GONE);
+        mErrorView.setVisibility(GONE);
         mPtrLayout.setRefreshing(false);
-        mRecycler.setVisibility(View.GONE);
+        mRecycler.setVisibility(View.INVISIBLE);
     }
 
-    /**
-     * Show the progressbar
-     */
+
+    public void showError() {
+        hideAll();
+        mErrorView.setVisibility(View.VISIBLE);
+    }
+
     public void showEmpty() {
         hideAll();
         mEmptyView.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * Show the progressbar
-     */
+
     public void showProgress() {
         hideAll();
         mProgressView.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * Hide the progressbar and show the recycler
-     */
+
     public void showRecycler() {
         hideAll();
         mRecycler.setVisibility(View.VISIBLE);
@@ -305,7 +332,7 @@ public class EasyRecyclerView extends FrameLayout {
      *
      * @param listener
      */
-    public void setRefreshListener(SwipeRefreshLayout.OnRefreshListener listener) {
+    public void setRefreshListener(android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener listener) {
         mPtrLayout.setEnabled(true);
         mPtrLayout.setOnRefreshListener(listener);
     }
