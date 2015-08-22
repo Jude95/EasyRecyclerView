@@ -243,6 +243,7 @@ public class EasyRecyclerView extends FrameLayout {
      * @param adapter
      */
     public void setAdapterWithProgress(RecyclerView.Adapter adapter) {
+        if (adapter.getItemCount()==0)
         showProgress();
         mRecycler.setAdapter(adapter);
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
