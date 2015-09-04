@@ -11,6 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.swipe.SwipeRefreshLayout;
 
 
@@ -224,10 +226,12 @@ public class EasyRecyclerView extends FrameLayout {
             }
 
             private void update() {
-                if (mRecycler.getAdapter().getItemCount() == 0) {
-                    showEmpty();
-                } else {
-                    showRecycler();
+                if (mRecycler.getAdapter() instanceof RecyclerArrayAdapter){
+                    if (((RecyclerArrayAdapter) mRecycler.getAdapter()).getCount()==0)showEmpty();
+                    else showRecycler();
+                }else{
+                    if (mRecycler.getAdapter().getItemCount() ==0)showEmpty();
+                    else showRecycler();
                 }
             }
         });
@@ -243,8 +247,13 @@ public class EasyRecyclerView extends FrameLayout {
      * @param adapter
      */
     public void setAdapterWithProgress(RecyclerView.Adapter adapter) {
-        if (adapter.getItemCount()==0)showProgress();
-        else showRecycler();
+        if (adapter instanceof RecyclerArrayAdapter){
+            if (((RecyclerArrayAdapter) adapter).getCount()==0)showProgress();
+            else showRecycler();
+        }else{
+            if (adapter.getItemCount()==0)showProgress();
+            else showRecycler();
+        }
 
         mRecycler.setAdapter(adapter);
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
