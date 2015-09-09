@@ -29,7 +29,7 @@ public class DefaultEventDelegate implements EventDelegate {
 
     public void onMoreViewShowed() {
         Log.i("recycler", "onMoreViewShowed");
-        if (!isLoadingMore)onLoadMoreListener.onLoadMore();
+        if (!isLoadingMore&&onLoadMoreListener!=null)onLoadMoreListener.onLoadMore();
     }
 
     public void onErrorViewShowed() {

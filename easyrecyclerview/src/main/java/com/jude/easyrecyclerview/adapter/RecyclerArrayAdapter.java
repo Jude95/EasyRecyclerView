@@ -113,7 +113,6 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     private void init(Context context , List<T> objects) {
         mContext = context;
         mObjects = objects;
-        mEventDelegate = new DefaultEventDelegate(this);
     }
 
     /**
@@ -122,7 +121,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      * @param object The object to add at the end of the array.
      */
     public void add(T object) {
-        mEventDelegate.addData(object == null ? 0 : 1);
+        if (mEventDelegate!=null)mEventDelegate.addData(object == null ? 0 : 1);
         synchronized (mLock) {
             mObjects.add(object);
         }
@@ -134,7 +133,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      * @param collection The Collection to add at the end of the array.
      */
     public void addAll(Collection<? extends T> collection) {
-        mEventDelegate.addData(collection == null ? 0 : collection.size());
+        if (mEventDelegate!=null)mEventDelegate.addData(collection == null ? 0 : collection.size());
         if (collection==null||collection.size()==0){
             return;
         }
@@ -150,7 +149,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      * @param items The items to add at the end of the array.
      */
     public void addAll(T... items) {
-        mEventDelegate.addData(items==null?0:items.length);
+        if (mEventDelegate!=null)mEventDelegate.addData(items==null?0:items.length);
         if (items==null||items.length==0){
             return;
         }
@@ -162,14 +161,17 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
 
 
     public void stopMore(){
+        if (mEventDelegate == null)throw new NullPointerException("You should invoking setLoadMore() first");
         mEventDelegate.stopLoadMore();
     }
 
     public void pauseMore(){
+        if (mEventDelegate == null)throw new NullPointerException("You should invoking setLoadMore() first");
         mEventDelegate.pauseLoadMore();
     }
 
     public void resumeMore(){
+        if (mEventDelegate == null)throw new NullPointerException("You should invoking setLoadMore() first");
         mEventDelegate.resumeLoadMore();
     }
 
@@ -193,16 +195,21 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     }
 
 
+    EventDelegate getEventDelegete(){
+        if (mEventDelegate == null)mEventDelegate  = new DefaultEventDelegate(this);
+        return mEventDelegate;
+    }
+
     public View setMore(final int res, final OnLoadMoreListener listener){
         FrameLayout container = new FrameLayout(getContext());
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         LayoutInflater.from(getContext()).inflate(res, container);
-        mEventDelegate.setMore(container, listener);
+        getEventDelegete().setMore(container, listener);
         return container;
     }
 
     public View setMore(final View view,OnLoadMoreListener listener){
-        mEventDelegate.setMore(view, listener);
+        getEventDelegete().setMore(view, listener);
         return view;
     }
 
@@ -210,12 +217,12 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         FrameLayout container = new FrameLayout(getContext());
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         LayoutInflater.from(getContext()).inflate(res, container);
-        mEventDelegate.setNoMore(container);
+        getEventDelegete().setNoMore(container);
         return container;
     }
 
     public View setNoMore(final View view) {
-        mEventDelegate.setNoMore(view);
+        getEventDelegete().setNoMore(view);
         return view;
     }
 
@@ -223,12 +230,12 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         FrameLayout container = new FrameLayout(getContext());
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         LayoutInflater.from(getContext()).inflate(res, container);
-        mEventDelegate.setErrorMore(container);
+        getEventDelegete().setErrorMore(container);
         return container;
     }
 
     public View setError(final View view) {
-        mEventDelegate.setErrorMore(view);
+        getEventDelegete().setErrorMore(view);
         return view;
     }
 
@@ -261,7 +268,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      * 触发清空
      */
     public void clear() {
-        mEventDelegate.clear();
+        if (mEventDelegate!=null)mEventDelegate.clear();
         synchronized (mLock) {
             mObjects.clear();
         }
