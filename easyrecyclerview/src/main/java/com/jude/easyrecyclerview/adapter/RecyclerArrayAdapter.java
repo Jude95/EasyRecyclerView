@@ -121,11 +121,11 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      * @param object The object to add at the end of the array.
      */
     public void add(T object) {
+        if (mNotifyOnChange) notifyDataSetChanged();
         if (mEventDelegate!=null)mEventDelegate.addData(object == null ? 0 : 1);
         synchronized (mLock) {
             mObjects.add(object);
         }
-        if (mNotifyOnChange) notifyDataSetChanged();
     }
     /**
      * Adds the specified Collection at the end of the array.
@@ -133,6 +133,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      * @param collection The Collection to add at the end of the array.
      */
     public void addAll(Collection<? extends T> collection) {
+        if (mNotifyOnChange) notifyDataSetChanged();
         if (mEventDelegate!=null)mEventDelegate.addData(collection == null ? 0 : collection.size());
         if (collection==null||collection.size()==0){
             return;
@@ -140,7 +141,6 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         synchronized (mLock) {
             mObjects.addAll(collection);
         }
-        if (mNotifyOnChange) notifyDataSetChanged();
     }
 
     /**
@@ -149,6 +149,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      * @param items The items to add at the end of the array.
      */
     public void addAll(T... items) {
+        if (mNotifyOnChange) notifyDataSetChanged();
         if (mEventDelegate!=null)mEventDelegate.addData(items==null?0:items.length);
         if (items==null||items.length==0){
             return;
@@ -156,7 +157,6 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         synchronized (mLock) {
             Collections.addAll(mObjects, items);
         }
-        if (mNotifyOnChange) notifyDataSetChanged();
     }
 
 
@@ -195,7 +195,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     }
 
 
-    EventDelegate getEventDelegete(){
+    EventDelegate getEventDelegate(){
         if (mEventDelegate == null)mEventDelegate  = new DefaultEventDelegate(this);
         return mEventDelegate;
     }
@@ -204,12 +204,12 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         FrameLayout container = new FrameLayout(getContext());
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         LayoutInflater.from(getContext()).inflate(res, container);
-        getEventDelegete().setMore(container, listener);
+        getEventDelegate().setMore(container, listener);
         return container;
     }
 
     public View setMore(final View view,OnLoadMoreListener listener){
-        getEventDelegete().setMore(view, listener);
+        getEventDelegate().setMore(view, listener);
         return view;
     }
 
@@ -217,12 +217,12 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         FrameLayout container = new FrameLayout(getContext());
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         LayoutInflater.from(getContext()).inflate(res, container);
-        getEventDelegete().setNoMore(container);
+        getEventDelegate().setNoMore(container);
         return container;
     }
 
     public View setNoMore(final View view) {
-        getEventDelegete().setNoMore(view);
+        getEventDelegate().setNoMore(view);
         return view;
     }
 
@@ -230,12 +230,12 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         FrameLayout container = new FrameLayout(getContext());
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         LayoutInflater.from(getContext()).inflate(res, container);
-        getEventDelegete().setErrorMore(container);
+        getEventDelegate().setErrorMore(container);
         return container;
     }
 
     public View setError(final View view) {
-        getEventDelegete().setErrorMore(view);
+        getEventDelegate().setErrorMore(view);
         return view;
     }
 
