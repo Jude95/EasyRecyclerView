@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 14
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -33,7 +33,7 @@ ext {
     siteUrl = 'https://github.com/Jude95/EasyRecyclerView'
     gitUrl = 'https://github.com/Jude95/EasyRecyclerView'
 
-    libraryVersion = '3.0.8'//�汾��
+    libraryVersion = '3.0.9'//�汾��
     libraryName = 'easyrecyclerview'//��Ŀ���֣�ûʲô��
     libraryDescription = 'A tool for Android'//��Ŀ������ûʲô��
 
