@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
@@ -33,14 +34,14 @@ public class MainActivity extends ActionBarActivity implements RecyclerArrayAdap
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapterWithProgress(adapter = new PersonAdapter(this));
-//        adapter.setMore(R.layout.view_more, this);
-//        adapter.setNoMore(R.layout.view_nomore);
-//        adapter.setError(R.layout.view_error).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                adapter.resumeMore();
-//            }
-//        });
+        adapter.setMore(R.layout.view_more, this);
+        adapter.setNoMore(R.layout.view_nomore);
+        adapter.setError(R.layout.view_error).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.resumeMore();
+            }
+        });
         recyclerView.setRefreshListener(this);
         addPerson();
     }
@@ -55,7 +56,6 @@ public class MainActivity extends ActionBarActivity implements RecyclerArrayAdap
         page = 0;
         addPerson();
     }
-
 
     public void addPerson(){
         handler.postDelayed(new Runnable() {
@@ -89,6 +89,7 @@ public class MainActivity extends ActionBarActivity implements RecyclerArrayAdap
         MenuItem item = menu.findItem(R.id.checkbox);
         CheckBox box = (CheckBox) item.getActionView();
         box.setChecked(true);
+        box.setText("网络");
         box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
