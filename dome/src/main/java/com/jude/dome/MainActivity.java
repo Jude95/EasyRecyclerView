@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.github.clans.fab.FloatingActionButton;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity implements RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener{
     private EasyRecyclerView recyclerView;
+    private FloatingActionButton top;
     private PersonAdapter adapter;
     private Handler handler;
 
@@ -31,6 +33,7 @@ public class MainActivity extends ActionBarActivity implements RecyclerArrayAdap
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
         setContentView(R.layout.activity_main);
+        top = (FloatingActionButton) findViewById(R.id.top);
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapterWithProgress(adapter = new PersonAdapter(this));
@@ -40,6 +43,12 @@ public class MainActivity extends ActionBarActivity implements RecyclerArrayAdap
             @Override
             public void onClick(View v) {
                 adapter.resumeMore();
+            }
+        });
+        top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.getRecyclerView().scrollToPosition(0);
             }
         });
         recyclerView.setRefreshListener(this);

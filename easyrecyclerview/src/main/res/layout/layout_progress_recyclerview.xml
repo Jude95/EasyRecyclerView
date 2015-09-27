@@ -12,8 +12,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@android:id/list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/holo_red_light" />
+            android:layout_height="match_parent" />
 
 
     </android.support.v4.widget.SwipeRefreshLayout>
@@ -22,7 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:background="@android:color/holo_green_light"
         />
 
     <FrameLayout
@@ -30,7 +28,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:background="@android:color/holo_blue_light"
         />
 
 </FrameLayout>
