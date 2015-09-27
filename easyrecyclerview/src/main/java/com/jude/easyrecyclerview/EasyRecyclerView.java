@@ -123,7 +123,7 @@ public class EasyRecyclerView extends FrameLayout {
     }
     public void setEmptyView(int emptyView){
         mEmptyView.removeAllViews();
-        LayoutInflater.from(getContext()).inflate(emptyView,mEmptyView);
+        LayoutInflater.from(getContext()).inflate(emptyView, mEmptyView);
     }
     public void setProgressView(int progressView){
         mProgressView.removeAllViews();
@@ -133,6 +133,11 @@ public class EasyRecyclerView extends FrameLayout {
         mErrorView.removeAllViews();
         LayoutInflater.from(getContext()).inflate(errorView, mErrorView);
     }
+
+    public void scrollToPosition(int position){
+        getRecyclerView().scrollToPosition(position);
+    }
+
     /**
      * Implement this method to customize the AbsListView
      */
@@ -226,11 +231,12 @@ public class EasyRecyclerView extends FrameLayout {
             }
 
             private void update() {
-                if (mRecycler.getAdapter() instanceof RecyclerArrayAdapter){
-                    if (((RecyclerArrayAdapter) mRecycler.getAdapter()).getCount()==0)showEmpty();
+                if (mRecycler.getAdapter() instanceof RecyclerArrayAdapter) {
+                    if (((RecyclerArrayAdapter) mRecycler.getAdapter()).getCount() == 0)
+                        showEmpty();
                     else showRecycler();
-                }else{
-                    if (mRecycler.getAdapter().getItemCount() ==0)showEmpty();
+                } else {
+                    if (mRecycler.getAdapter().getItemCount() == 0) showEmpty();
                     else showRecycler();
                 }
             }

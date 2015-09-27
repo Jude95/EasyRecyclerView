@@ -48,7 +48,7 @@ public class MainActivity extends ActionBarActivity implements RecyclerArrayAdap
         top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.getRecyclerView().scrollToPosition(0);
+                recyclerView.scrollToPosition(3);
             }
         });
         recyclerView.setRefreshListener(this);
