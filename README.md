@@ -56,8 +56,8 @@ xml中
 `void showProgress()`  
 `void showRecycler() `
 
-**跳到固定位置**
-`void scrollToPosition(int position)`
+**跳到固定位置**  
+`void scrollToPosition(int position)`  
 比如回到顶部什么的
 
 ##RecyclerArrayAdapter<T>  
