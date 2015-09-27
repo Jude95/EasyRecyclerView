@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 14
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -24,25 +24,25 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.0'
 }
 ext {
-    bintrayRepo = 'maven'////bintray上的仓库名，一般为maven
-    bintrayName = 'easyrecyclerview'//bintray上的项目名
+    bintrayRepo = 'maven'////bintray锟较的仓匡拷锟斤拷锟斤拷一锟斤拷为maven
+    bintrayName = 'easyrecyclerview'//bintray锟较碉拷锟斤拷目锟斤拷
 
-    publishedGroupId = 'com.jude'//JCenter的GroupId
-    artifact = 'easyrecyclerview'//JCenter的ArtifactId
+    publishedGroupId = 'com.jude'//JCenter锟斤拷GroupId
+    artifact = 'easyrecyclerview'//JCenter锟斤拷ArtifactId
 
     siteUrl = 'https://github.com/Jude95/EasyRecyclerView'
     gitUrl = 'https://github.com/Jude95/EasyRecyclerView'
 
-    libraryVersion = '1.0.4'//版本号
-    libraryName = 'easyrecyclerview'//项目名字，没什么用
-    libraryDescription = 'A tool for Android'//项目描述，没什么用
+    libraryVersion = '3.1.0'//锟芥本锟斤拷
+    libraryName = 'easyrecyclerview'//锟斤拷目锟斤拷锟街ｏ拷没什么锟斤拷
+    libraryDescription = 'A tool for Android'//锟斤拷目锟斤拷锟斤拷锟斤拷没什么锟斤拷
 
-    //开发者信息
+    //锟斤拷锟斤拷锟斤拷锟斤拷息
     developerId = 'jude95'
     developerName = 'jude95'
     developerEmail = 'jude@helloworld.moe'
 
-    //以上所有信息自行修改，以下不变
+    //锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷息锟斤拷锟斤拷锟睫改ｏ拷锟斤拷锟铰诧拷锟斤拷
 
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'

@@ -23,7 +23,7 @@ public class MainActivity extends ActionBarActivity implements RecyclerArrayAdap
     private EasyRecyclerView recyclerView;
     private FloatingActionButton top;
     private PersonAdapter adapter;
-    private Handler handler;
+    private Handler handler = new Handler();
 
     private int page = 0;
     private boolean hasNetWork = true;
@@ -52,7 +52,6 @@ public class MainActivity extends ActionBarActivity implements RecyclerArrayAdap
             }
         });
         recyclerView.setRefreshListener(this);
-        handler = new Handler();
         addPerson();
     }
 
@@ -63,7 +62,7 @@ public class MainActivity extends ActionBarActivity implements RecyclerArrayAdap
 
     @Override
     public void onRefresh() {
-        page=0;
+        page = 0;
         addPerson();
     }
 
@@ -86,11 +85,11 @@ public class MainActivity extends ActionBarActivity implements RecyclerArrayAdap
                     adapter.pauseMore();
                     return;
                 }
-                if (ipage == 3) adapter.stopMore();
+                if (ipage == 3) arr.clear();//adapter.stopMore();
                 page++;
                 adapter.addAll(arr);
             }
-        }, 5000);
+        }, 1000);
     }
 
     @Override
@@ -99,6 +98,7 @@ public class MainActivity extends ActionBarActivity implements RecyclerArrayAdap
         MenuItem item = menu.findItem(R.id.checkbox);
         CheckBox box = (CheckBox) item.getActionView();
         box.setChecked(true);
+        box.setText("网络");
         box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

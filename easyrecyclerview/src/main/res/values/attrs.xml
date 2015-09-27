@@ -4,6 +4,7 @@
     <declare-styleable name="superrecyclerview">
         <attr name="layout_empty" format="reference" />
         <attr name="layout_progress" format="reference" />
+        <attr name="layout_error" format="reference" />
         <attr name="recyclerClipToPadding" format="boolean" />
         <attr name="recyclerPadding" format="dimension" />
         <attr name="recyclerPaddingTop" format="dimension" />
@@ -16,8 +17,6 @@
             <flag name="outsideOverlay" value="0x02000000" />
             <flag name="outsideInset" value="0x03000000" />
         </attr>
-
-        <attr name="mainLayoutId" format="reference" />
     </declare-styleable>
 
 

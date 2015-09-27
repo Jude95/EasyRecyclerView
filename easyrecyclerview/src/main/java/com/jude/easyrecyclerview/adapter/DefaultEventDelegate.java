@@ -1,5 +1,6 @@
 package com.jude.easyrecyclerview.adapter;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,7 @@ import android.widget.FrameLayout;
  */
 public class DefaultEventDelegate implements EventDelegate {
 
-    private EventFooter footer = new EventFooter();
+    private EventFooter footer ;
 
     private RecyclerArrayAdapter.OnLoadMoreListener onLoadMoreListener;
 
@@ -24,12 +25,13 @@ public class DefaultEventDelegate implements EventDelegate {
     private static final int STATUS_ERROR = 732;
 
     public DefaultEventDelegate(RecyclerArrayAdapter adapter) {
+        footer = new EventFooter(adapter.getContext());
         adapter.addFooter(footer);
     }
 
     public void onMoreViewShowed() {
         Log.i("recycler", "onMoreViewShowed");
-        if (!isLoadingMore)onLoadMoreListener.onLoadMore();
+        if (!isLoadingMore&&onLoadMoreListener!=null)onLoadMoreListener.onLoadMore();
     }
 
     public void onErrorViewShowed() {
@@ -112,12 +114,14 @@ public class DefaultEventDelegate implements EventDelegate {
 
         private int flag = 0;
 
+        public EventFooter(Context ctx){
+            container = new FrameLayout(ctx);
+            container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
 
         @Override
         public View onCreateView(ViewGroup parent) {
-            Log.i("recycler","onCreateView");
-            container = new FrameLayout(parent.getContext());
-            container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            Log.i("recycler", "onCreateView");
             return container;
         }
 
