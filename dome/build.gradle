@@ -25,4 +25,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.facebook.fresco:fresco:0.5.1'
     compile project(':easyrecyclerview')
+    compile 'com.github.clans:fab:1.6.0'
+
 }

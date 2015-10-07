@@ -8,7 +8,7 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 
 
 ##依赖
-`compile 'com.jude:easyrecyclerview:3.1.0'`
+`compile 'com.jude:easyrecyclerview:3.1.1'`
 
 
 ##示例
@@ -54,7 +54,11 @@ xml中
 然后可以随时显示他们  
 `void showEmpty()`  
 `void showProgress()`  
-`void showRecycler() `  
+`void showRecycler() `
+
+**跳到固定位置**  
+`void scrollToPosition(int position)`  
+比如回到顶部什么的
 
 ##RecyclerArrayAdapter<T>  
 这个Adapter与本RecyclerView没有任何耦合。你可以使用其他adapter。也可以把本adapter用于其他RecyclerView  
