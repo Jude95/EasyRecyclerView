@@ -8,7 +8,7 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 
 
 ##依赖
-`compile 'com.jude:easyrecyclerview:3.2.1'`
+`compile 'com.jude:easyrecyclerview:3.2.2'`
 
 
 ##示例
@@ -85,6 +85,24 @@ ItemView不是view而是view生成器
              void onBindView(View itemView);
         }
 
+
+**整合OnItemClickListener与OnItemLongClickListener**  
+
+        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                //position为数据位置，不包含Header
+            }
+        });
+
+        adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemClick(int position) {
+                return true;
+            }
+        });
+
+与在ViewHolder中给itemView设置OnClickListener等效。若重复设置ViewHolder中的设置会被替换。
 
 ###下面的功能在adapter最后添加一个footer。来显示各种状态。
 
