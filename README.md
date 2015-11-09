@@ -157,7 +157,7 @@ ItemView不是view而是view生成器
 License
 -------
 
-    Copyright 2013 Jake Wharton
+    Copyright 2015 Jude
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -171,12 +171,6 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
-
-
- [1]: http://square.github.com/dagger/
- [2]: https://search.maven.org/remote_content?g=com.jakewharton&a=butterknife&v=LATEST
- [3]: http://jakewharton.github.com/butterknife/
- [snap]: https://oss.sonatype.org/content/repositories/snapshots/
 
 
 
