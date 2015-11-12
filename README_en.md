@@ -50,14 +50,14 @@ xml:
 code:  
 `void setEmptyView(View emptyView)`  
 `void setProgressView(View progressView)`  
-then you can show it by this whenever:
+then you can show it by this whenever:  
 `void showEmpty()`  
 `void showProgress()`  
-`void showRecycler() `
+`void showRecycler() `  
 
-**scrollToPosition**
-`void scrollToPosition(int position)`
-such as scroll to top;
+**scrollToPosition**  
+`void scrollToPosition(int position)`  
+such as scroll to top;  
 
 ##RecyclerArrayAdapter<T>  
 there is no relation between RecyclerArrayAdapter and EasyRecyclerView.you can user any Adapter for the EasyRecyclerView,and use the RecyclerArrayAdapter for any RecyclerView.
@@ -82,15 +82,15 @@ ItemView is not a view but a view creator;
         }
         
 the onCreateView and onBindView corresponding the callback in RecyclerView's Adapter,so one onCreateView with multiple onBindView;  
-it recommend that add the ItemView to Adapter after the data is loaded,initialization View in onCreateView and nothing in onBindView.
-after change the Header and Footer ,call `notifyDataSetChanged();` to refresh view; 
+it recommend that add the ItemView to Adapter after the data is loaded,initialization View in onCreateView and nothing in onBindView.  
+after change the Header and Footer ,call `notifyDataSetChanged();` to refresh view;   
 
 ###the API below realized by add a Footer。
 
 **LoadMore**  
 `void setMore(final int res,OnLoadMoreListener listener)`  
 `void setMore(final View view,OnLoadMoreListener listener)`  
-Attention when you add null or the length of data you add is 0 ,it will finish LoadMore and show NoMore;
+Attention when you add null or the length of data you add is 0 ,it will finish LoadMore and show NoMore;  
 also you can show NoMore manually `adapter.stopMore();`  
  
 **LoadError**  
@@ -100,15 +100,15 @@ use `adapter.pauseMore()` to show Error,when your loading throw an error;
 if you add data when showing Error.it will resume to load more;  
 when the ErrorView display to screen again,it will resume to load more too,and callback the OnLoadMoreListener(retry).  
 `adapter.resumeMore()`you can resume to load more manually,it will callback the OnLoadMoreListener immediately.   
-you can put resumeMore() into the OnClickListener of ErrorView to realize click to retry.
+you can put resumeMore() into the OnClickListener of ErrorView to realize click to retry.  
 
 **NoMore**  
-when loading is finished(add null or empty or stop manually),it while show in the end.
+when loading is finished(add null or empty or stop manually),it while show in the end.  
 `void setNoMore(final int res)`   
 `void setNoMore(final View view)`  
 
 ##BaseViewHolder\<M\>
-decoupling the ViewHolder and Adapter,new ViewHolder in Adapter and inflate view in ViewHolder.
+decoupling the ViewHolder and Adapter,new ViewHolder in Adapter and inflate view in ViewHolder.  
 Example:
 
         public class PersonViewHolder extends BaseViewHolder<Person> {
