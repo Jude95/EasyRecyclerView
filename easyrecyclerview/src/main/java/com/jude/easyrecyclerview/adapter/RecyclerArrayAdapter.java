@@ -54,6 +54,8 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     ArrayList<ItemView> headers = new ArrayList<>();
     ArrayList<ItemView> footers = new ArrayList<>();
 
+    private OnItemClickListener mItemClickListener;
+    private OnItemLongClickListener mItemLongClickListener;
 
     public interface ItemView {
          View onCreateView(ViewGroup parent);
@@ -265,6 +267,19 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     }
 
     /**
+     * 删除，不会触发任何事情
+     *
+     * @param position The position of the object to remove.
+     */
+    public void remove(int position) {
+        synchronized (mLock) {
+            mObjects.remove(position);
+        }
+        if (mNotifyOnChange) notifyDataSetChanged();
+    }
+
+
+    /**
      * 触发清空
      */
     public void clear() {
@@ -361,7 +376,28 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         if (view!=null){
             return new StateViewHolder(view);
         }
-        return OnCreateViewHolder(parent, viewType);
+
+        final BaseViewHolder viewHolder = OnCreateViewHolder(parent, viewType);
+
+        //itemView 的点击事件
+        if (mItemClickListener!=null) {
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mItemClickListener.onItemClick(viewHolder.getAdapterPosition()-headers.size());
+                }
+            });
+        }
+
+        if (mItemLongClickListener!=null){
+            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return mItemLongClickListener.onItemClick(viewHolder.getAdapterPosition()-headers.size());
+                }
+            });
+        }
+        return viewHolder;
     }
 
     abstract public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType);
@@ -384,9 +420,10 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         OnBindViewHolder(holder,position-headers.size());
     }
 
-    public void OnBindViewHolder(BaseViewHolder holder, int position){
+    public void OnBindViewHolder(BaseViewHolder holder, final int position){
         holder.setData(getItem(position));
     }
+
 
     @Override
     public final int getItemViewType(int position) {
@@ -449,4 +486,21 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         }
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public interface OnItemLongClickListener {
+        boolean onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mItemClickListener = listener;
+        notifyDataSetChanged();
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener listener){
+        this.mItemLongClickListener = listener;
+        notifyDataSetChanged();
+    }
 }

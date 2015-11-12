@@ -18,6 +18,10 @@ public class DefaultEventDelegate implements EventDelegate {
     private boolean hasData = false;
     private boolean isLoadingMore = false;
 
+    private boolean hasMore = false;
+    private boolean hasNoMore = false;
+    private boolean hasError = false;
+
     private int status = STATUS_INITIAL;
     private static final int STATUS_INITIAL = 291;
     private static final int STATUS_MORE = 260;
@@ -42,17 +46,24 @@ public class DefaultEventDelegate implements EventDelegate {
     @Override
     public void addData(int length) {
         Log.i("recycler", "addData" + length);
-        if (length == 0){
-            //当添加0个时，认为已结束加载到底
-            if (status==STATUS_INITIAL || status == STATUS_MORE){
+        if (hasMore){
+            if (length == 0){
+                //当添加0个时，认为已结束加载到底
+                if (status==STATUS_INITIAL || status == STATUS_MORE){
+                    footer.showNoMore();
+                }
+            }else {
+                //当Error或初始时。添加数据，如果有More则还原。
+                if (hasMore && (status == STATUS_INITIAL || status == STATUS_ERROR)){
+                    footer.showMore();
+                }
+                hasData = true;
+            }
+        }else{
+            if (hasNoMore){
                 footer.showNoMore();
+                status = STATUS_NOMORE;
             }
-        }else {
-            //当Error时。再次添加则还原。
-            if (status == STATUS_INITIAL || status == STATUS_ERROR){
-                footer.showMore();
-            }
-            hasData = true;
         }
     }
 
@@ -90,18 +101,21 @@ public class DefaultEventDelegate implements EventDelegate {
     public void setMore(View view, RecyclerArrayAdapter.OnLoadMoreListener listener) {
         this.footer.setMoreView(view);
         this.onLoadMoreListener = listener;
+        hasMore = true;
         Log.i("recycler","setMore");
     }
 
     @Override
     public void setNoMore(View view) {
         this.footer.setNoMoreView(view);
+        hasNoMore = true;
         Log.i("recycler", "setNoMore");
     }
 
     @Override
     public void setErrorMore(View view) {
         this.footer.setErrorView(view);
+        hasError = true;
         Log.i("recycler","setErrorMore");
     }
 
@@ -113,6 +127,7 @@ public class DefaultEventDelegate implements EventDelegate {
         private View errorView;
 
         private int flag = 0;
+
 
         public EventFooter(Context ctx){
             container = new FrameLayout(ctx);
@@ -166,7 +181,9 @@ public class DefaultEventDelegate implements EventDelegate {
             flag = 3;
         }
 
+        //初始化
         public void hide(){
+            flag = 0;
             container.setVisibility(View.GONE);
         }
 

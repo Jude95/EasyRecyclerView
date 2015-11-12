@@ -1,5 +1,6 @@
 package com.jude.easyrecyclerview.adapter;
 
+import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
@@ -30,8 +31,12 @@ abstract public class BaseViewHolder<M> extends RecyclerView.ViewHolder {
     public void setData(M data) {
     }
 
-
     protected <T extends View> T $(@IdRes int id) {
         return (T) itemView.findViewById(id);
     }
+
+    protected Context getContext(){
+        return itemView.getContext();
+    }
+
 }

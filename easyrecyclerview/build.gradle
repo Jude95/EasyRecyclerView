@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -20,8 +20,8 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:22.2.0'
-    compile 'com.android.support:recyclerview-v7:22.2.0'
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:recyclerview-v7:23.0.1'
 }
 ext {
     bintrayRepo = 'maven'////bintray�ϵĲֿ�����һ��Ϊmaven
@@ -33,7 +33,7 @@ ext {
     siteUrl = 'https://github.com/Jude95/EasyRecyclerView'
     gitUrl = 'https://github.com/Jude95/EasyRecyclerView'
 
-    libraryVersion = '3.1.1'//�汾��
+    libraryVersion = '3.2.2'//�汾��
     libraryName = 'easyrecyclerview'//��Ŀ���֣�ûʲô��
     libraryDescription = 'A tool for Android'//��Ŀ������ûʲô��
 

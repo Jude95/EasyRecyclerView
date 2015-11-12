@@ -8,7 +8,7 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 
 
 ##依赖
-`compile 'com.jude:easyrecyclerview:3.1.1'`
+`compile 'com.jude:easyrecyclerview:3.2.2'`
 
 
 ##示例
@@ -56,8 +56,8 @@ xml中
 `void showProgress()`  
 `void showRecycler() `
 
-**跳到固定位置**
-`void scrollToPosition(int position)`
+**跳到固定位置**  
+`void scrollToPosition(int position)`  
 比如回到顶部什么的
 
 ##RecyclerArrayAdapter<T>  
@@ -85,6 +85,24 @@ ItemView不是view而是view生成器
              void onBindView(View itemView);
         }
 
+
+**整合OnItemClickListener与OnItemLongClickListener**  
+
+        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                //position为数据位置，不包含Header
+            }
+        });
+
+        adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemClick(int position) {
+                return true;
+            }
+        });
+
+与在ViewHolder中给itemView设置OnClickListener等效。若重复设置ViewHolder中的设置会被替换。
 
 ###下面的功能在adapter最后添加一个footer。来显示各种状态。
 
@@ -136,6 +154,22 @@ ItemView不是view而是view生成器
 
 **详细用法请看dome，哦不~demo**
 
+License
+-------
+
+    Copyright 2015 Jude
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 
 
 
