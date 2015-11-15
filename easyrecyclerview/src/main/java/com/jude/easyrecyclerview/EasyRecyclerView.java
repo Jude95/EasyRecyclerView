@@ -109,6 +109,14 @@ public class EasyRecyclerView extends FrameLayout {
         return mPtrLayout.dispatchTouchEvent(ev);
     }
 
+    public void setRecyclerPadding(int left,int top,int right,int bottom){
+        this.mPaddingLeft = left;
+        this.mPaddingTop = top;
+        this.mPaddingRight = right;
+        this.mPaddingBottom = bottom;
+        mRecycler.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
+    }
+
     public void setEmptyView(View emptyView){
         mEmptyView.removeAllViews();
         mEmptyView.addView(emptyView);

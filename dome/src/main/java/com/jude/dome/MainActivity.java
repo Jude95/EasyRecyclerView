@@ -39,7 +39,6 @@ public class MainActivity extends ActionBarActivity implements RecyclerArrayAdap
         recyclerView.setAdapterWithProgress(adapter = new PersonAdapter(this));
         adapter.setMore(R.layout.view_more, this);
         adapter.setNoMore(R.layout.view_nomore);
-
         adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemClick(int position) {
