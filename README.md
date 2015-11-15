@@ -1,10 +1,12 @@
 # EasyRecyclerView
-这个库使用了部分[Malinskiy/SuperRecyclerView](https://github.com/Malinskiy/SuperRecyclerView)的代码，将更多功能交给了adapter实现。    
+[中文](https://github.com/Jude95/EasyRecyclerView/blob/master/README.md) ｜ [English](https://github.com/Jude95/EasyRecyclerView/blob/master/README_en.md)
+
 将开发中常用的RecyclerView的各种需求封装进库。提升开发效率。  
 重点在Adapter与viewholder的封装。他们之间彻底解耦。  
 adapter工作更少，仅负责业务逻辑。所以如果你使用mvp架构可以放进presenter层。  
 viewholder负责View展示与Adapter没有任何耦合，将可以到处复用。并不会影响运行效率。  
 并且adapter支持数据管理，Header与Footer添加，加载更多。没有更多。加载错误  
+使用了部分[Malinskiy/SuperRecyclerView](https://github.com/Malinskiy/SuperRecyclerView)的代码，将更多功能交给了adapter实现。    
 
 
 ##依赖
@@ -152,8 +154,24 @@ ItemView不是view而是view生成器
         }
 
 
-**详细用法请看dome，哦不~demo**
+**详细用法请看demo**
 
+License
+-------
+
+    Copyright 2015 Jude
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 
 
 
