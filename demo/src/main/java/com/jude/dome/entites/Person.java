@@ -1,4 +1,4 @@
-package com.jude.dome;
+package com.jude.dome.entites;
 
 /**
  * Created by Mr.Jude on 2015/7/18.

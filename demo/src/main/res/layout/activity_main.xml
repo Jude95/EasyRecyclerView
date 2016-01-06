@@ -1,28 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-
-    <com.jude.easyrecyclerview.EasyRecyclerView
-        android:id="@+id/recyclerView"
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/refresh_and_more"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_empty="@layout/view_empty"
-        app:layout_progress="@layout/view_progress"
-        />
-
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_top"
-        app:fab_colorNormal="?colorAccent"
-        app:fab_colorPressed="?colorAccent"
-        app:fab_size="normal" />
-
-</FrameLayout>
+        android:layout_height="48dp"
+        android:text="@string/refresh_and_more"/>
+    <Button
+        android:id="@+id/header_footer"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/header_and_footer"/>
+    <Button
+        android:id="@+id/multi_style"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/multi_style"/>
+</LinearLayout>

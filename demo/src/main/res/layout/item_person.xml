@@ -6,13 +6,12 @@
     android:layout_height="72dp"
     android:gravity="center_vertical"
     android:background="@android:color/white">
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/person_face"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginLeft="16dp"
         android:layout_centerVertical="true"
-        fresco:roundAsCircle="true"
         />
     <LinearLayout
         android:layout_width="match_parent"
