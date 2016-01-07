@@ -10,7 +10,7 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 
 
 ##依赖
-`compile 'com.jude:easyrecyclerview:3.2.3'`
+`compile 'com.jude:easyrecyclerview:3.3.0'`
 
 
 ##示例
@@ -87,6 +87,11 @@ ItemView不是view而是view生成器
              void onBindView(View itemView);
         }
 
+Header与Footer完美适配`LinearLayoutManager`,`GridLayoutManager`,`StaggeredGridLayoutManager`  
+在GridLayoutManager模式中需额外加一句
+        
+        //用adapter去生成一个LookUp设置给LayoutManager，参数是列数。
+         gridLayoutManager.setSpanSizeLookup(adapter.obtainGridSpanSizeLookUp(2));
 
 **整合OnItemClickListener与OnItemLongClickListener**  
 

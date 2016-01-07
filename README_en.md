@@ -8,7 +8,7 @@ Part of the code modified from [Malinskiy/SuperRecyclerView](https://github.com/
 
 
 #Denpendency
-`compile 'com.jude:easyrecyclerview:3.2.2'`
+`compile 'com.jude:easyrecyclerview:3.3.0'`
 
 
 #ScreenShot
@@ -83,7 +83,13 @@ ItemView is not a view but a view creator;
         
 the onCreateView and onBindView corresponding the callback in RecyclerView's Adapter,so one onCreateView with multiple onBindView;  
 it recommend that add the ItemView to Adapter after the data is loaded,initialization View in onCreateView and nothing in onBindView.  
-after change the Header and Footer ,call `notifyDataSetChanged();` to refresh view;   
+after change the Header and Footer ,call `notifyDataSetChanged();` to refresh view;  
+ 
+ Header and Footer support `LinearLayoutManager`,`GridLayoutManager`,`StaggeredGridLayoutManager`  
+ in `GridLayoutManager` you must add this:
+         
+         //make adapter obtain a LookUp for LayoutManager，param is maxSpan。
+          gridLayoutManager.setSpanSizeLookup(adapter.obtainGridSpanSizeLookUp(2));
 
 ###the API below realized by add a Footer。
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -33,13 +34,21 @@ import java.util.List;
 public class HeaderFooterActivity extends AppCompatActivity {
     private EasyRecyclerView recyclerView;
     private PersonAdapter adapter;
+    private GridLayoutManager gridLayoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multi_style);
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter = new PersonAdapter(this));
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+//        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+
+//        recyclerView.setLayoutManager(gridLayoutManager = new GridLayoutManager(this,2));
+//        gridLayoutManager.setSpanSizeLookup(adapter.obtainGridSpanSizeLookUp(2));
+
         adapter.addAll(DataProvider.getPersonList(0));
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
             @Override

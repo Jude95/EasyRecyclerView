@@ -17,7 +17,9 @@
 package com.jude.easyrecyclerview.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +65,30 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     }
     public interface OnLoadMoreListener{
         void onLoadMore();
+    }
+
+    public class GridSpanSizeLookup extends GridLayoutManager.SpanSizeLookup{
+        private int mMaxCount;
+        public GridSpanSizeLookup(int maxCount){
+            this.mMaxCount = maxCount;
+        }
+        @Override
+        public int getSpanSize(int position) {
+            if (headers.size()!=0){
+                if (position<headers.size())return mMaxCount;
+            }
+            if (footers.size()!=0) {
+                int i = position - headers.size() - mObjects.size();
+                if (i >= 0) {
+                    return mMaxCount;
+                }
+            }
+            return 1;
+        }
+    }
+
+    public GridSpanSizeLookup obtainGridSpanSizeLookUp(int maxCount){
+        return new GridSpanSizeLookup(maxCount);
     }
 
     /**
@@ -358,12 +384,18 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         for (ItemView headerView:headers){
             if (headerView.hashCode() == viewType){
                 View view = headerView.onCreateView(parent);
+                StaggeredGridLayoutManager.LayoutParams layoutParams = new StaggeredGridLayoutManager.LayoutParams(view.getLayoutParams());
+                layoutParams.setFullSpan(true);
+                view.setLayoutParams(layoutParams);
                 return view;
             }
         }
         for (ItemView footerview:footers){
             if (footerview.hashCode() == viewType){
                 View view = footerview.onCreateView(parent);
+                StaggeredGridLayoutManager.LayoutParams layoutParams = new StaggeredGridLayoutManager.LayoutParams(view.getLayoutParams());
+                layoutParams.setFullSpan(true);
+                view.setLayoutParams(layoutParams);
                 return view;
             }
         }
@@ -415,16 +447,17 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         if (footers.size()!=0 && i>=0){
             footers.get(i).onBindView(holder.itemView);
             return ;
-
         }
         OnBindViewHolder(holder,position-headers.size());
     }
+
 
     public void OnBindViewHolder(BaseViewHolder holder, final int position){
         holder.setData(getItem(position));
     }
 
 
+    @Deprecated
     @Override
     public final int getItemViewType(int position) {
         if (headers.size()!=0){
