@@ -12,10 +12,10 @@
         <attr name="recyclerPaddingLeft" format="dimension" />
         <attr name="recyclerPaddingRight" format="dimension" />
         <attr name="scrollbarStyle">
-            <flag name="insideOverlay" value="0x0" />
-            <flag name="insideInset" value="0x01000000" />
-            <flag name="outsideOverlay" value="0x02000000" />
-            <flag name="outsideInset" value="0x03000000" />
+            <enum name="insideOverlay" value="0x0" />
+            <enum name="insideInset" value="0x01000000" />
+            <enum name="outsideOverlay" value="0x02000000" />
+            <enum name="outsideInset" value="0x03000000" />
         </attr>
     </declare-styleable>
 

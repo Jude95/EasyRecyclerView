@@ -77,7 +77,8 @@ public class EasyRecyclerView extends FrameLayout {
             mPaddingBottom = (int) a.getDimension(R.styleable.superrecyclerview_recyclerPaddingBottom, 0.0f);
             mPaddingLeft = (int) a.getDimension(R.styleable.superrecyclerview_recyclerPaddingLeft, 0.0f);
             mPaddingRight = (int) a.getDimension(R.styleable.superrecyclerview_recyclerPaddingRight, 0.0f);
-            mScrollbarStyle = a.getInt(R.styleable.superrecyclerview_scrollbarStyle, -1);
+            mScrollbarStyle = a.getInteger(R.styleable.superrecyclerview_scrollbarStyle, -1);
+
             mEmptyId = a.getResourceId(R.styleable.superrecyclerview_layout_empty, 0);
             mProgressId = a.getResourceId(R.styleable.superrecyclerview_layout_progress, 0);
             mErrorId = a.getResourceId(R.styleable.superrecyclerview_layout_error, 0);
@@ -181,7 +182,7 @@ public class EasyRecyclerView extends FrameLayout {
             } else {
                 mRecycler.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
             }
-
+            Log.i("Recycler","mScrollbarStyle"+mScrollbarStyle);
             if (mScrollbarStyle != -1) {
                 mRecycler.setScrollBarStyle(mScrollbarStyle);
             }
@@ -302,7 +303,7 @@ public class EasyRecyclerView extends FrameLayout {
             }
 
             private void update() {
-                Log.i("recycler","update");
+                Log.i("recycler", "update");
                 if (mRecycler.getAdapter().getItemCount() == 0) {
                     showEmpty();
                 } else {
@@ -360,6 +361,15 @@ public class EasyRecyclerView extends FrameLayout {
     public void setRefreshListener(android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener listener) {
         mPtrLayout.setEnabled(true);
         mPtrLayout.setOnRefreshListener(listener);
+    }
+
+    public void setRefreshing(final boolean isRefreshing){
+        mPtrLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mPtrLayout.setRefreshing(isRefreshing);
+            }
+        });
     }
 
     /**
