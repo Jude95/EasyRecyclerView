@@ -59,6 +59,11 @@ then you can show it by this whenever:
 `void scrollToPosition(int position)`  
 such as scroll to top;  
 
+**control the pullToRefresh**  
+`void setRefreshing(boolean isRefreshing)`   
+
+
+
 ##RecyclerArrayAdapter<T>  
 there is no relation between RecyclerArrayAdapter and EasyRecyclerView.you can user any Adapter for the EasyRecyclerView,and use the RecyclerArrayAdapter for any RecyclerView.
 
