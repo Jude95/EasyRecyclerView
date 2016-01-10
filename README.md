@@ -62,6 +62,10 @@ xml中
 `void scrollToPosition(int position)`  
 比如回到顶部什么的
 
+**下拉刷新的控制**  
+`void setRefreshing(boolean isRefreshing)`   
+
+
 ##RecyclerArrayAdapter<T>  
 这个Adapter与本RecyclerView没有任何耦合。你可以使用其他adapter。也可以把本adapter用于其他RecyclerView  
 
