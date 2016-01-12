@@ -40,7 +40,7 @@ public class EasyRecyclerView extends FrameLayout {
     protected RecyclerView.OnScrollListener mExternalOnScrollListener;
 
     protected SwipeRefreshLayout mPtrLayout;
-
+    protected android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener mRefreshListener;
 
 
     public SwipeRefreshLayout getSwipeToRefresh() {
@@ -182,7 +182,6 @@ public class EasyRecyclerView extends FrameLayout {
             } else {
                 mRecycler.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
             }
-            Log.i("Recycler","mScrollbarStyle"+mScrollbarStyle);
             if (mScrollbarStyle != -1) {
                 mRecycler.setScrollBarStyle(mScrollbarStyle);
             }
@@ -361,6 +360,7 @@ public class EasyRecyclerView extends FrameLayout {
     public void setRefreshListener(android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener listener) {
         mPtrLayout.setEnabled(true);
         mPtrLayout.setOnRefreshListener(listener);
+        this.mRefreshListener = listener;
     }
 
     public void setRefreshing(final boolean isRefreshing){
@@ -368,6 +368,18 @@ public class EasyRecyclerView extends FrameLayout {
             @Override
             public void run() {
                 mPtrLayout.setRefreshing(isRefreshing);
+            }
+        });
+    }
+
+    public void setRefreshing(final boolean isRefreshing, final boolean isCallbackListener){
+        mPtrLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mPtrLayout.setRefreshing(isRefreshing);
+                if (isRefreshing&&isCallbackListener&&mRefreshListener!=null){
+                    mRefreshListener.onRefresh();
+                }
             }
         });
     }

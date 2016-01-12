@@ -10,7 +10,7 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 
 
 ##依赖
-`compile 'com.jude:easyrecyclerview:3.3.1'`
+`compile 'com.jude:easyrecyclerview:3.3.2'`
 
 
 ##示例
@@ -64,7 +64,7 @@ xml中
 
 **下拉刷新的控制**  
 `void setRefreshing(boolean isRefreshing)`   
-
+`void setRefreshing(final boolean isRefreshing, final boolean isCallback)`//第二个参数是是否立即回调
 
 ##RecyclerArrayAdapter<T>  
 这个Adapter与本RecyclerView没有任何耦合。你可以使用其他adapter。也可以把本adapter用于其他RecyclerView  

@@ -61,7 +61,7 @@ such as scroll to top;
 
 **control the pullToRefresh**  
 `void setRefreshing(boolean isRefreshing)`   
-
+`void setRefreshing(final boolean isRefreshing, final boolean isCallback)`//second params is callback immediately
 
 
 ##RecyclerArrayAdapter<T>  

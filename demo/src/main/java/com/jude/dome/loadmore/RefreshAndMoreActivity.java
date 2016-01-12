@@ -45,7 +45,6 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
                 return true;
             }
         });
-        recyclerView.setRefreshing(true);
         adapter.setError(R.layout.view_error).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +59,7 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
             }
         });
         recyclerView.setRefreshListener(this);
-        onRefresh();
+        recyclerView.setRefreshing(true,true);
     }
 
     @Override
