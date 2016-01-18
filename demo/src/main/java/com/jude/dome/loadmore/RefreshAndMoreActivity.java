@@ -56,10 +56,11 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
             public void onClick(View v) {
                 recyclerView.setRefreshing(false);
                 recyclerView.scrollToPosition(3);
+                recyclerView.showEmpty();
             }
         });
         recyclerView.setRefreshListener(this);
-        recyclerView.setRefreshing(true,true);
+        onRefresh();
     }
 
     @Override
