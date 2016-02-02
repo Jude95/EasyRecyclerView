@@ -45,7 +45,6 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
                 return true;
             }
         });
-
         adapter.setError(R.layout.view_error).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +54,9 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
         top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                recyclerView.setRefreshing(false);
                 recyclerView.scrollToPosition(3);
+                recyclerView.showEmpty();
             }
         });
         recyclerView.setRefreshListener(this);

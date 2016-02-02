@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorRes;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.AdapterDataObserver;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,7 +40,7 @@ public class EasyRecyclerView extends FrameLayout {
     protected RecyclerView.OnScrollListener mExternalOnScrollListener;
 
     protected SwipeRefreshLayout mPtrLayout;
-
+    protected android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener mRefreshListener;
 
 
     public SwipeRefreshLayout getSwipeToRefresh() {
@@ -77,7 +77,8 @@ public class EasyRecyclerView extends FrameLayout {
             mPaddingBottom = (int) a.getDimension(R.styleable.superrecyclerview_recyclerPaddingBottom, 0.0f);
             mPaddingLeft = (int) a.getDimension(R.styleable.superrecyclerview_recyclerPaddingLeft, 0.0f);
             mPaddingRight = (int) a.getDimension(R.styleable.superrecyclerview_recyclerPaddingRight, 0.0f);
-            mScrollbarStyle = a.getInt(R.styleable.superrecyclerview_scrollbarStyle, -1);
+            mScrollbarStyle = a.getInteger(R.styleable.superrecyclerview_scrollbarStyle, -1);
+
             mEmptyId = a.getResourceId(R.styleable.superrecyclerview_layout_empty, 0);
             mProgressId = a.getResourceId(R.styleable.superrecyclerview_layout_progress, 0);
             mErrorId = a.getResourceId(R.styleable.superrecyclerview_layout_error, 0);
@@ -181,7 +182,6 @@ public class EasyRecyclerView extends FrameLayout {
             } else {
                 mRecycler.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
             }
-
             if (mScrollbarStyle != -1) {
                 mRecycler.setScrollBarStyle(mScrollbarStyle);
             }
@@ -198,6 +198,63 @@ public class EasyRecyclerView extends FrameLayout {
         mRecycler.setLayoutManager(manager);
     }
 
+
+    private static class EasyDataObserver extends AdapterDataObserver {
+        private EasyRecyclerView recyclerView;
+        private boolean isInit = false;
+        private boolean hasProgress = false;
+
+        public EasyDataObserver(EasyRecyclerView recyclerView,boolean hasProgress) {
+            this.recyclerView = recyclerView;
+            this.hasProgress = hasProgress;
+        }
+
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount) {
+            super.onItemRangeChanged(positionStart, itemCount);
+            update();
+        }
+
+        @Override
+        public void onItemRangeInserted(int positionStart, int itemCount) {
+            super.onItemRangeInserted(positionStart, itemCount);
+            update();
+        }
+
+        @Override
+        public void onItemRangeRemoved(int positionStart, int itemCount) {
+            super.onItemRangeRemoved(positionStart, itemCount);
+            update();
+        }
+
+        @Override
+        public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
+            super.onItemRangeMoved(fromPosition, toPosition, itemCount);
+            update();
+        }
+
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            update();
+        }
+
+        private void update() {
+            if (recyclerView.getAdapter() instanceof RecyclerArrayAdapter) {
+                if (((RecyclerArrayAdapter) recyclerView.getAdapter()).getCount() == 0){
+                    if (hasProgress&&!isInit)recyclerView.showProgress();
+                    else recyclerView.showEmpty();
+                } else{
+                    recyclerView.showRecycler();
+                    isInit = true;
+                }
+            } else {
+                if (recyclerView.getAdapter().getItemCount() == 0) recyclerView.showEmpty();
+                else recyclerView.showRecycler();
+            }
+        }
+    }
+
     /**
      * 设置适配器，关闭所有副view。展示recyclerView
      * 适配器有更新，自动关闭所有副view。根据条数判断是否展示EmptyView
@@ -207,48 +264,7 @@ public class EasyRecyclerView extends FrameLayout {
     public void setAdapter(RecyclerView.Adapter adapter) {
         showRecycler();
         mRecycler.setAdapter(adapter);
-        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeChanged(int positionStart, int itemCount) {
-                super.onItemRangeChanged(positionStart, itemCount);
-                update();
-            }
-
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-                update();
-            }
-
-            @Override
-            public void onItemRangeRemoved(int positionStart, int itemCount) {
-                super.onItemRangeRemoved(positionStart, itemCount);
-                update();
-            }
-
-            @Override
-            public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-                super.onItemRangeMoved(fromPosition, toPosition, itemCount);
-                update();
-            }
-
-            @Override
-            public void onChanged() {
-                super.onChanged();
-                update();
-            }
-
-            private void update() {
-                if (mRecycler.getAdapter() instanceof RecyclerArrayAdapter) {
-                    if (((RecyclerArrayAdapter) mRecycler.getAdapter()).getCount() == 0)
-                        showEmpty();
-                    else showRecycler();
-                } else {
-                    if (mRecycler.getAdapter().getItemCount() == 0) showEmpty();
-                    else showRecycler();
-                }
-            }
-        });
+        adapter.registerAdapterDataObserver(new EasyDataObserver(this,false));
         if (adapter == null || adapter.getItemCount() == 0) {
             showEmpty();
         }
@@ -270,46 +286,7 @@ public class EasyRecyclerView extends FrameLayout {
         }
 
         mRecycler.setAdapter(adapter);
-        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeChanged(int positionStart, int itemCount) {
-                super.onItemRangeChanged(positionStart, itemCount);
-                update();
-            }
-
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-                update();
-            }
-
-            @Override
-            public void onItemRangeRemoved(int positionStart, int itemCount) {
-                super.onItemRangeRemoved(positionStart, itemCount);
-                update();
-            }
-
-            @Override
-            public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-                super.onItemRangeMoved(fromPosition, toPosition, itemCount);
-                update();
-            }
-
-            @Override
-            public void onChanged() {
-                super.onChanged();
-                update();
-            }
-
-            private void update() {
-                Log.i("recycler","update");
-                if (mRecycler.getAdapter().getItemCount() == 0) {
-                    showEmpty();
-                } else {
-                    showRecycler();
-                }
-            }
-        });
+        adapter.registerAdapterDataObserver(new EasyDataObserver(this,true));
     }
 
     /**
@@ -360,6 +337,28 @@ public class EasyRecyclerView extends FrameLayout {
     public void setRefreshListener(android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener listener) {
         mPtrLayout.setEnabled(true);
         mPtrLayout.setOnRefreshListener(listener);
+        this.mRefreshListener = listener;
+    }
+
+    public void setRefreshing(final boolean isRefreshing){
+        mPtrLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mPtrLayout.setRefreshing(isRefreshing);
+            }
+        });
+    }
+
+    public void setRefreshing(final boolean isRefreshing, final boolean isCallbackListener){
+        mPtrLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mPtrLayout.setRefreshing(isRefreshing);
+                if (isRefreshing&&isCallbackListener&&mRefreshListener!=null){
+                    mRefreshListener.onRefresh();
+                }
+            }
+        });
     }
 
     /**
@@ -442,13 +441,20 @@ public class EasyRecyclerView extends FrameLayout {
     }
 
 
-
+    /**
+     * @return inflated error view or null
+     */
+    public View getErrorView() {
+        if (mErrorView.getChildCount()>0)return mErrorView.getChildAt(0);
+        return null;
+    }
 
     /**
      * @return inflated progress view or null
      */
     public View getProgressView() {
-        return mProgressView;
+        if (mProgressView.getChildCount()>0)return mProgressView.getChildAt(0);
+        return null;
     }
 
 
@@ -456,13 +462,8 @@ public class EasyRecyclerView extends FrameLayout {
      * @return inflated empty view or null
      */
     public View getEmptyView() {
-        return mEmptyView;
+        if (mEmptyView.getChildCount()>0)return mEmptyView.getChildAt(0);
+        return null;
     }
 
-
-    public static enum LAYOUT_MANAGER_TYPE {
-        LINEAR,
-        GRID,
-        STAGGERED_GRID
-    }
 }

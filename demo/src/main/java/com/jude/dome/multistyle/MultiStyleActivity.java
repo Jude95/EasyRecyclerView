@@ -20,7 +20,8 @@ public class MultiStyleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_multi_style);
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter = new PersonWithAdAdapter(this));
+        recyclerView.setProgressView(R.layout.view_progress);
+        recyclerView.setAdapterWithProgress(adapter = new PersonWithAdAdapter(this));
         adapter.addAll(DataProvider.getPersonWithAds(0));
     }
 }

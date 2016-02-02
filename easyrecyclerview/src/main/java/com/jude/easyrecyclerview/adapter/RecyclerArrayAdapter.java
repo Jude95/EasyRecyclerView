@@ -496,7 +496,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
                 return footers.get(i).hashCode();
             }
         }
-        return getViewType(position);
+        return getViewType(position-headers.size());
     }
 
     public int getViewType(int position){

@@ -8,7 +8,7 @@ Part of the code modified from [Malinskiy/SuperRecyclerView](https://github.com/
 
 
 #Denpendency
-`compile 'com.jude:easyrecyclerview:3.3.0'`
+`compile 'com.jude:easyrecyclerview:3.3.4'`
 
 
 #ScreenShot
@@ -58,6 +58,11 @@ then you can show it by this whenever:
 **scrollToPosition**  
 `void scrollToPosition(int position)`  
 such as scroll to top;  
+
+**control the pullToRefresh**  
+`void setRefreshing(boolean isRefreshing)`   
+`void setRefreshing(final boolean isRefreshing, final boolean isCallback)`//second params is callback immediately
+
 
 ##RecyclerArrayAdapter<T>  
 there is no relation between RecyclerArrayAdapter and EasyRecyclerView.you can user any Adapter for the EasyRecyclerView,and use the RecyclerArrayAdapter for any RecyclerView.
