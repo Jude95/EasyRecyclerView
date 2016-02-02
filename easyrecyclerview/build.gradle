@@ -24,25 +24,23 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.0.1'
 }
 ext {
-    bintrayRepo = 'maven'////bintray�ϵĲֿ�����һ��Ϊmaven
-    bintrayName = 'easyrecyclerview'//bintray�ϵ���Ŀ��
+    bintrayRepo = 'maven'
+    bintrayName = 'easyrecyclerview'
 
-    publishedGroupId = 'com.jude'//JCenter��GroupId
-    artifact = 'easyrecyclerview'//JCenter��ArtifactId
+    publishedGroupId = 'com.jude'
+    artifact = 'easyrecyclerview'
 
     siteUrl = 'https://github.com/Jude95/EasyRecyclerView'
     gitUrl = 'https://github.com/Jude95/EasyRecyclerView'
 
-    libraryVersion = '3.3.0'//�汾��
-    libraryName = 'easyrecyclerview'//��Ŀ���֣�ûʲô��
-    libraryDescription = 'A tool for Android'//��Ŀ������ûʲô��
+    libraryVersion = '3.3.0'
+    libraryName = 'easyrecyclerview'
+    libraryDescription = 'A tool for Android'
 
-    //��������Ϣ
     developerId = 'jude95'
     developerName = 'jude95'
     developerEmail = 'jude@helloworld.moe'
 
-    //����������Ϣ�����޸ģ����²���
 
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
