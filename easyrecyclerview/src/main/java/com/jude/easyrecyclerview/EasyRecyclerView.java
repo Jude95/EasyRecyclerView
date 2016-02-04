@@ -6,6 +6,7 @@ import android.support.annotation.ColorRes;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.AdapterDataObserver;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -236,9 +237,11 @@ public class EasyRecyclerView extends FrameLayout {
         @Override
         public void onChanged() {
             super.onChanged();
+            Log.i("Recycler","onChanged");
             update();
         }
 
+        //自动更改Container的样式
         private void update() {
             if (recyclerView.getAdapter() instanceof RecyclerArrayAdapter) {
                 if (((RecyclerArrayAdapter) recyclerView.getAdapter()).getCount() == 0){
@@ -246,12 +249,12 @@ public class EasyRecyclerView extends FrameLayout {
                     else recyclerView.showEmpty();
                 } else{
                     recyclerView.showRecycler();
-                    isInit = true;
                 }
             } else {
                 if (recyclerView.getAdapter().getItemCount() == 0) recyclerView.showEmpty();
                 else recyclerView.showRecycler();
             }
+            isInit = true;//设置Adapter时会有一次onChange。忽略此次。
         }
     }
 
