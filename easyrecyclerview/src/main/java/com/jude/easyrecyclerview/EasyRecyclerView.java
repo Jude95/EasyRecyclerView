@@ -265,12 +265,8 @@ public class EasyRecyclerView extends FrameLayout {
      * @param adapter
      */
     public void setAdapter(RecyclerView.Adapter adapter) {
-        showRecycler();
         mRecycler.setAdapter(adapter);
         adapter.registerAdapterDataObserver(new EasyDataObserver(this,false));
-        if (adapter == null || adapter.getItemCount() == 0) {
-            showEmpty();
-        }
     }
 
     /**
@@ -280,14 +276,6 @@ public class EasyRecyclerView extends FrameLayout {
      * @param adapter
      */
     public void setAdapterWithProgress(RecyclerView.Adapter adapter) {
-        if (adapter instanceof RecyclerArrayAdapter){
-            if (((RecyclerArrayAdapter) adapter).getCount()==0)showProgress();
-            else showRecycler();
-        }else{
-            if (adapter.getItemCount()==0)showProgress();
-            else showRecycler();
-        }
-
         mRecycler.setAdapter(adapter);
         adapter.registerAdapterDataObserver(new EasyDataObserver(this,true));
     }
