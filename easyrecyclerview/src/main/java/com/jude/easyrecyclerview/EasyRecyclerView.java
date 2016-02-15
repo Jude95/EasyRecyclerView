@@ -18,7 +18,8 @@ import com.jude.easyrecyclerview.swipe.SwipeRefreshLayout;
 
 
 public class EasyRecyclerView extends FrameLayout {
-
+    public static final String TAG = "EasyRecyclerView";
+    public static final boolean DEBUG = false;
     protected RecyclerView mRecycler;
     protected ViewGroup mProgressView;
     protected ViewGroup mEmptyView;
@@ -187,6 +188,7 @@ public class EasyRecyclerView extends FrameLayout {
                 mRecycler.setScrollBarStyle(mScrollbarStyle);
             }
         }
+        showRecycler();
     }
 
 
@@ -237,22 +239,30 @@ public class EasyRecyclerView extends FrameLayout {
         @Override
         public void onChanged() {
             super.onChanged();
-            Log.i("Recycler","onChanged");
             update();
         }
 
         //自动更改Container的样式
         private void update() {
+            log("update");
             if (recyclerView.getAdapter() instanceof RecyclerArrayAdapter) {
                 if (((RecyclerArrayAdapter) recyclerView.getAdapter()).getCount() == 0){
+                    log("no data:"+((hasProgress&&!isInit)?"show progress":"show empty"));
                     if (hasProgress&&!isInit)recyclerView.showProgress();
                     else recyclerView.showEmpty();
                 } else{
+                    log("has data");
                     recyclerView.showRecycler();
                 }
             } else {
-                if (recyclerView.getAdapter().getItemCount() == 0) recyclerView.showEmpty();
-                else recyclerView.showRecycler();
+                if (recyclerView.getAdapter().getItemCount() == 0) {
+                    log("no data:"+((hasProgress&&!isInit)?"show progress":"show empty"));
+                    if (hasProgress&&!isInit)recyclerView.showProgress();
+                    else recyclerView.showEmpty();
+                } else{
+                    log("has data");
+                    recyclerView.showRecycler();
+                }
             }
             isInit = true;//设置Adapter时会有一次onChange。忽略此次。
         }
@@ -267,6 +277,7 @@ public class EasyRecyclerView extends FrameLayout {
     public void setAdapter(RecyclerView.Adapter adapter) {
         mRecycler.setAdapter(adapter);
         adapter.registerAdapterDataObserver(new EasyDataObserver(this,false));
+        adapter.notifyDataSetChanged();
     }
 
     /**
@@ -278,6 +289,7 @@ public class EasyRecyclerView extends FrameLayout {
     public void setAdapterWithProgress(RecyclerView.Adapter adapter) {
         mRecycler.setAdapter(adapter);
         adapter.registerAdapterDataObserver(new EasyDataObserver(this,true));
+        adapter.notifyDataSetChanged();
     }
 
     /**
@@ -298,23 +310,27 @@ public class EasyRecyclerView extends FrameLayout {
 
 
     public void showError() {
+        log("showError");
         hideAll();
         mErrorView.setVisibility(View.VISIBLE);
     }
 
     public void showEmpty() {
+        log("showEmpty");
         hideAll();
         mEmptyView.setVisibility(View.VISIBLE);
     }
 
 
     public void showProgress() {
+        log("showProgress");
         hideAll();
         mProgressView.setVisibility(View.VISIBLE);
     }
 
 
     public void showRecycler() {
+        log("showRecycler");
         hideAll();
         mRecycler.setVisibility(View.VISIBLE);
     }
@@ -455,6 +471,12 @@ public class EasyRecyclerView extends FrameLayout {
     public View getEmptyView() {
         if (mEmptyView.getChildCount()>0)return mEmptyView.getChildAt(0);
         return null;
+    }
+
+    private static void log(String content){
+        if (DEBUG){
+            Log.i(TAG,content);
+        }
     }
 
 }

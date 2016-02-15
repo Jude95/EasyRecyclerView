@@ -230,6 +230,10 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         footers.get(index);
     }
 
+    public int getHeaderCount(){return headers.size();}
+
+    public int getFooterCount(){return footers.size();}
+
     public void removeHeader(ItemView view){
         headers.remove(view);
     }
