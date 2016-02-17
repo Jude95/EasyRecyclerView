@@ -247,8 +247,8 @@ public class EasyRecyclerView extends FrameLayout {
             log("update");
             if (recyclerView.getAdapter() instanceof RecyclerArrayAdapter) {
                 if (((RecyclerArrayAdapter) recyclerView.getAdapter()).getCount() == 0){
-                    log("no data:"+((hasProgress&&!isInit)?"show progress":"show empty"));
-                    if (hasProgress&&!isInit)recyclerView.showProgress();
+                    log("no data:"+((hasProgress&&isInit)?"show progress":"show empty"));
+                    if (hasProgress&&isInit)recyclerView.showProgress();
                     else recyclerView.showEmpty();
                 } else{
                     log("has data");
@@ -256,8 +256,8 @@ public class EasyRecyclerView extends FrameLayout {
                 }
             } else {
                 if (recyclerView.getAdapter().getItemCount() == 0) {
-                    log("no data:"+((hasProgress&&!isInit)?"show progress":"show empty"));
-                    if (hasProgress&&!isInit)recyclerView.showProgress();
+                    log("no data:"+((hasProgress&&isInit)?"show progress":"show empty"));
+                    if (hasProgress&&isInit)recyclerView.showProgress();
                     else recyclerView.showEmpty();
                 } else{
                     log("has data");
