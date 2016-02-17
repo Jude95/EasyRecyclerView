@@ -549,11 +549,9 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
 
     public void setOnItemClickListener(OnItemClickListener listener){
         this.mItemClickListener = listener;
-        notifyDataSetChanged();
     }
 
     public void setOnItemLongClickListener(OnItemLongClickListener listener){
         this.mItemLongClickListener = listener;
-        notifyDataSetChanged();
     }
 }
