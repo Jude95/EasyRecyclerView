@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,6 +68,7 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
 
     @Override
     public void onLoadMore() {
+        Log.i("EasyRecyclerView","onLoadMore");
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -78,7 +80,7 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
                 adapter.addAll(DataProvider.getPersonList(page));
                 page++;
             }
-        }, 1000);
+        }, 3000);
     }
 
     @Override
