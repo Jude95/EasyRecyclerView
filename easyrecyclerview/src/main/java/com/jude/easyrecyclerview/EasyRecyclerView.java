@@ -311,21 +311,34 @@ public class EasyRecyclerView extends FrameLayout {
 
     public void showError() {
         log("showError");
-        hideAll();
-        mErrorView.setVisibility(View.VISIBLE);
+        if (mErrorView.getChildCount()>0){
+            hideAll();
+            mErrorView.setVisibility(View.VISIBLE);
+        }else {
+            showRecycler();
+        }
+
     }
 
     public void showEmpty() {
         log("showEmpty");
-        hideAll();
-        mEmptyView.setVisibility(View.VISIBLE);
+        if (mEmptyView.getChildCount()>0){
+            hideAll();
+            mEmptyView.setVisibility(View.VISIBLE);
+        }else {
+            showRecycler();
+        }
     }
 
 
     public void showProgress() {
         log("showProgress");
-        hideAll();
-        mProgressView.setVisibility(View.VISIBLE);
+        if (mProgressView.getChildCount()>0){
+            hideAll();
+            mProgressView.setVisibility(View.VISIBLE);
+        }else {
+            showRecycler();
+        }
     }
 
 
