@@ -30,6 +30,9 @@
         <activity android:name=".header.HeaderFooterActivity"
             android:label="@string/header_and_footer">
         </activity>
+        <activity android:name=".collapsing.CollapsingActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/collapsing"/>
     </application>
 
 </manifest>

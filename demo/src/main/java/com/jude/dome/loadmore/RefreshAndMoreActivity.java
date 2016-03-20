@@ -57,9 +57,17 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
         top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.setRefreshing(false);
-                recyclerView.scrollToPosition(3);
-                recyclerView.showEmpty();
+                adapter.setNotifyOnChange(false);
+                int count = adapter.getCount();
+                for (int i = 0; i < count; i++) {
+                    adapter.remove(0);
+                }
+                adapter.setNotifyOnChange(true);
+                adapter.notifyDataSetChanged();
+
+//                recyclerView.setRefreshing(false);
+//                recyclerView.scrollToPosition(3);
+//                recyclerView.showEmpty();
             }
         });
         recyclerView.setRefreshListener(this);

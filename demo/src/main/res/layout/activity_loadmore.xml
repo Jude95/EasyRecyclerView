@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:scrollbarStyle="insideOverlay"
-        app:layout_empty="@layout/view_empty"
         app:layout_progress="@layout/view_progress"
         />
 
