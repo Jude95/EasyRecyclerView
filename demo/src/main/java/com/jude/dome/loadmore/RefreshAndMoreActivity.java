@@ -88,7 +88,7 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
                 adapter.addAll(DataProvider.getPersonList(page));
                 page++;
             }
-        }, 3000);
+        }, 1000);
     }
 
     @Override

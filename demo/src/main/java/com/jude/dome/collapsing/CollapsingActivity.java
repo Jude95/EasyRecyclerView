@@ -29,7 +29,6 @@ public class CollapsingActivity extends AppCompatActivity {
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter = new PersonAdapter(this));
-        adapter.addAll(DataProvider.getPersonList(0));
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -41,6 +40,7 @@ public class CollapsingActivity extends AppCompatActivity {
                 }, 1000);
             }
         });
+        adapter.addAll(DataProvider.getPersonList(0));
 
         //这里不能再使用下拉刷新。会直接拦截掉Toolbar的事件
 //        recyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
