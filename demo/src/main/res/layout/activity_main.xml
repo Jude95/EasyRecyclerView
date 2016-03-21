@@ -18,4 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/multi_style"/>
+    <Button
+        android:id="@+id/collapsing"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/collapsing"/>
 </LinearLayout>

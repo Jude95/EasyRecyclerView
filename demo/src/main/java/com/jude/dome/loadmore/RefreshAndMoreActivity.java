@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,9 +57,17 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
         top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.setRefreshing(false);
-                recyclerView.scrollToPosition(3);
-                recyclerView.showEmpty();
+                adapter.setNotifyOnChange(false);
+                int count = adapter.getCount();
+                for (int i = 0; i < count; i++) {
+                    adapter.remove(0);
+                }
+                adapter.setNotifyOnChange(true);
+                adapter.notifyDataSetChanged();
+
+//                recyclerView.setRefreshing(false);
+//                recyclerView.scrollToPosition(3);
+//                recyclerView.showEmpty();
             }
         });
         recyclerView.setRefreshListener(this);
@@ -67,6 +76,7 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
 
     @Override
     public void onLoadMore() {
+        Log.i("EasyRecyclerView","onLoadMore");
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {

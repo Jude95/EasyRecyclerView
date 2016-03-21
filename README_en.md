@@ -8,7 +8,7 @@ Part of the code modified from [Malinskiy/SuperRecyclerView](https://github.com/
 
 
 #Denpendency
-`compile 'com.jude:easyrecyclerview:3.3.8'`
+`compile 'com.jude:easyrecyclerview:3.4.3'`
 
 
 #ScreenShot
@@ -95,6 +95,26 @@ after change the Header and Footer ,call `notifyDataSetChanged();` to refresh vi
          
          //make adapter obtain a LookUp for LayoutManager，param is maxSpan。
           gridLayoutManager.setSpanSizeLookup(adapter.obtainGridSpanSizeLookUp(2));
+
+
+**整合OnItemClickListener与OnItemLongClickListener**  
+
+        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                //position not contain Header
+            }
+        });
+
+        adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemClick(int position) {
+                return true;
+            }
+        });
+
+equal 'itemview.setOnClickListener()' in ViewHolder.  
+if you set listener after RecyclerView has layout.you should use 'notifyDataSetChange()';
 
 ###the API below realized by add a Footer。
 

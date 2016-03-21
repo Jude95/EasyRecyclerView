@@ -204,7 +204,7 @@ public class EasyRecyclerView extends FrameLayout {
 
     private static class EasyDataObserver extends AdapterDataObserver {
         private EasyRecyclerView recyclerView;
-        private boolean isInit = false;
+        private boolean isInitialized = false;
         private boolean hasProgress = false;
 
         public EasyDataObserver(EasyRecyclerView recyclerView,boolean hasProgress) {
@@ -247,8 +247,8 @@ public class EasyRecyclerView extends FrameLayout {
             log("update");
             if (recyclerView.getAdapter() instanceof RecyclerArrayAdapter) {
                 if (((RecyclerArrayAdapter) recyclerView.getAdapter()).getCount() == 0){
-                    log("no data:"+((hasProgress&&!isInit)?"show progress":"show empty"));
-                    if (hasProgress&&!isInit)recyclerView.showProgress();
+                    log("no data:"+((hasProgress&&!isInitialized)?"show progress":"show empty"));
+                    if (hasProgress&&!isInitialized)recyclerView.showProgress();
                     else recyclerView.showEmpty();
                 } else{
                     log("has data");
@@ -256,15 +256,15 @@ public class EasyRecyclerView extends FrameLayout {
                 }
             } else {
                 if (recyclerView.getAdapter().getItemCount() == 0) {
-                    log("no data:"+((hasProgress&&!isInit)?"show progress":"show empty"));
-                    if (hasProgress&&!isInit)recyclerView.showProgress();
+                    log("no data:"+((hasProgress&&!isInitialized)?"show progress":"show empty"));
+                    if (hasProgress&&!isInitialized)recyclerView.showProgress();
                     else recyclerView.showEmpty();
                 } else{
                     log("has data");
                     recyclerView.showRecycler();
                 }
             }
-            isInit = true;//设置Adapter时会有一次onChange。忽略此次。
+            isInitialized = true;//设置Adapter时会有一次onChange。忽略此次。
         }
     }
 
@@ -311,21 +311,34 @@ public class EasyRecyclerView extends FrameLayout {
 
     public void showError() {
         log("showError");
-        hideAll();
-        mErrorView.setVisibility(View.VISIBLE);
+        if (mErrorView.getChildCount()>0){
+            hideAll();
+            mErrorView.setVisibility(View.VISIBLE);
+        }else {
+            showRecycler();
+        }
+
     }
 
     public void showEmpty() {
         log("showEmpty");
-        hideAll();
-        mEmptyView.setVisibility(View.VISIBLE);
+        if (mEmptyView.getChildCount()>0){
+            hideAll();
+            mEmptyView.setVisibility(View.VISIBLE);
+        }else {
+            showRecycler();
+        }
     }
 
 
     public void showProgress() {
         log("showProgress");
-        hideAll();
-        mProgressView.setVisibility(View.VISIBLE);
+        if (mProgressView.getChildCount()>0){
+            hideAll();
+            mProgressView.setVisibility(View.VISIBLE);
+        }else {
+            showRecycler();
+        }
     }
 
 

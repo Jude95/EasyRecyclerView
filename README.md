@@ -10,7 +10,7 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 
 
 ##依赖
-`compile 'com.jude:easyrecyclerview:3.3.8'`
+`compile 'com.jude:easyrecyclerview:3.4.3'`
 
 
 ##示例
@@ -113,7 +113,8 @@ Header与Footer完美适配`LinearLayoutManager`,`GridLayoutManager`,`StaggeredG
             }
         });
 
-与在ViewHolder中给itemView设置OnClickListener等效。若重复设置ViewHolder中的设置会被替换。
+与在ViewHolder中给itemView设置OnClickListener等效。若重复设置ViewHolder中的设置会被替换。  
+如果在RecyclerView布局以后再设置。需要再使用'notifyDataSetChange()'。
 
 ###下面的功能在adapter最后添加一个footer。来显示各种状态。
 

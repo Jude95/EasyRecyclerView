@@ -35,7 +35,10 @@ public class DefaultEventDelegate implements EventDelegate {
 
     public void onMoreViewShowed() {
         Log.i("recycler", "onMoreViewShowed");
-        if (!isLoadingMore&&onLoadMoreListener!=null)onLoadMoreListener.onLoadMore();
+        if (!isLoadingMore&&onLoadMoreListener!=null){
+            isLoadingMore = true;
+            onLoadMoreListener.onLoadMore();
+        }
     }
 
     public void onErrorViewShowed() {
@@ -65,6 +68,7 @@ public class DefaultEventDelegate implements EventDelegate {
                 status = STATUS_NOMORE;
             }
         }
+        isLoadingMore = false;
     }
 
     @Override
@@ -73,6 +77,7 @@ public class DefaultEventDelegate implements EventDelegate {
         hasData = false;
         status = STATUS_INITIAL;
         footer.hide();
+        isLoadingMore = false;
     }
 
     @Override
@@ -80,6 +85,7 @@ public class DefaultEventDelegate implements EventDelegate {
         Log.i("recycler", "stopLoadMore");
         footer.showNoMore();
         status = STATUS_NOMORE;
+        isLoadingMore = false;
     }
 
     @Override
@@ -87,10 +93,12 @@ public class DefaultEventDelegate implements EventDelegate {
         Log.i("recycler", "pauseLoadMore");
         footer.showError();
         status = STATUS_ERROR;
+        isLoadingMore = false;
     }
 
     @Override
     public void resumeLoadMore() {
+        isLoadingMore = false;
         footer.showMore();
         onMoreViewShowed();
     }
