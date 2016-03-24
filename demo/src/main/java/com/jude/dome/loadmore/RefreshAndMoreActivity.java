@@ -39,7 +39,6 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
         recyclerView.setAdapterWithProgress(adapter = new PersonAdapter(this));
         adapter.setMore(R.layout.view_more, this);
         adapter.setNoMore(R.layout.view_nomore);
-
         adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemClick(int position) {
@@ -57,17 +56,9 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
         top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.setNotifyOnChange(false);
-                int count = adapter.getCount();
-                for (int i = 0; i < count; i++) {
-                    adapter.remove(0);
-                }
-                adapter.setNotifyOnChange(true);
-                adapter.notifyDataSetChanged();
-
-//                recyclerView.setRefreshing(false);
-//                recyclerView.scrollToPosition(3);
-//                recyclerView.showEmpty();
+                recyclerView.setRefreshing(false);
+                recyclerView.scrollToPosition(3);
+                recyclerView.showEmpty();
             }
         });
         recyclerView.setRefreshListener(this);
