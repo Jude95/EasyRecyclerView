@@ -290,6 +290,8 @@ public class SwipeRefreshLayout extends FrameLayout {
         // the absolute offset has to take into account that the circle starts at an offset
         mSpinnerFinalOffset = DEFAULT_CIRCLE_TARGET * metrics.density;
         mTotalDragDistance = mSpinnerFinalOffset;
+
+        requestDisallowInterceptTouchEvent(true);
     }
 
     protected int getChildDrawingOrder(int childCount, int i) {
@@ -699,6 +701,8 @@ public class SwipeRefreshLayout extends FrameLayout {
     @Override
     public void requestDisallowInterceptTouchEvent(boolean b) {
         // Nope.
+        //Why Nope?
+        super.requestDisallowInterceptTouchEvent(b);
     }
 
     private boolean isAnimationRunning(Animation animation) {

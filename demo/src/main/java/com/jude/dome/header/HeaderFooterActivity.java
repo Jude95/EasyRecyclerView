@@ -3,6 +3,7 @@ package com.jude.dome.header;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,7 +44,12 @@ public class HeaderFooterActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter = new PersonAdapter(this));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
 
+            }
+        });
 //        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
 
 //        recyclerView.setLayoutManager(gridLayoutManager = new GridLayoutManager(this,2));
