@@ -222,12 +222,12 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         footers.clear();
     }
 
-    public void getHeader(int index){
-        headers.get(index);
+    public ItemView getHeader(int index){
+        return headers.get(index);
     }
 
-    public void getFooter(int index){
-        footers.get(index);
+    public ItemView getFooter(int index){
+        return footers.get(index);
     }
 
     public int getHeaderCount(){return headers.size();}
