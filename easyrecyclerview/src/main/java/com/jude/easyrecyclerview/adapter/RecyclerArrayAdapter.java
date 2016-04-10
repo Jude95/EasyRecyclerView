@@ -177,7 +177,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      *
      * @param items The items to add at the end of the array.
      */
-    public void addAll(T... items) {
+    public void addAll(T[] items) {
         if (mEventDelegate!=null)mEventDelegate.addData(items==null?0:items.length);
         if (items!=null&&items.length!=0) {
             synchronized (mLock) {

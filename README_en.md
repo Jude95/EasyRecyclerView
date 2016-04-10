@@ -8,7 +8,7 @@ Part of the code modified from [Malinskiy/SuperRecyclerView](https://github.com/
 
 
 #Denpendency
-`compile 'com.jude:easyrecyclerview:3.4.6'`
+`compile 'com.jude:easyrecyclerview:3.4.7'`
 
 
 #ScreenShot

@@ -11,6 +11,9 @@ import com.jude.dome.header.HeaderFooterActivity;
 import com.jude.dome.loadmore.RefreshAndMoreActivity;
 import com.jude.dome.multistyle.MultiStyleActivity;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 /**
  * Created by Mr.Jude on 2016/1/6.
  */
@@ -52,5 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, CollapsingActivity.class));
             }
         });
+        Executors.newFixedThreadPool()
     }
 }
