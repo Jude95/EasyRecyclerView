@@ -308,7 +308,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      */
     public void insertAll(T[] object, int index) {
         synchronized (mLock) {
-            mObjects.addAll(index, object);
+            mObjects.addAll(index, Arrays.asList(object));
         }
         if (mNotifyOnChange) notifyDataSetChanged();
     }

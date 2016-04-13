@@ -33,7 +33,7 @@ ext {
     siteUrl = 'https://github.com/Jude95/EasyRecyclerView'
     gitUrl = 'https://github.com/Jude95/EasyRecyclerView'
 
-    libraryVersion = '3.4.7'
+    libraryVersion = '3.4.8'
     libraryName = 'easyrecyclerview'
     libraryDescription = 'A tool for Android'
 
