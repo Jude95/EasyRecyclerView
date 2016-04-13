@@ -301,6 +301,32 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     }
 
     /**
+     * 插入数组，不会触发任何事情
+     *
+     * @param object The object to insert into the array.
+     * @param index The index at which the object must be inserted.
+     */
+    public void insertAll(T[] object, int index) {
+        synchronized (mLock) {
+            mObjects.addAll(index, object);
+        }
+        if (mNotifyOnChange) notifyDataSetChanged();
+    }
+
+    /**
+     * 插入数组，不会触发任何事情
+     *
+     * @param object The object to insert into the array.
+     * @param index The index at which the object must be inserted.
+     */
+    public void insertAll(Collection<? extends T> object, int index) {
+        synchronized (mLock) {
+            mObjects.addAll(index, object);
+        }
+        if (mNotifyOnChange) notifyDataSetChanged();
+    }
+
+    /**
      * 删除，不会触发任何事情
      *
      * @param object The object to remove.
