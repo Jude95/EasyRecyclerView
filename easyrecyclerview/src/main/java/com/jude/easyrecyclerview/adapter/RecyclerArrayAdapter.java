@@ -177,7 +177,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      *
      * @param items The items to add at the end of the array.
      */
-    public void addAll(T... items) {
+    public void addAll(T[] items) {
         if (mEventDelegate!=null)mEventDelegate.addData(items==null?0:items.length);
         if (items!=null&&items.length!=0) {
             synchronized (mLock) {
@@ -222,12 +222,12 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         footers.clear();
     }
 
-    public void getHeader(int index){
-        headers.get(index);
+    public ItemView getHeader(int index){
+        return headers.get(index);
     }
 
-    public void getFooter(int index){
-        footers.get(index);
+    public ItemView getFooter(int index){
+        return footers.get(index);
     }
 
     public int getHeaderCount(){return headers.size();}
