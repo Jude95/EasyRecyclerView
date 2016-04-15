@@ -164,6 +164,12 @@ Header与Footer完美适配`LinearLayoutManager`,`GridLayoutManager`,`StaggeredG
         }
 
 
+## 另外
+虽然与我的库没什么关系，但很多人在问就写一下吧。item的**水波纹效果**  
+在你item的View加上这一条属性：  
+`android:foreground="?android:attr/selectableItemBackground"`  
+就好了...
+
 **详细用法请看demo**
 
 License
