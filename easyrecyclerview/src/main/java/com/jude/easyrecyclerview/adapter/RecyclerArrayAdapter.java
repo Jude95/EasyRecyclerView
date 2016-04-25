@@ -51,13 +51,13 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      * Contains the list of objects that represent the data of this ArrayAdapter.
      * The content of this list is referred to as "the array" in the documentation.
      */
-    private List<T> mObjects;
-    private EventDelegate mEventDelegate;
-    ArrayList<ItemView> headers = new ArrayList<>();
-    ArrayList<ItemView> footers = new ArrayList<>();
+    protected List<T> mObjects;
+    protected EventDelegate mEventDelegate;
+    protected ArrayList<ItemView> headers = new ArrayList<>();
+    protected ArrayList<ItemView> footers = new ArrayList<>();
 
-    private OnItemClickListener mItemClickListener;
-    private OnItemLongClickListener mItemLongClickListener;
+    protected OnItemClickListener mItemClickListener;
+    protected OnItemLongClickListener mItemLongClickListener;
 
     public interface ItemView {
          View onCreateView(ViewGroup parent);
