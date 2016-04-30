@@ -11,4 +11,7 @@
         <item name="colorPrimaryDark">#2196F3</item>
         <item name="colorAccent">#F44336</item>
     </style>
+    <style name="transText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#0000</item>
+    </style>
 </resources>

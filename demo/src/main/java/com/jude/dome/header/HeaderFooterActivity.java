@@ -1,6 +1,7 @@
 package com.jude.dome.header;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,9 +23,9 @@ import com.jude.dome.entites.Ad;
 import com.jude.dome.loadmore.PersonAdapter;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import com.jude.rollviewpager.PointHintView;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.StaticPagerAdapter;
+import com.jude.rollviewpager.hintview.ColorPointHintView;
 
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class HeaderFooterActivity extends AppCompatActivity {
             @Override
             public View onCreateView(ViewGroup parent) {
                 RollPagerView header = new RollPagerView(HeaderFooterActivity.this);
-                header.setHintView(new PointHintView(HeaderFooterActivity.this));
+                header.setHintView(new ColorPointHintView(HeaderFooterActivity.this, Color.YELLOW,Color.GRAY));
                 header.setHintPadding(0, 0, 0, (int) Utils.convertDpToPixel(8, HeaderFooterActivity.this));
                 header.setPlayDelay(2000);
                 header.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) Utils.convertDpToPixel(200, HeaderFooterActivity.this)));
