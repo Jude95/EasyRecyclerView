@@ -129,22 +129,28 @@ public class DefaultEventDelegate implements EventDelegate {
 
 
     private class EventFooter implements RecyclerArrayAdapter.ItemView {
+        private Context ctx;
         private FrameLayout container;
         private View moreView;
         private View noMoreView;
         private View errorView;
 
-        private int flag = 0;
+        private int flag = Hide;
+        public static final int Hide = 0;
+        public static final int ShowMore = 1;
+        public static final int ShowError = 2;
+        public static final int ShowNoMore = 3;
 
 
         public EventFooter(Context ctx){
-            container = new FrameLayout(ctx);
-            container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            this.ctx = ctx;
         }
 
         @Override
         public View onCreateView(ViewGroup parent) {
             Log.i("recycler", "onCreateView");
+            container = new FrameLayout(ctx);
+            container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             return container;
         }
 
@@ -152,47 +158,54 @@ public class DefaultEventDelegate implements EventDelegate {
         public void onBindView(View headerView) {
             Log.i("recycler","onBindView");
             switch (flag){
-                case 1:
+                case ShowMore:
                     onMoreViewShowed();
                     break;
-                case 2:
+                case ShowError:
                     onErrorViewShowed();
                     break;
 
             }
         }
 
-        private void showView(View view){
-            if (view!=null){
+        public void refreshStatus(){
+            if (container!=null){
+                if (flag == Hide){
+                    container.setVisibility(View.GONE);
+                    return;
+                }
                 if (container.getVisibility() != View.VISIBLE)container.setVisibility(View.VISIBLE);
+                View view = null;
+                switch (flag){
+                    case ShowMore:view = moreView;break;
+                    case ShowError:view = errorView;break;
+                    case ShowNoMore:view = noMoreView;break;
+                }
                 if (view.getParent()==null)container.addView(view);
-
                 for (int i = 0; i < container.getChildCount(); i++) {
                     if (container.getChildAt(i) == view)view.setVisibility(View.VISIBLE);
                     else container.getChildAt(i).setVisibility(View.GONE);
                 }
-            }else {
-                container.setVisibility(View.GONE);
             }
         }
 
         public void showError(){
-            showView(errorView);
-            flag = 2;
+            flag = ShowError;
+            refreshStatus();
         }
         public void showMore(){
-            showView(moreView);
-            flag = 1;
+            flag = ShowMore;
+            refreshStatus();
         }
         public void showNoMore(){
-            showView(noMoreView);
-            flag = 3;
+            flag = ShowNoMore;
+            refreshStatus();
         }
 
         //初始化
         public void hide(){
-            flag = 0;
-            container.setVisibility(View.GONE);
+            flag = Hide;
+            refreshStatus();
         }
 
         public void setMoreView(View moreView) {
