@@ -10,7 +10,7 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 
 
 ##依赖
-`compile 'com.jude:easyrecyclerview:3.5.1'`
+`compile 'com.jude:easyrecyclerview:3.5.2'`
 
 
 ##示例

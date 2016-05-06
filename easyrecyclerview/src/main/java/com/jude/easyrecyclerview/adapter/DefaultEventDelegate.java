@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.jude.easyrecyclerview.EasyRecyclerView;
+
 /**
  * Created by Mr.Jude on 2015/8/18.
  */
@@ -34,7 +36,7 @@ public class DefaultEventDelegate implements EventDelegate {
     }
 
     public void onMoreViewShowed() {
-        Log.i("recycler", "onMoreViewShowed");
+        log("onMoreViewShowed");
         if (!isLoadingMore&&onLoadMoreListener!=null){
             isLoadingMore = true;
             onLoadMoreListener.onLoadMore();
@@ -48,7 +50,7 @@ public class DefaultEventDelegate implements EventDelegate {
     //-------------------5个状态触发事件-------------------
     @Override
     public void addData(int length) {
-        Log.i("recycler", "addData" + length);
+        log("addData" + length);
         if (hasMore){
             if (length == 0){
                 //当添加0个时，认为已结束加载到底
@@ -73,7 +75,7 @@ public class DefaultEventDelegate implements EventDelegate {
 
     @Override
     public void clear() {
-        Log.i("recycler","clear");
+        log("clear");
         hasData = false;
         status = STATUS_INITIAL;
         footer.hide();
@@ -82,7 +84,7 @@ public class DefaultEventDelegate implements EventDelegate {
 
     @Override
     public void stopLoadMore() {
-        Log.i("recycler", "stopLoadMore");
+        log("stopLoadMore");
         footer.showNoMore();
         status = STATUS_NOMORE;
         isLoadingMore = false;
@@ -90,7 +92,7 @@ public class DefaultEventDelegate implements EventDelegate {
 
     @Override
     public void pauseLoadMore() {
-        Log.i("recycler", "pauseLoadMore");
+        log("pauseLoadMore");
         footer.showError();
         status = STATUS_ERROR;
         isLoadingMore = false;
@@ -110,21 +112,21 @@ public class DefaultEventDelegate implements EventDelegate {
         this.footer.setMoreView(view);
         this.onLoadMoreListener = listener;
         hasMore = true;
-        Log.i("recycler","setMore");
+        log("setMore");
     }
 
     @Override
     public void setNoMore(View view) {
         this.footer.setNoMoreView(view);
         hasNoMore = true;
-        Log.i("recycler", "setNoMore");
+        log("setNoMore");
     }
 
     @Override
     public void setErrorMore(View view) {
         this.footer.setErrorView(view);
         hasError = true;
-        Log.i("recycler","setErrorMore");
+        log("setErrorMore");
     }
 
 
@@ -148,7 +150,7 @@ public class DefaultEventDelegate implements EventDelegate {
 
         @Override
         public View onCreateView(ViewGroup parent) {
-            Log.i("recycler", "onCreateView");
+            log("onCreateView");
             container = new FrameLayout(ctx);
             container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             return container;
@@ -156,7 +158,7 @@ public class DefaultEventDelegate implements EventDelegate {
 
         @Override
         public void onBindView(View headerView) {
-            Log.i("recycler","onBindView");
+            log("onBindView");
             switch (flag){
                 case ShowMore:
                     onMoreViewShowed();
@@ -221,4 +223,9 @@ public class DefaultEventDelegate implements EventDelegate {
         }
     }
 
+    private static void log(String content){
+        if (EasyRecyclerView.DEBUG){
+            Log.i(EasyRecyclerView.TAG,content);
+        }
+    }
 }
