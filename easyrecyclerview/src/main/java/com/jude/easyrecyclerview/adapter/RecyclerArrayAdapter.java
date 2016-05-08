@@ -439,6 +439,9 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         return mContext;
     }
 
+    public void setContext(Context ctx) {
+        mContext = ctx;
+    }
 
     /**
      * 这个函数包含了头部和尾部view的个数，不是真正的item个数。
@@ -571,6 +574,11 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
 
     public int getViewType(int position){
         return 0;
+    }
+
+
+    public List<T> getAllData(){
+        return new ArrayList<>(mObjects);
     }
 
     /**

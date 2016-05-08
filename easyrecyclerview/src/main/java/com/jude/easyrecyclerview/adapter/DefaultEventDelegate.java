@@ -1,6 +1,5 @@
 package com.jude.easyrecyclerview.adapter;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import com.jude.easyrecyclerview.EasyRecyclerView;
  * Created by Mr.Jude on 2015/8/18.
  */
 public class DefaultEventDelegate implements EventDelegate {
-
+    private RecyclerArrayAdapter adapter;
     private EventFooter footer ;
 
     private RecyclerArrayAdapter.OnLoadMoreListener onLoadMoreListener;
@@ -31,7 +30,8 @@ public class DefaultEventDelegate implements EventDelegate {
     private static final int STATUS_ERROR = 732;
 
     public DefaultEventDelegate(RecyclerArrayAdapter adapter) {
-        footer = new EventFooter(adapter.getContext());
+        this.adapter = adapter;
+        footer = new EventFooter();
         adapter.addFooter(footer);
     }
 
@@ -131,7 +131,6 @@ public class DefaultEventDelegate implements EventDelegate {
 
 
     private class EventFooter implements RecyclerArrayAdapter.ItemView {
-        private Context ctx;
         private FrameLayout container;
         private View moreView;
         private View noMoreView;
@@ -144,14 +143,16 @@ public class DefaultEventDelegate implements EventDelegate {
         public static final int ShowNoMore = 3;
 
 
-        public EventFooter(Context ctx){
-            this.ctx = ctx;
+        public EventFooter(){
         }
 
         @Override
         public View onCreateView(ViewGroup parent) {
             log("onCreateView");
-            container = new FrameLayout(ctx);
+            //重新创建新的Container时，复用3个View
+            if (container!=null)container.removeAllViews();
+
+            container = new FrameLayout(adapter.getContext());
             container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             return container;
         }
