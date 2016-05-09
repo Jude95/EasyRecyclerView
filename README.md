@@ -116,7 +116,7 @@ Header与Footer完美适配`LinearLayoutManager`,`GridLayoutManager`,`StaggeredG
 与在ViewHolder中给itemView设置OnClickListener等效。若重复设置ViewHolder中的设置会被替换。  
 如果在RecyclerView布局以后再设置。需要再使用'notifyDataSetChange()'。
 
-###下面的功能在adapter最后添加一个footer。来显示各种状态。
+###下面的功能是在adapter最后添加一个footer。来显示各种状态。
 
 **加载更多**  
 `void setMore(final int res,OnLoadMoreListener listener)`  
