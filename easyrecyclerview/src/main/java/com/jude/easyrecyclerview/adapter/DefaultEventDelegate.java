@@ -154,6 +154,7 @@ public class DefaultEventDelegate implements EventDelegate {
 
             container = new FrameLayout(adapter.getContext());
             container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            refreshStatus();
             return container;
         }
 
@@ -167,7 +168,6 @@ public class DefaultEventDelegate implements EventDelegate {
                 case ShowError:
                     onErrorViewShowed();
                     break;
-
             }
         }
 

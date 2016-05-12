@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 7
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -19,8 +19,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:recyclerview-v7:23.3.0'
 }
 ext {
@@ -33,7 +31,7 @@ ext {
     siteUrl = 'https://github.com/Jude95/EasyRecyclerView'
     gitUrl = 'https://github.com/Jude95/EasyRecyclerView'
 
-    libraryVersion = '3.5.5'
+    libraryVersion = '3.5.6'
     libraryName = 'easyrecyclerview'
     libraryDescription = 'A tool for Android'
 
