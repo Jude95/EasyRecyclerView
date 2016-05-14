@@ -144,17 +144,13 @@ public class DefaultEventDelegate implements EventDelegate {
 
 
         public EventFooter(){
+            container = new FrameLayout(adapter.getContext());
+            container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
 
         @Override
         public View onCreateView(ViewGroup parent) {
             log("onCreateView");
-            //重新创建新的Container时，复用3个View
-            if (container!=null)container.removeAllViews();
-
-            container = new FrameLayout(adapter.getContext());
-            container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            refreshStatus();
             return container;
         }
 
@@ -183,6 +179,10 @@ public class DefaultEventDelegate implements EventDelegate {
                     case ShowMore:view = moreView;break;
                     case ShowError:view = errorView;break;
                     case ShowNoMore:view = noMoreView;break;
+                }
+                if (view == null){
+                    hide();
+                    return;
                 }
                 if (view.getParent()==null)container.addView(view);
                 for (int i = 0; i < container.getChildCount(); i++) {
