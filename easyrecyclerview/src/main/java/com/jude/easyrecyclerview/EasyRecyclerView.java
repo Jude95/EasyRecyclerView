@@ -384,25 +384,19 @@ public class EasyRecyclerView extends FrameLayout {
     /**
      * Set the colors for the SwipeRefreshLayout states
      *
-     * @param colRes1
-     * @param colRes2
-     * @param colRes3
-     * @param colRes4
+     * @param colRes
      */
-    public void setRefreshingColorResources(@ColorRes int colRes1, @ColorRes int colRes2, @ColorRes int colRes3, @ColorRes int colRes4) {
-        mPtrLayout.setColorSchemeResources(colRes1, colRes2, colRes3, colRes4);
+    public void setRefreshingColorResources(@ColorRes int... colRes) {
+        mPtrLayout.setColorSchemeResources(colRes);
     }
 
     /**
      * Set the colors for the SwipeRefreshLayout states
      *
-     * @param col1
-     * @param col2
-     * @param col3
-     * @param col4
+     * @param col
      */
-    public void setRefreshingColor(int col1, int col2, int col3, int col4) {
-        mPtrLayout.setColorSchemeColors(col1, col2, col3, col4);
+    public void setRefreshingColor(int... col) {
+        mPtrLayout.setColorSchemeColors(col);
     }
 
     /**
