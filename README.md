@@ -1,5 +1,5 @@
 # EasyRecyclerView
-[中文](https://github.com/Jude95/EasyRecyclerView/blob/master/README_ch_.md) ｜ [English](https://github.com/Jude95/EasyRecyclerView/blob/master/README.md)
+[中文](https://github.com/Jude95/EasyRecyclerView/blob/master/README_ch.md) ｜ [English](https://github.com/Jude95/EasyRecyclerView/blob/master/README.md)
 
 Encapsulate many API about RecyclerView into the library,such as arrayAdapter,pull to refresh,auto load more,no more and error in the end,header&footer.  
 The library uses a new usage of ViewHolder,decoupling the ViewHolder and Adapter.  

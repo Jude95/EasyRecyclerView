@@ -1,5 +1,5 @@
 # EasyRecyclerView
-[中文](https://github.com/Jude95/EasyRecyclerView/blob/master/README_ch_.md) ｜ [English](https://github.com/Jude95/EasyRecyclerView/blob/master/README.md)
+[中文](https://github.com/Jude95/EasyRecyclerView/blob/master/README_ch.md) ｜ [English](https://github.com/Jude95/EasyRecyclerView/blob/master/README.md)
 
 将开发中常用的RecyclerView的各种需求封装进库。提升开发效率。  
 重点在Adapter与viewholder的封装。他们之间彻底解耦。  
