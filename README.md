@@ -119,7 +119,7 @@ after change the Header and Footer ,call `notifyDataSetChanged();` to refresh vi
 gridLayoutManager.setSpanSizeLookup(adapter.obtainGridSpanSizeLookUp(2));
 ```
 
-** OnItemClickListener&OnItemLongClickListener**  
+**OnItemClickListener&OnItemLongClickListener**  
 ```java
 adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
     @Override
