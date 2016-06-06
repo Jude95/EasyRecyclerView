@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".loadmore.RefreshAndMoreActivity">
+    <item android:id="@+id/checkbox"
+        android:title="checkbox"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.CheckBox"/>
+</menu>
