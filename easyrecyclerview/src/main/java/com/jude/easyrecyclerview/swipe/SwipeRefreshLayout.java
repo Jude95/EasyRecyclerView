@@ -113,7 +113,7 @@ public class SwipeRefreshLayout extends FrameLayout {
     private boolean mReturningToStart;
     private final DecelerateInterpolator mDecelerateInterpolator;
     private static final int[] LAYOUT_ATTRS = new int[] {
-        android.R.attr.enabled
+            android.R.attr.enabled
     };
 
     private CircleImageView mCircleView;
@@ -621,7 +621,7 @@ public class SwipeRefreshLayout extends FrameLayout {
                 final AbsListView absListView = (AbsListView) mTarget;
                 return absListView.getChildCount() > 0
                         && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0)
-                                .getTop() < absListView.getPaddingTop());
+                        .getTop() < absListView.getPaddingTop());
             } else {
                 return ViewCompat.canScrollVertically(mTarget, -1) || mTarget.getScrollY() > 0;
             }
@@ -713,6 +713,8 @@ public class SwipeRefreshLayout extends FrameLayout {
     public boolean onTouchEvent(MotionEvent ev) {
         final int action = MotionEventCompat.getActionMasked(ev);
 
+        int pointerIndex = -1;
+
         if (mReturningToStart && action == MotionEvent.ACTION_DOWN) {
             mReturningToStart = false;
         }
@@ -729,7 +731,7 @@ public class SwipeRefreshLayout extends FrameLayout {
                 break;
 
             case MotionEvent.ACTION_MOVE: {
-                final int pointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
+                pointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
                 if (pointerIndex < 0) {
                     Log.e(LOG_TAG, "Got ACTION_MOVE event but have an invalid active pointer id.");
                     return false;
@@ -792,8 +794,12 @@ public class SwipeRefreshLayout extends FrameLayout {
                 break;
             }
             case MotionEventCompat.ACTION_POINTER_DOWN: {
-                final int index = MotionEventCompat.getActionIndex(ev);
-                mActivePointerId = MotionEventCompat.getPointerId(ev, index);
+                pointerIndex = MotionEventCompat.getActionIndex(ev);
+                if (pointerIndex < 0) {
+                    Log.e(LOG_TAG, "Got ACTION_POINTER_DOWN event but have an invalid action index.");
+                    return false;
+                }
+                mActivePointerId = MotionEventCompat.getPointerId(ev, pointerIndex);
                 break;
             }
 
@@ -802,14 +808,11 @@ public class SwipeRefreshLayout extends FrameLayout {
                 break;
 
             case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL: {
-                if (mActivePointerId == INVALID_POINTER) {
-                    if (action == MotionEvent.ACTION_UP) {
-                        Log.e(LOG_TAG, "Got ACTION_UP event but don't have an active pointer id.");
-                    }
+                pointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
+                if (pointerIndex < 0) {
+                    Log.e(LOG_TAG, "Got ACTION_UP event but don't have an active pointer id.");
                     return false;
                 }
-                final int pointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
                 final float y = MotionEventCompat.getY(ev, pointerIndex);
                 final float overscrollTop = (y - mInitialMotionY) * DRAG_RATE;
                 mIsBeingDragged = false;
@@ -845,7 +848,8 @@ public class SwipeRefreshLayout extends FrameLayout {
                 }
                 mActivePointerId = INVALID_POINTER;
                 return false;
-            }
+            case MotionEvent.ACTION_CANCEL:
+                return false;
         }
         return true;
     }
@@ -911,7 +915,7 @@ public class SwipeRefreshLayout extends FrameLayout {
     };
 
     private void startScaleDownReturnToStartAnimation(int from,
-            Animation.AnimationListener listener) {
+                                                      Animation.AnimationListener listener) {
         mFrom = from;
         if (isAlphaUsedForScale()) {
             mStartingScale = mProgress.getAlpha();
