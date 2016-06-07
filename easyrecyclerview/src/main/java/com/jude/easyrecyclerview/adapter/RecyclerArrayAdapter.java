@@ -87,38 +87,6 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         }
     }
 
-
-//    public class DividerItemDecoration extends RecyclerView.ItemDecoration {
-//
-//        private final int mSpace;
-//        private final int mModel;
-//
-//        public DividerItemDecoration(int mSpace) {
-//            this(mSpace, LinearLayoutCompat.VERTICAL);
-//        }
-//
-//        public DividerItemDecoration(int mSpace, int model) {
-//            this.mSpace = mSpace;
-//            this.mModel = model;
-//        }
-//
-//        @Override
-//        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-//            if (parent.getChildAdapterPosition(view) != parent.getAdapter().getItemCount() - 1) {
-//                if (mModel == LinearLayoutCompat.VERTICAL)outRect.bottom = mSpace;
-//                else outRect.right = mSpace;
-//            }
-//        }
-//
-//        @Override
-//        public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-//            super.onDraw(c, parent, state);
-//
-//
-//        }
-//    }
-
-
     public GridSpanSizeLookup obtainGridSpanSizeLookUp(int maxCount){
         return new GridSpanSizeLookup(maxCount);
     }

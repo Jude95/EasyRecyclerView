@@ -3,8 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="refresh_and_more"><![CDATA[下拉刷新&加载更多]]></string>
-    <string name="header_and_footer"><![CDATA[Header&Footer]]></string>
-    <string name="multi_style">多类型ViewHolder</string>
+    <string name="refresh_and_more">Refresh&amp;More</string>
+    <string name="header_and_footer">Header&amp;Footer</string>
+    <string name="multi_style">MultiType</string>
     <string name="collapsing">Collapsing</string>
+    <string name="staggered_grid">StaggeredGrid</string>
 </resources>

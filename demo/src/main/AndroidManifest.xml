@@ -33,6 +33,8 @@
         <activity android:name=".collapsing.CollapsingActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/collapsing"/>
+        <activity android:name=".staggeredgrid.StaggeredGridActivity"
+            android:label="@string/staggered_grid"/>
     </application>
 
 </manifest>

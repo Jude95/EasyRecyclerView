@@ -10,6 +10,7 @@ import com.jude.dome.collapsing.CollapsingActivity;
 import com.jude.dome.header.HeaderFooterActivity;
 import com.jude.dome.loadmore.RefreshAndMoreActivity;
 import com.jude.dome.multistyle.MultiStyleActivity;
+import com.jude.dome.staggeredgrid.StaggeredGridActivity;
 
 /**
  * Created by Mr.Jude on 2016/1/6.
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     Button multiStyle;
     Button headerAndFooter;
     Button collapsing;
+    Button staggeredGrid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, CollapsingActivity.class));
+            }
+        });
+        staggeredGrid = (Button) findViewById(R.id.staggered_grid);
+        staggeredGrid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, StaggeredGridActivity.class));
             }
         });
     }

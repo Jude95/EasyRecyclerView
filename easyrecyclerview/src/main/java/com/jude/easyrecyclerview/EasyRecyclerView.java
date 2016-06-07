@@ -154,8 +154,7 @@ public class EasyRecyclerView extends FrameLayout {
      */
     protected void initRecyclerView(View view) {
         mRecycler = (RecyclerView) view.findViewById(android.R.id.list);
-
-
+        setItemAnimator(null);
         if (mRecycler != null) {
             mRecycler.setHasFixedSize(true);
             mRecycler.setClipToPadding(mClipToPadding);
