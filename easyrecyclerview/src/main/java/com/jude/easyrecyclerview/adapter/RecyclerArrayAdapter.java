@@ -175,50 +175,6 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         mObjects = objects;
     }
 
-    /**
-     * Adds the specified object at the end of the array.
-     *
-     * @param object The object to add at the end of the array.
-     */
-    public void add(T object) {
-        if (mEventDelegate!=null)mEventDelegate.addData(object == null ? 0 : 1);
-        if (object!=null){
-            synchronized (mLock) {
-                mObjects.add(object);
-            }
-        }
-        if (mNotifyOnChange) notifyDataSetChanged();
-    }
-    /**
-     * Adds the specified Collection at the end of the array.
-     *
-     * @param collection The Collection to add at the end of the array.
-     */
-    public void addAll(Collection<? extends T> collection) {
-        if (mEventDelegate!=null)mEventDelegate.addData(collection == null ? 0 : collection.size());
-        if (collection!=null&&collection.size()!=0){
-            synchronized (mLock) {
-                mObjects.addAll(collection);
-            }
-        }
-        if (mNotifyOnChange) notifyDataSetChanged();
-    }
-
-    /**
-     * Adds the specified items at the end of the array.
-     *
-     * @param items The items to add at the end of the array.
-     */
-    public void addAll(T[] items) {
-        if (mEventDelegate!=null)mEventDelegate.addData(items==null?0:items.length);
-        if (items!=null&&items.length!=0) {
-            synchronized (mLock) {
-                Collections.addAll(mObjects, items);
-            }
-        }
-        if (mNotifyOnChange) notifyDataSetChanged();
-    }
-
 
     public void stopMore(){
         if (mEventDelegate == null)throw new NullPointerException("You should invoking setLoadMore() first");
@@ -319,6 +275,52 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         return view;
     }
 
+
+
+    /**
+     * Adds the specified object at the end of the array.
+     *
+     * @param object The object to add at the end of the array.
+     */
+    public void add(T object) {
+        if (mEventDelegate!=null)mEventDelegate.addData(object == null ? 0 : 1);
+        if (object!=null){
+            synchronized (mLock) {
+                mObjects.add(object);
+            }
+        }
+        if (mNotifyOnChange) notifyItemInserted(headers.size()+getCount()-1);
+    }
+    /**
+     * Adds the specified Collection at the end of the array.
+     *
+     * @param collection The Collection to add at the end of the array.
+     */
+    public void addAll(Collection<? extends T> collection) {
+        if (mEventDelegate!=null)mEventDelegate.addData(collection == null ? 0 : collection.size());
+        if (collection!=null&&collection.size()!=0){
+            synchronized (mLock) {
+                mObjects.addAll(collection);
+            }
+        }
+        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+getCount()-collection.size(),collection.size());
+    }
+
+    /**
+     * Adds the specified items at the end of the array.
+     *
+     * @param items The items to add at the end of the array.
+     */
+    public void addAll(T[] items) {
+        if (mEventDelegate!=null)mEventDelegate.addData(items==null?0:items.length);
+        if (items!=null&&items.length!=0) {
+            synchronized (mLock) {
+                Collections.addAll(mObjects, items);
+            }
+        }
+        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+getCount()-items.length,items.length);
+    }
+
     /**
      * 插入，不会触发任何事情
      *
@@ -329,7 +331,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         synchronized (mLock) {
             mObjects.add(index, object);
         }
-        if (mNotifyOnChange) notifyDataSetChanged();
+        if (mNotifyOnChange) notifyItemInserted(index);
     }
 
     /**
@@ -342,7 +344,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         synchronized (mLock) {
             mObjects.addAll(index, Arrays.asList(object));
         }
-        if (mNotifyOnChange) notifyDataSetChanged();
+        if (mNotifyOnChange) notifyItemRangeInserted(index,object.length);
     }
 
     /**
@@ -355,7 +357,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         synchronized (mLock) {
             mObjects.addAll(index, object);
         }
-        if (mNotifyOnChange) notifyDataSetChanged();
+        if (mNotifyOnChange) notifyItemRangeInserted(index,object.size());
     }
 
     /**
@@ -364,10 +366,12 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      * @param object The object to remove.
      */
     public void remove(T object) {
+        int position = mObjects.indexOf(object);
         synchronized (mLock) {
-            mObjects.remove(object);
+            if (mObjects.remove(object)){
+                if (mNotifyOnChange) notifyItemRemoved(position);
+            }
         }
-        if (mNotifyOnChange) notifyDataSetChanged();
     }
 
     /**
@@ -379,7 +383,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         synchronized (mLock) {
             mObjects.remove(position);
         }
-        if (mNotifyOnChange) notifyDataSetChanged();
+        if (mNotifyOnChange) notifyItemRemoved(position);
     }
 
 
@@ -387,11 +391,12 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
      * 触发清空
      */
     public void clear() {
+        int count = mObjects.size();
         if (mEventDelegate!=null)mEventDelegate.clear();
         synchronized (mLock) {
             mObjects.clear();
         }
-        if (mNotifyOnChange) notifyDataSetChanged();
+        if (mNotifyOnChange) notifyItemRangeRemoved(headers.size(),count);
     }
 
     /**

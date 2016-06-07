@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
 }
 ext {
     bintrayRepo = 'maven'
@@ -31,7 +31,7 @@ ext {
     siteUrl = 'https://github.com/Jude95/EasyRecyclerView'
     gitUrl = 'https://github.com/Jude95/EasyRecyclerView'
 
-    libraryVersion = '3.5.8'
+    libraryVersion = '4.0.0-alpha1'
     libraryName = 'easyrecyclerview'
     libraryDescription = 'A tool for Android'
 
