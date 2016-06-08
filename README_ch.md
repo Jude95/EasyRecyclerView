@@ -218,8 +218,7 @@ itemDecoration.setDrawHeaderFooter(false);//是否对Header于Footer有效,默�
 recyclerView.addItemDecoration(itemDecoration);
 ```
 这是效果:  
-![](http://o84n5syhk.bkt.clouddn.com/divider.jpg =300x)
-
+<img src="http://o84n5syhk.bkt.clouddn.com/divider.jpg" width="300">
 
 **SpaceDecoration**  
 通常用于GridLayoutManager和StaggeredGridLayoutManager。在View之间添加间距。  
@@ -231,8 +230,7 @@ itemDecoration.setPaddingHeaderFooter(false);//是否对Header于Footer有效,�
 recyclerView.addItemDecoration(itemDecoration);
 ```
 这是效果:  
-![](http://o84n5syhk.bkt.clouddn.com/space.jpg =300x)
-
+<img src="http://o84n5syhk.bkt.clouddn.com/space.jpg" width="300">
 
 ## 另外
 虽然与我的库没什么关系，但很多人在问就写一下吧。item的**水波纹效果**  
