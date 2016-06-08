@@ -217,7 +217,7 @@ itemDecoration.setDrawHeaderFooter(false);//whether draw divider for header and 
 recyclerView.addItemDecoration(itemDecoration);
 ```
 this is the demo:  
-![](http://o84n5syhk.bkt.clouddn.com/divider.jpg=300x)
+![](http://o84n5syhk.bkt.clouddn.com/divider.jpg =300x)
 
 
 **SpaceDecoration**  
@@ -230,7 +230,7 @@ itemDecoration.setPaddingHeaderFooter(false);//whether add space for header and 
 recyclerView.addItemDecoration(itemDecoration);
 ```
 this is the demo:  
-![](http://o84n5syhk.bkt.clouddn.com/space.jpg=300x)
+![](http://o84n5syhk.bkt.clouddn.com/space.jpg =300x)
 
 **for detail,see the demo**
 
