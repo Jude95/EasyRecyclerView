@@ -20,10 +20,13 @@ import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import com.jude.easyrecyclerview.EasyRecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,6 +61,8 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
 
     protected OnItemClickListener mItemClickListener;
     protected OnItemLongClickListener mItemLongClickListener;
+
+    RecyclerView.AdapterDataObserver mObserver;
 
     public interface ItemView {
          View onCreateView(ViewGroup parent);
@@ -163,19 +168,25 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     public void addHeader(ItemView view){
         if (view==null)throw new NullPointerException("ItemView can't be null");
         headers.add(view);
+        notifyItemInserted(footers.size()-1);
     }
 
     public void addFooter(ItemView view){
         if (view==null)throw new NullPointerException("ItemView can't be null");
         footers.add(view);
+        notifyItemInserted(headers.size()+getCount()+footers.size()-1);
     }
 
     public void removeAllHeader(){
+        int count = headers.size();
         headers.clear();
+        notifyItemRangeRemoved(0,count);
     }
 
     public void removeAllFooter(){
+        int count = footers.size();
         footers.clear();
+        notifyItemRangeRemoved(headers.size()+getCount(),count);
     }
 
     public ItemView getHeader(int index){
@@ -191,11 +202,15 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     public int getFooterCount(){return footers.size();}
 
     public void removeHeader(ItemView view){
+        int position = headers.indexOf(view);
         headers.remove(view);
+        notifyItemRemoved(position);
     }
 
     public void removeFooter(ItemView view){
+        int position = headers.size()+getCount()+footers.indexOf(view);
         footers.remove(view);
+        notifyItemRemoved(position);
     }
 
 
@@ -244,6 +259,14 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     }
 
 
+    @Override
+    public void registerAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
+        if (observer instanceof EasyRecyclerView.EasyDataObserver){
+            mObserver = observer;
+        }else {
+            super.registerAdapterDataObserver(observer);
+        }
+    }
 
     /**
      * Adds the specified object at the end of the array.
@@ -257,7 +280,9 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
                 mObjects.add(object);
             }
         }
-        if (mNotifyOnChange) notifyItemInserted(headers.size()+getCount()-1);
+        if (mObserver!=null)mObserver.onItemRangeInserted(getCount()+1,1);
+        if (mNotifyOnChange) notifyItemInserted(headers.size()+getCount()+1);
+        log("add notifyItemInserted "+(headers.size()+getCount()+1));
     }
     /**
      * Adds the specified Collection at the end of the array.
@@ -271,7 +296,10 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
                 mObjects.addAll(collection);
             }
         }
-        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+getCount()-collection.size(),collection.size());
+        if (mObserver!=null)mObserver.onItemRangeInserted(getCount()-collection.size()+1,collection.size());
+        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+getCount()-collection.size()+1,collection.size());
+        log("addAll notifyItemRangeInserted "+(headers.size()+getCount()-collection.size()+1)+","+(collection.size()));
+
     }
 
     /**
@@ -286,7 +314,9 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
                 Collections.addAll(mObjects, items);
             }
         }
-        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+getCount()-items.length,items.length);
+        if (mObserver!=null)mObserver.onItemRangeInserted(getCount()-items.length+1,items.length);
+        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+getCount()-items.length+1,items.length);
+        log("addAll notifyItemRangeInserted "+((headers.size()+getCount()-items.length+1)+","+(items.length)));
     }
 
     /**
@@ -299,7 +329,9 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         synchronized (mLock) {
             mObjects.add(index, object);
         }
-        if (mNotifyOnChange) notifyItemInserted(index);
+        if (mObserver!=null)mObserver.onItemRangeInserted(index,1);
+        if (mNotifyOnChange) notifyItemInserted(headers.size()+index+1);
+        log("insert notifyItemRangeInserted "+(headers.size()+index+1));
     }
 
     /**
@@ -312,7 +344,9 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         synchronized (mLock) {
             mObjects.addAll(index, Arrays.asList(object));
         }
-        if (mNotifyOnChange) notifyItemRangeInserted(index,object.length);
+        if (mObserver!=null)mObserver.onItemRangeInserted(index+1,object.length);
+        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+index+1,object.length);
+        log("insertAll notifyItemRangeInserted "+((headers.size()+index+1)+","+(object.length)));
     }
 
     /**
@@ -325,7 +359,9 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         synchronized (mLock) {
             mObjects.addAll(index, object);
         }
-        if (mNotifyOnChange) notifyItemRangeInserted(index,object.size());
+        if (mObserver!=null)mObserver.onItemRangeInserted(index+1,object.size());
+        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+index+1,object.size());
+        log("insertAll notifyItemRangeInserted "+((headers.size()+index+1)+","+(object.size())));
     }
 
     /**
@@ -337,7 +373,9 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         int position = mObjects.indexOf(object);
         synchronized (mLock) {
             if (mObjects.remove(object)){
-                if (mNotifyOnChange) notifyItemRemoved(position);
+                if (mObserver!=null)mObserver.onItemRangeRemoved(position,1);
+                if (mNotifyOnChange) notifyItemRemoved(headers.size()+position);
+                log("remove notifyItemRemoved "+(headers.size()+position));
             }
         }
     }
@@ -351,7 +389,9 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         synchronized (mLock) {
             mObjects.remove(position);
         }
-        if (mNotifyOnChange) notifyItemRemoved(position);
+        if (mObserver!=null)mObserver.onItemRangeRemoved(position,1);
+        if (mNotifyOnChange) notifyItemRemoved(headers.size()+position);
+        log("remove notifyItemRemoved "+(headers.size()+position));
     }
 
 
@@ -364,7 +404,9 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         synchronized (mLock) {
             mObjects.clear();
         }
+        if (mObserver!=null)mObserver.onItemRangeRemoved(0,count);
         if (mNotifyOnChange) notifyItemRangeRemoved(headers.size(),count);
+        log("clear notifyItemRangeRemoved "+(headers.size())+","+(count));
     }
 
     /**
@@ -600,5 +642,11 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
 
     public void setOnItemLongClickListener(OnItemLongClickListener listener){
         this.mItemLongClickListener = listener;
+    }
+
+    private static void log(String content){
+        if (EasyRecyclerView.DEBUG){
+            Log.i(EasyRecyclerView.TAG,content);
+        }
     }
 }

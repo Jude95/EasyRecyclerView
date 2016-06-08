@@ -19,7 +19,7 @@ import com.jude.easyrecyclerview.swipe.SwipeRefreshLayout;
 
 public class EasyRecyclerView extends FrameLayout {
     public static final String TAG = "EasyRecyclerView";
-    public static boolean DEBUG = false;
+    public static boolean DEBUG = true;
     protected RecyclerView mRecycler;
     protected ViewGroup mProgressView;
     protected ViewGroup mEmptyView;
@@ -187,7 +187,6 @@ public class EasyRecyclerView extends FrameLayout {
                 mRecycler.setScrollBarStyle(mScrollbarStyle);
             }
         }
-        showRecycler();
     }
 
 
@@ -201,14 +200,11 @@ public class EasyRecyclerView extends FrameLayout {
     }
 
 
-    private static class EasyDataObserver extends AdapterDataObserver {
+    public static class EasyDataObserver extends AdapterDataObserver {
         private EasyRecyclerView recyclerView;
-        private boolean isInitialized = false;
-        private boolean hasProgress = false;
 
-        public EasyDataObserver(EasyRecyclerView recyclerView,boolean hasProgress) {
+        public EasyDataObserver(EasyRecyclerView recyclerView) {
             this.recyclerView = recyclerView;
-            this.hasProgress = hasProgress;
         }
 
         @Override
@@ -244,26 +240,19 @@ public class EasyRecyclerView extends FrameLayout {
         //自动更改Container的样式
         private void update() {
             log("update");
+            int count;
             if (recyclerView.getAdapter() instanceof RecyclerArrayAdapter) {
-                if (((RecyclerArrayAdapter) recyclerView.getAdapter()).getCount() == 0){
-                    log("no data:"+((hasProgress&&!isInitialized)?"show progress":"show empty"));
-                    if (hasProgress&&!isInitialized)recyclerView.showProgress();
-                    else recyclerView.showEmpty();
-                } else{
-                    log("has data");
-                    recyclerView.showRecycler();
-                }
+                count = ((RecyclerArrayAdapter) recyclerView.getAdapter()).getCount();
             } else {
-                if (recyclerView.getAdapter().getItemCount() == 0) {
-                    log("no data:"+((hasProgress&&!isInitialized)?"show progress":"show empty"));
-                    if (hasProgress&&!isInitialized)recyclerView.showProgress();
-                    else recyclerView.showEmpty();
-                } else{
-                    log("has data");
-                    recyclerView.showRecycler();
-                }
+                count = recyclerView.getAdapter().getItemCount();
             }
-            isInitialized = true;//设置Adapter时会有一次onChange。忽略此次。
+            if (count == 0) {
+                log("no data:"+"show empty");
+                recyclerView.showEmpty();
+            } else{
+                log("has data");
+                recyclerView.showRecycler();
+            }
         }
     }
 
@@ -275,8 +264,8 @@ public class EasyRecyclerView extends FrameLayout {
      */
     public void setAdapter(RecyclerView.Adapter adapter) {
         mRecycler.setAdapter(adapter);
-        adapter.registerAdapterDataObserver(new EasyDataObserver(this,false));
-        adapter.notifyDataSetChanged();
+        adapter.registerAdapterDataObserver(new EasyDataObserver(this));
+        showRecycler();
     }
 
     /**
@@ -287,8 +276,21 @@ public class EasyRecyclerView extends FrameLayout {
      */
     public void setAdapterWithProgress(RecyclerView.Adapter adapter) {
         mRecycler.setAdapter(adapter);
-        adapter.registerAdapterDataObserver(new EasyDataObserver(this,true));
-        adapter.notifyDataSetChanged();
+        adapter.registerAdapterDataObserver(new EasyDataObserver(this));
+        //只有Adapter为空时才显示ProgressView
+        if (adapter instanceof RecyclerArrayAdapter){
+            if (((RecyclerArrayAdapter) adapter).getCount() == 0){
+                showProgress();
+            }else {
+                showRecycler();
+            }
+        }else {
+            if (adapter.getItemCount() == 0){
+                showProgress();
+            }else {
+                showRecycler();
+            }
+        }
     }
 
     /**

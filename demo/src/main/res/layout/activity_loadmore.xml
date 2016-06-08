@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         app:scrollbarStyle="insideOverlay"
         app:layout_progress="@layout/view_progress"
+        app:layout_empty="@layout/view_empty"
         />
 
     <com.github.clans.fab.FloatingActionButton
