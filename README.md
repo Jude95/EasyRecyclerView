@@ -216,8 +216,8 @@ itemDecoration.setDrawLastItem(true);//sometimes you don't want draw the divider
 itemDecoration.setDrawHeaderFooter(false);//whether draw divider for header and footer,default is false.
 recyclerView.addItemDecoration(itemDecoration);
 ```
-this the demo:  
-![](http://o84n5syhk.bkt.clouddn.com/divider.jpg)
+this is the demo:  
+![](http://o84n5syhk.bkt.clouddn.com/divider.jpg=300x)
 
 
 **SpaceDecoration**  
@@ -229,8 +229,8 @@ itemDecoration.setPaddingStart(true);//whether add top space for the first line 
 itemDecoration.setPaddingHeaderFooter(false);//whether add space for header and footer.default is false.
 recyclerView.addItemDecoration(itemDecoration);
 ```
-this the demo:  
-![](http://o84n5syhk.bkt.clouddn.com/divider.jpg)
+this is the demo:  
+![](http://o84n5syhk.bkt.clouddn.com/space.jpg=300x)
 
 **for detail,see the demo**
 

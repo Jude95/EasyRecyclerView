@@ -217,12 +217,12 @@ itemDecoration.setDrawLastItem(true);//有时候你不想让最后一个item有�
 itemDecoration.setDrawHeaderFooter(false);//是否对Header于Footer有效,默认false.
 recyclerView.addItemDecoration(itemDecoration);
 ```
-this the demo:  
-![](http://o84n5syhk.bkt.clouddn.com/divider.jpg)
+这是效果:  
+![](http://o84n5syhk.bkt.clouddn.com/divider.jpg=300x)
 
 
 **SpaceDecoration**  
-Usually used in GridLayoutManager and StaggeredGridLayoutManager.add space between items.    
+通常用于GridLayoutManager和StaggeredGridLayoutManager。在View之间添加间距。  
 ```java
 SpaceDecoration itemDecoration = new SpaceDecoration((int) Utils.convertDpToPixel(8,this));//参数是距离宽度
 itemDecoration.setPaddingEdgeSide(true);//是否为左右2边添加padding.默认true.
@@ -230,8 +230,8 @@ itemDecoration.setPaddingStart(true);//是否在给第一行的item添加上padd
 itemDecoration.setPaddingHeaderFooter(false);//是否对Header于Footer有效,默认false.
 recyclerView.addItemDecoration(itemDecoration);
 ```
-this the demo:  
-![](http://o84n5syhk.bkt.clouddn.com/space.jpg)
+这是效果:  
+![](http://o84n5syhk.bkt.clouddn.com/space.jpg=300x)
 
 
 ## 另外
