@@ -207,29 +207,29 @@ public class PersonAdapter extends RecyclerArrayAdapter<Person> {
 ```
 
 ## Decoration
-Now there are tow commonly used decoration provide for you.
+Now there are tow commonly used decoration provide for you.  
 **DividerDecoration**  
 Usually used in LinearLayoutManager.add divider between items.
 ```java
-    DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY, Util.dip2px(this,0.5f), Util.dip2px(this,72),0);//color & height & paddingLeft & paddingRight
-    itemDecoration.setDrawLastItem(true);//sometimes you don't want draw the divider for the last item,default is true.
-    itemDecoration.setDrawHeaderFooter(false);//whether draw divider for header and footer,default is false.
-    recyclerView.addItemDecoration(itemDecoration);
+DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY, Util.dip2px(this,0.5f), Util.dip2px(this,72),0);//color & height & paddingLeft & paddingRight
+itemDecoration.setDrawLastItem(true);//sometimes you don't want draw the divider for the last item,default is true.
+itemDecoration.setDrawHeaderFooter(false);//whether draw divider for header and footer,default is false.
+recyclerView.addItemDecoration(itemDecoration);
 ```
-this the demo:
+this the demo:  
 ![](http://o84n5syhk.bkt.clouddn.com/divider.jpg)
 
 
 **SpaceDecoration**  
-Usually used in GridLayoutManager and StaggeredGridLayoutManager.add space between items.
+Usually used in GridLayoutManager and StaggeredGridLayoutManager.add space between items.  
 ```java
-        SpaceDecoration itemDecoration = new SpaceDecoration((int) Utils.convertDpToPixel(8,this));//params is height
-        itemDecoration.setPaddingEdgeSide(true);//whether add space for left and right adge.default is true.
-        itemDecoration.setPaddingStart(true);//whether add top space for the first line item(exclude header).default is true.
-        itemDecoration.setPaddingHeaderFooter(false);//whether add space for header and footer.default is false.
-        recyclerView.addItemDecoration(itemDecoration);
+SpaceDecoration itemDecoration = new SpaceDecoration((int) Utils.convertDpToPixel(8,this));//params is height
+itemDecoration.setPaddingEdgeSide(true);//whether add space for left and right adge.default is true.
+itemDecoration.setPaddingStart(true);//whether add top space for the first line item(exclude header).default is true.
+itemDecoration.setPaddingHeaderFooter(false);//whether add space for header and footer.default is false.
+recyclerView.addItemDecoration(itemDecoration);
 ```
-this the demo:
+this the demo:  
 ![](http://o84n5syhk.bkt.clouddn.com/divider.jpg)
 
 **for detail,see the demo**

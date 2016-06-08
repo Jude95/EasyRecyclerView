@@ -208,29 +208,29 @@ public class PersonAdapter extends RecyclerArrayAdapter<Person> {
 ```
 
 ## Decoration
-这里提供了2种常用Decoration供大家使用。
+这里提供了2种常用Decoration供大家使用。  
 **DividerDecoration**  
-通常用在LinearLayoutManager的情况下。在item之间添加分割线。
+通常用在LinearLayoutManager的情况下。在item之间添加分割线。  
 ```java
-    DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY, Util.dip2px(this,0.5f), Util.dip2px(this,72),0);//颜色 & 高度 & 左边距 & 右边距
-    itemDecoration.setDrawLastItem(true);//有时候你不想让最后一个item有分割线,默认true.
-    itemDecoration.setDrawHeaderFooter(false);//是否对Header于Footer有效,默认false.
-    recyclerView.addItemDecoration(itemDecoration);
+DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY, Util.dip2px(this,0.5f), Util.dip2px(this,72),0);//颜色 & 高度 & 左边距 & 右边距
+itemDecoration.setDrawLastItem(true);//有时候你不想让最后一个item有分割线,默认true.
+itemDecoration.setDrawHeaderFooter(false);//是否对Header于Footer有效,默认false.
+recyclerView.addItemDecoration(itemDecoration);
 ```
-this the demo:
+this the demo:  
 ![](http://o84n5syhk.bkt.clouddn.com/divider.jpg)
 
 
 **SpaceDecoration**  
-Usually used in GridLayoutManager and StaggeredGridLayoutManager.add space between items.
+Usually used in GridLayoutManager and StaggeredGridLayoutManager.add space between items.    
 ```java
-        SpaceDecoration itemDecoration = new SpaceDecoration((int) Utils.convertDpToPixel(8,this));//参数是距离宽度
-        itemDecoration.setPaddingEdgeSide(true);//是否为左右2边添加padding.默认true.
-        itemDecoration.setPaddingStart(true);//是否在给第一行的item添加上padding(不包含header).默认true.
-        itemDecoration.setPaddingHeaderFooter(false);//是否对Header于Footer有效,默认false.
-        recyclerView.addItemDecoration(itemDecoration);
+SpaceDecoration itemDecoration = new SpaceDecoration((int) Utils.convertDpToPixel(8,this));//参数是距离宽度
+itemDecoration.setPaddingEdgeSide(true);//是否为左右2边添加padding.默认true.
+itemDecoration.setPaddingStart(true);//是否在给第一行的item添加上padding(不包含header).默认true.
+itemDecoration.setPaddingHeaderFooter(false);//是否对Header于Footer有效,默认false.
+recyclerView.addItemDecoration(itemDecoration);
 ```
-this the demo:
+this the demo:  
 ![](http://o84n5syhk.bkt.clouddn.com/space.jpg)
 
 
