@@ -17,7 +17,9 @@ import com.jude.dome.Utils;
 import com.jude.dome.loadmore.PersonAdapter;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.jude.rollviewpager.RollPagerView;
+import com.jude.rollviewpager.Util;
 import com.jude.rollviewpager.hintview.ColorPointHintView;
 
 /**
@@ -34,6 +36,10 @@ public class HeaderFooterActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter = new PersonAdapter(this));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY, Util.dip2px(this,0.5f), Util.dip2px(this,72),0);
+        itemDecoration.setDrawLastItem(true);
+        itemDecoration.setDrawHeaderFooter(true);
+        recyclerView.addItemDecoration(itemDecoration);
 
         adapter.addAll(DataProvider.getPersonList(0));
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {

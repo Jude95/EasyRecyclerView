@@ -11,7 +11,7 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 
 ##依赖
 ```groovy
-compile 'com.jude:easyrecyclerview:3.5.8'
+compile 'com.jude:easyrecyclerview:4.0.1'
 ```
 
 ##示例
@@ -102,7 +102,6 @@ void addFooter(ItemView view)
 ItemView不是view而是view生成器  
 对应Adapter的onCreate与onBind方法,所以onCreate后会多次onBind。  
 建议数据加载完毕后再add。onCreate里初始化UI。不使用onBind。  
-添加删除过后都需手动`notifyDataSetChanged();`  
 
 ```java
 public interface ItemView {
@@ -208,11 +207,40 @@ public class PersonAdapter extends RecyclerArrayAdapter<Person> {
 }
 ```
 
+## Decoration
+这里提供了2种常用Decoration供大家使用。
+**DividerDecoration**  
+通常用在LinearLayoutManager的情况下。在item之间添加分割线。
+```java
+    DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY, Util.dip2px(this,0.5f), Util.dip2px(this,72),0);//颜色 & 高度 & 左边距 & 右边距
+    itemDecoration.setDrawLastItem(true);//有时候你不想让最后一个item有分割线,默认true.
+    itemDecoration.setDrawHeaderFooter(false);//是否对Header于Footer有效,默认false.
+    recyclerView.addItemDecoration(itemDecoration);
+```
+this the demo:
+![](http://o84n5syhk.bkt.clouddn.com/divider.jpg)
+
+
+**SpaceDecoration**  
+Usually used in GridLayoutManager and StaggeredGridLayoutManager.add space between items.
+```java
+        SpaceDecoration itemDecoration = new SpaceDecoration((int) Utils.convertDpToPixel(8,this));//参数是距离宽度
+        itemDecoration.setPaddingEdgeSide(true);//是否为左右2边添加padding.默认true.
+        itemDecoration.setPaddingStart(true);//是否在给第一行的item添加上padding(不包含header).默认true.
+        itemDecoration.setPaddingHeaderFooter(false);//是否对Header于Footer有效,默认false.
+        recyclerView.addItemDecoration(itemDecoration);
+```
+this the demo:
+![](http://o84n5syhk.bkt.clouddn.com/space.jpg)
+
+
 ## 另外
 虽然与我的库没什么关系，但很多人在问就写一下吧。item的**水波纹效果**  
 在你item的View加上这一条属性：  
 `android:foreground="?android:attr/selectableItemBackground"`  
 就好了...
+
+
 
 **详细用法请看demo**
 

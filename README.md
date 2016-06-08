@@ -7,9 +7,9 @@ Adapter will do less work,adapter only direct the ViewHolder,if you use MVP,you 
 Part of the code modified from [Malinskiy/SuperRecyclerView](https://github.com/Malinskiy/SuperRecyclerView),make more functions handed by Adapter.    
 
 
-#Denpendency
+# Dependency
 ```groovy
-compile 'com.jude:easyrecyclerview:3.5.8'
+compile 'com.jude:easyrecyclerview:4.0.1'
 ```
 
 #ScreenShot
@@ -109,8 +109,7 @@ public interface ItemView {
 ```
 
 the onCreateView and onBindView corresponding the callback in RecyclerView's Adapter,so one onCreateView with multiple onBindView;  
-it recommend that add the ItemView to Adapter after the data is loaded,initialization View in onCreateView and nothing in onBindView.  
-after change the Header and Footer ,call `notifyDataSetChanged();` to refresh view;  
+it recommend that add the ItemView to Adapter after the data is loaded,initialization View in onCreateView and nothing in onBindView. 
  
  Header and Footer support `LinearLayoutManager`,`GridLayoutManager`,`StaggeredGridLayoutManager`  
  in `GridLayoutManager` you must add this:
@@ -140,7 +139,7 @@ if you set listener after RecyclerView has layout.you should use 'notifyDataSetC
 
 ###the API below realized by add a Footer。
 
-**LoadMore** 
+**LoadMore**  
 ```java
 void setMore(final int res,OnLoadMoreListener listener);
 void setMore(final View view,OnLoadMoreListener listener);
@@ -148,7 +147,7 @@ void setMore(final View view,OnLoadMoreListener listener);
 Attention when you add null or the length of data you add is 0 ,it will finish LoadMore and show NoMore;  
 also you can show NoMore manually `adapter.stopMore();`  
  
-**LoadError**
+**LoadError**  
 ```java
 View setError(final int res)
 View setError(final View view)
@@ -206,6 +205,32 @@ public class PersonAdapter extends RecyclerArrayAdapter<Person> {
     }
 }
 ```
+
+## Decoration
+Now there are tow commonly used decoration provide for you.
+**DividerDecoration**  
+Usually used in LinearLayoutManager.add divider between items.
+```java
+    DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY, Util.dip2px(this,0.5f), Util.dip2px(this,72),0);//color & height & paddingLeft & paddingRight
+    itemDecoration.setDrawLastItem(true);//sometimes you don't want draw the divider for the last item,default is true.
+    itemDecoration.setDrawHeaderFooter(false);//whether draw divider for header and footer,default is false.
+    recyclerView.addItemDecoration(itemDecoration);
+```
+this the demo:
+![](http://o84n5syhk.bkt.clouddn.com/divider.jpg)
+
+
+**SpaceDecoration**  
+Usually used in GridLayoutManager and StaggeredGridLayoutManager.add space between items.
+```java
+        SpaceDecoration itemDecoration = new SpaceDecoration((int) Utils.convertDpToPixel(8,this));//params is height
+        itemDecoration.setPaddingEdgeSide(true);//whether add space for left and right adge.default is true.
+        itemDecoration.setPaddingStart(true);//whether add top space for the first line item(exclude header).default is true.
+        itemDecoration.setPaddingHeaderFooter(false);//whether add space for header and footer.default is false.
+        recyclerView.addItemDecoration(itemDecoration);
+```
+this the demo:
+![](http://o84n5syhk.bkt.clouddn.com/divider.jpg)
 
 **for detail,see the demo**
 

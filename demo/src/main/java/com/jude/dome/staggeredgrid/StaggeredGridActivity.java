@@ -15,7 +15,7 @@ import com.jude.dome.Utils;
 import com.jude.dome.header.BannerAdapter;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import com.jude.easyrecyclerview.decoration.SpacesItemDecoration;
+import com.jude.easyrecyclerview.decoration.SpaceDecoration;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.hintview.ColorPointHintView;
 
@@ -50,7 +50,11 @@ public class StaggeredGridActivity extends AppCompatActivity {
 
             }
         });
-        recyclerView.addItemDecoration(new SpacesItemDecoration((int) Utils.convertDpToPixel(8,this)));
+        SpaceDecoration itemDecoration = new SpaceDecoration((int) Utils.convertDpToPixel(8,this));
+        itemDecoration.setPaddingEdgeSide(true);
+        itemDecoration.setPaddingStart(true);
+        itemDecoration.setPaddingHeaderFooter(false);
+        recyclerView.addItemDecoration(itemDecoration);
         adapter.addAll(DataProvider.getPictures(0));
     }
 }

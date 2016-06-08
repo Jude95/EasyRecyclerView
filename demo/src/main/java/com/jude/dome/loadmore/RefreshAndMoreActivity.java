@@ -1,5 +1,6 @@
 package com.jude.dome.loadmore;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,6 +18,8 @@ import com.jude.dome.DataProvider;
 import com.jude.dome.R;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+import com.jude.easyrecyclerview.decoration.DividerDecoration;
+import com.jude.rollviewpager.Util;
 
 
 public class RefreshAndMoreActivity extends ActionBarActivity implements RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener{
@@ -36,6 +39,11 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
         top = (FloatingActionButton) findViewById(R.id.top);
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY,Util.dip2px(this,0.5f), Util.dip2px(this,72),0);
+        itemDecoration.setDrawLastItem(false);
+        recyclerView.addItemDecoration(itemDecoration);
+
+
         recyclerView.setAdapterWithProgress(adapter = new PersonAdapter(this));
         adapter.setMore(R.layout.view_more, this);
         adapter.setNoMore(R.layout.view_nomore);

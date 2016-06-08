@@ -19,7 +19,7 @@ import com.jude.easyrecyclerview.swipe.SwipeRefreshLayout;
 
 public class EasyRecyclerView extends FrameLayout {
     public static final String TAG = "EasyRecyclerView";
-    public static boolean DEBUG = true;
+    public static boolean DEBUG = false;
     protected RecyclerView mRecycler;
     protected ViewGroup mProgressView;
     protected ViewGroup mEmptyView;

@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
-public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+public class SpaceDecoration extends RecyclerView.ItemDecoration {
 
     private int halfSpace;
     private int headerCount = -1;
@@ -21,7 +21,7 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
     private boolean mPaddingHeaderFooter = false;
 
 
-    public SpacesItemDecoration(int space) {
+    public SpaceDecoration(int space) {
         this.halfSpace = space / 2;
     }
 
@@ -133,11 +133,13 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
                             outRect.left = halfSpace * 2;
                             outRect.right = halfSpace * 2;
                         }
+                        outRect.top =  halfSpace*2;
                     }else{
                         if (mPaddingEdgeSide) {
                             outRect.top = halfSpace * 2;
                             outRect.bottom = halfSpace * 2;
                         }
+                        outRect.left =  halfSpace*2;
                     }
                 }
         }
