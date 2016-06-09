@@ -296,9 +296,10 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
                 mObjects.addAll(collection);
             }
         }
-        if (mObserver!=null)mObserver.onItemRangeInserted(getCount()-collection.size()+1,collection.size());
-        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+getCount()-collection.size()+1,collection.size());
-        log("addAll notifyItemRangeInserted "+(headers.size()+getCount()-collection.size()+1)+","+(collection.size()));
+        int dataCount = collection==null?0:collection.size();
+        if (mObserver!=null)mObserver.onItemRangeInserted(getCount()-dataCount+1,dataCount);
+        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+getCount()-dataCount+1,dataCount);
+        log("addAll notifyItemRangeInserted "+(headers.size()+getCount()-dataCount+1)+","+(dataCount));
 
     }
 
@@ -314,9 +315,10 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
                 Collections.addAll(mObjects, items);
             }
         }
-        if (mObserver!=null)mObserver.onItemRangeInserted(getCount()-items.length+1,items.length);
-        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+getCount()-items.length+1,items.length);
-        log("addAll notifyItemRangeInserted "+((headers.size()+getCount()-items.length+1)+","+(items.length)));
+        int dataCount = items==null?0:items.length;
+        if (mObserver!=null)mObserver.onItemRangeInserted(getCount()-dataCount+1,dataCount);
+        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+getCount()-dataCount+1,dataCount);
+        log("addAll notifyItemRangeInserted "+((headers.size()+getCount()-dataCount+1)+","+(dataCount)));
     }
 
     /**
@@ -344,9 +346,10 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         synchronized (mLock) {
             mObjects.addAll(index, Arrays.asList(object));
         }
-        if (mObserver!=null)mObserver.onItemRangeInserted(index+1,object.length);
-        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+index+1,object.length);
-        log("insertAll notifyItemRangeInserted "+((headers.size()+index+1)+","+(object.length)));
+        int dataCount = object==null?0:object.length;
+        if (mObserver!=null)mObserver.onItemRangeInserted(index+1,dataCount);
+        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+index+1,dataCount);
+        log("insertAll notifyItemRangeInserted "+((headers.size()+index+1)+","+(dataCount)));
     }
 
     /**
@@ -359,9 +362,10 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         synchronized (mLock) {
             mObjects.addAll(index, object);
         }
-        if (mObserver!=null)mObserver.onItemRangeInserted(index+1,object.size());
-        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+index+1,object.size());
-        log("insertAll notifyItemRangeInserted "+((headers.size()+index+1)+","+(object.size())));
+        int dataCount = object==null?0:object.size();
+        if (mObserver!=null)mObserver.onItemRangeInserted(index+1,dataCount);
+        if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+index+1,dataCount);
+        log("insertAll notifyItemRangeInserted "+((headers.size()+index+1)+","+(dataCount)));
     }
 
     /**
