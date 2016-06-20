@@ -28,20 +28,23 @@ compile 'com.jude:easyrecyclerview:4.0.2'
 
 the custom attr:
 ```xml
-<attr name="layout_empty" format="reference" />
-<attr name="layout_progress" format="reference" />
-<attr name="recyclerClipToPadding" format="boolean" />
-<attr name="recyclerPadding" format="dimension" />
-<attr name="recyclerPaddingTop" format="dimension" />
-<attr name="recyclerPaddingBottom" format="dimension" />
-<attr name="recyclerPaddingLeft" format="dimension" />
-<attr name="recyclerPaddingRight" format="dimension" />
-<attr name="scrollbarStyle">
-        <flag name="insideOverlay" value="0x0" />
-        <flag name="insideInset" value="0x01000000" />
-        <flag name="outsideOverlay" value="0x02000000" />
-        <flag name="outsideInset" value="0x03000000" />
-</attr>
+<declare-styleable name="superrecyclerview">
+    <attr name="layout_empty" format="reference" />
+    <attr name="layout_progress" format="reference" />
+    <attr name="layout_error" format="reference" />
+    <attr name="recyclerClipToPadding" format="boolean" />
+    <attr name="recyclerPadding" format="dimension" />
+    <attr name="recyclerPaddingTop" format="dimension" />
+    <attr name="recyclerPaddingBottom" format="dimension" />
+    <attr name="recyclerPaddingLeft" format="dimension" />
+    <attr name="recyclerPaddingRight" format="dimension" />
+    <attr name="scrollbarStyle">
+        <enum name="insideOverlay" value="0x0" />
+        <enum name="insideInset" value="0x01000000" />
+        <enum name="outsideOverlay" value="0x02000000" />
+        <enum name="outsideInset" value="0x03000000" />
+    </attr>
+</declare-styleable>
 ```
 
 **Attention** EasyRecyclerView is not a RecyclerView just contain a RecyclerView.use 'getRecyclerView()' to get the RecyclerView;
@@ -51,12 +54,14 @@ xml:
 ```xml
 app:layout_empty="@layout/view_empty"
 app:layout_progress="@layout/view_progress"
+app:layout_error="@layout/view_error"
 ```
 
 code:  
 ```java
 void setEmptyView(View emptyView)
 void setProgressView(View progressView)
+void setErrorView(View errorView)
 ```
 
 then you can show it by this whenever:  
@@ -64,6 +69,7 @@ then you can show it by this whenever:
 ```java
 void showEmpty()
 void showProgress()  
+void showError()  
 void showRecycler()
 ```
 
