@@ -114,11 +114,11 @@ public interface ItemView {
 }
 ```
 
-the onCreateView and onBindView corresponding the callback in RecyclerView's Adapter,so one onCreateView with multiple onBindView;  
-it recommend that add the ItemView to Adapter after the data is loaded,initialization View in onCreateView and nothing in onBindView. 
+The onCreateView and onBindView correspond the callback in RecyclerView's Adapter,so adapter will call `onCreateView` once and `onBindView` more than once;  
+It recommend that add the ItemView to Adapter after the data is loaded,initialization View in onCreateView and nothing in onBindView. 
  
- Header and Footer support `LinearLayoutManager`,`GridLayoutManager`,`StaggeredGridLayoutManager`  
- in `GridLayoutManager` you must add this:
+ Header and Footer support `LinearLayoutManager`,`GridLayoutManager`,`StaggeredGridLayoutManager`.  
+ In `GridLayoutManager` you must add this:
 ```java         
 //make adapter obtain a LookUp for LayoutManager，param is maxSpan。
 gridLayoutManager.setSpanSizeLookup(adapter.obtainGridSpanSizeLookUp(2));
@@ -165,12 +165,11 @@ when the ErrorView display to screen again,it will resume to load more too,and c
 you can put resumeMore() into the OnClickListener of ErrorView to realize click to retry.  
 
 **NoMore**  
-when loading is finished(add null or empty or stop manually),it while show in the end.  
-
 ```java
 void setNoMore(final int res)
 void setNoMore(final View view)
 ```
+when loading is finished(add null or empty or stop manually),it while show in the end.  
 
 ##BaseViewHolder\<M\>
 decoupling the ViewHolder and Adapter,new ViewHolder in Adapter and inflate view in ViewHolder.  
