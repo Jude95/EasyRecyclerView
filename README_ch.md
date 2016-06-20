@@ -23,8 +23,6 @@ compile 'com.jude:easyrecyclerview:4.0.2'
   android:id="@+id/recyclerView"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  app:layout_empty="@layout/view_empty"
-  app:layout_progress="@layout/view_progress"
   />
 ```
 
@@ -53,7 +51,7 @@ compile 'com.jude:easyrecyclerview:4.0.2'
 ```
 注意EasyRecyclerView本质并不是一个RecyclerView
 
-**设置空白View与加载View**  
+**设置空白View&加载View&错误View**  
 xml中  
 ```xml
 app:layout_empty="@layout/view_empty"

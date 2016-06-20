@@ -49,7 +49,7 @@ the custom attr:
 
 **Attention** EasyRecyclerView is not a RecyclerView just contain a RecyclerView.use 'getRecyclerView()' to get the RecyclerView;
 
-**EmptyView&LoadingView**  
+**EmptyView&LoadingView&ErrorView**  
 xml:  
 ```xml
 app:layout_empty="@layout/view_empty"
