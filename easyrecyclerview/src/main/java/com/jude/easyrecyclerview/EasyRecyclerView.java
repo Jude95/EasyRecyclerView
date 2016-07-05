@@ -112,7 +112,28 @@ public class EasyRecyclerView extends FrameLayout {
         return mPtrLayout.dispatchTouchEvent(ev);
     }
 
+    /**
+     * use {@link #setPadding}
+     * @param left
+     * @param top
+     * @param right
+     * @param bottom
+     */
+    @Deprecated
     public void setRecyclerPadding(int left,int top,int right,int bottom){
+        this.mPaddingLeft = left;
+        this.mPaddingTop = top;
+        this.mPaddingRight = right;
+        this.mPaddingBottom = bottom;
+        mRecycler.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
+    }
+
+    public void setClipToPadding(boolean isClip){
+        mRecycler.setClipToPadding(isClip);
+    }
+
+    @Override
+    public void setPadding(int left, int top, int right, int bottom) {
         this.mPaddingLeft = left;
         this.mPaddingTop = top;
         this.mPaddingRight = right;
