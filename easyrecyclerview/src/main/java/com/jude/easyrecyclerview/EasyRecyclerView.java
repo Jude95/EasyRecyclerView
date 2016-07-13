@@ -3,6 +3,7 @@ package com.jude.easyrecyclerview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorRes;
+import android.support.annotation.IntDef;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.AdapterDataObserver;
 import android.util.AttributeSet;
@@ -15,6 +16,9 @@ import android.widget.FrameLayout;
 
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.swipe.SwipeRefreshLayout;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 
 public class EasyRecyclerView extends FrameLayout {
@@ -35,8 +39,7 @@ public class EasyRecyclerView extends FrameLayout {
     protected int mPaddingLeft;
     protected int mPaddingRight;
     protected int mScrollbarStyle;
-
-
+    protected int mScrollbar;
 
     protected RecyclerView.OnScrollListener mInternalOnScrollListener;
     protected RecyclerView.OnScrollListener mExternalOnScrollListener;
@@ -80,6 +83,7 @@ public class EasyRecyclerView extends FrameLayout {
             mPaddingLeft = (int) a.getDimension(R.styleable.superrecyclerview_recyclerPaddingLeft, 0.0f);
             mPaddingRight = (int) a.getDimension(R.styleable.superrecyclerview_recyclerPaddingRight, 0.0f);
             mScrollbarStyle = a.getInteger(R.styleable.superrecyclerview_scrollbarStyle, -1);
+            mScrollbar = a.getInteger(R.styleable.superrecyclerview_scrollbars, -1);
 
             mEmptyId = a.getResourceId(R.styleable.superrecyclerview_layout_empty, 0);
             mProgressId = a.getResourceId(R.styleable.superrecyclerview_layout_progress, 0);
@@ -186,9 +190,26 @@ public class EasyRecyclerView extends FrameLayout {
             if (mScrollbarStyle != -1) {
                 mRecycler.setScrollBarStyle(mScrollbarStyle);
             }
+            switch (mScrollbar){
+                case 0:setVerticalScrollBarEnabled(false);break;
+                case 1:setHorizontalScrollBarEnabled(false);break;
+                case 2:
+                    setVerticalScrollBarEnabled(false);
+                    setHorizontalScrollBarEnabled(false);
+                    break;
+            }
         }
     }
 
+    @Override
+    public void setVerticalScrollBarEnabled(boolean verticalScrollBarEnabled) {
+        mRecycler.setVerticalScrollBarEnabled(verticalScrollBarEnabled);
+    }
+
+    @Override
+    public void setHorizontalScrollBarEnabled(boolean horizontalScrollBarEnabled) {
+        mRecycler.setHorizontalScrollBarEnabled(horizontalScrollBarEnabled);
+    }
 
     /**
      * Set the layout manager to the recycler

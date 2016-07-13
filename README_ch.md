@@ -47,6 +47,11 @@ compile 'com.jude:easyrecyclerview:4.0.2'
         <enum name="outsideOverlay" value="0x02000000" />
         <enum name="outsideInset" value="0x03000000" />
     </attr>
+    <attr name="scrollbars">//默认是正常模式的scrollbar,这里可以指定模式
+        <enum name="vertical" value="1"/>
+        <enum name="horizontal" value="0"/>
+        <enum name="none" value="2"/>//关闭scrollbar
+    </attr>
 </declare-styleable>
 ```
 注意EasyRecyclerView本质并不是一个RecyclerView
