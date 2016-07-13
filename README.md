@@ -44,6 +44,11 @@ the custom attr:
         <enum name="outsideOverlay" value="0x02000000" />
         <enum name="outsideInset" value="0x03000000" />
     </attr>
+    <attr name="scrollbars">//default show normal scrollbar
+        <enum name="vertical" value="1"/>
+        <enum name="horizontal" value="0"/>
+        <enum name="none" value="2"/>//don't display scrollbar
+    </attr>
 </declare-styleable>
 ```
 
