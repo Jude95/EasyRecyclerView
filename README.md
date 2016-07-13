@@ -9,7 +9,7 @@ Part of the code modified from [Malinskiy/SuperRecyclerView](https://github.com/
 
 # Dependency
 ```groovy
-compile 'com.jude:easyrecyclerview:4.0.2'
+compile 'com.jude:easyrecyclerview:4.0.4'
 ```
 
 #ScreenShot

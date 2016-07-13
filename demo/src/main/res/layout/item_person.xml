@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:gravity="center_vertical"
+    android:foreground="?android:attr/selectableItemBackground"
     android:background="@android:color/white">
     <ImageView
         android:id="@+id/person_face"
