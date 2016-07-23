@@ -3,7 +3,6 @@ package com.jude.easyrecyclerview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorRes;
-import android.support.annotation.IntDef;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.AdapterDataObserver;
 import android.util.AttributeSet;
@@ -16,9 +15,6 @@ import android.widget.FrameLayout;
 
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.swipe.SwipeRefreshLayout;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 
 
 public class EasyRecyclerView extends FrameLayout {
@@ -117,13 +113,12 @@ public class EasyRecyclerView extends FrameLayout {
     }
 
     /**
-     * use {@link #setPadding}
+     *
      * @param left
      * @param top
      * @param right
      * @param bottom
      */
-    @Deprecated
     public void setRecyclerPadding(int left,int top,int right,int bottom){
         this.mPaddingLeft = left;
         this.mPaddingTop = top;
@@ -136,14 +131,6 @@ public class EasyRecyclerView extends FrameLayout {
         mRecycler.setClipToPadding(isClip);
     }
 
-    @Override
-    public void setPadding(int left, int top, int right, int bottom) {
-        this.mPaddingLeft = left;
-        this.mPaddingTop = top;
-        this.mPaddingRight = right;
-        this.mPaddingBottom = bottom;
-        mRecycler.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
-    }
 
     public void setEmptyView(View emptyView){
         mEmptyView.removeAllViews();
