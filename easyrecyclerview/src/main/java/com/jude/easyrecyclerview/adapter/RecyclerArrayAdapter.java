@@ -533,7 +533,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
             viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    return mItemLongClickListener.onItemClick(viewHolder.getAdapterPosition()-headers.size());
+                    return mItemLongClickListener.onItemLongClick(viewHolder.getAdapterPosition()-headers.size());
                 }
             });
         }
@@ -637,7 +637,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     }
 
     public interface OnItemLongClickListener {
-        boolean onItemClick(int position);
+        boolean onItemLongClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){

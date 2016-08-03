@@ -9,7 +9,7 @@ Part of the code modified from [Malinskiy/SuperRecyclerView](https://github.com/
 
 # Dependency
 ```groovy
-compile 'com.jude:easyrecyclerview:4.0.5'
+compile 'com.jude:easyrecyclerview:4.0.6'
 ```
 
 #ScreenShot
@@ -140,7 +140,7 @@ adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
 
 adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
     @Override
-    public boolean onItemClick(int position) {
+    public boolean onItemLongClick(int position) {
         return true;
     }
 });

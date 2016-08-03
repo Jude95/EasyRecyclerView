@@ -11,7 +11,7 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 
 ##依赖
 ```groovy
-compile 'com.jude:easyrecyclerview:4.0.5'
+compile 'com.jude:easyrecyclerview:4.0.6'
 ```
 
 ##示例
@@ -139,7 +139,7 @@ adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
 
 adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
     @Override
-    public boolean onItemClick(int position) {
+    public boolean onItemLongClick(int position) {
         return true;
     }
 });
