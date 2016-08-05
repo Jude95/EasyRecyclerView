@@ -49,7 +49,7 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
         adapter.setNoMore(R.layout.view_nomore);
         adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
             @Override
-            public boolean onItemClick(int position) {
+            public boolean onItemLongClick(int position) {
                 adapter.remove(position);
                 return true;
             }
