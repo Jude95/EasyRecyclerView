@@ -1,6 +1,7 @@
 package com.jude.easyrecyclerview.adapter;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -14,7 +15,9 @@ public class DefaultEventDelegate implements EventDelegate {
     private RecyclerArrayAdapter adapter;
     private EventFooter footer ;
 
-    private RecyclerArrayAdapter.OnLoadMoreListener onLoadMoreListener;
+    private RecyclerArrayAdapter.OnMoreListener onMoreListener;
+    private RecyclerArrayAdapter.OnNoMoreListener onNoMoreListener;
+    private RecyclerArrayAdapter.OnErrorListener onErrorListener;
 
     private boolean hasData = false;
     private boolean isLoadingMore = false;
@@ -37,14 +40,30 @@ public class DefaultEventDelegate implements EventDelegate {
 
     public void onMoreViewShowed() {
         log("onMoreViewShowed");
-        if (!isLoadingMore&&onLoadMoreListener!=null){
+        if (!isLoadingMore&& onMoreListener !=null){
             isLoadingMore = true;
-            onLoadMoreListener.onLoadMore();
+            onMoreListener.onMoreShow();
         }
     }
 
+    public void onMoreViewClicked() {
+        if (onMoreListener !=null) onMoreListener.onMoreClick();
+    }
+
     public void onErrorViewShowed() {
-        resumeLoadMore();
+        if (onErrorListener!=null)onErrorListener.onErrorShow();
+    }
+
+    public void onErrorViewClicked() {
+        if (onErrorListener!=null)onErrorListener.onErrorClick();
+    }
+
+    public void onNoMoreViewShowed() {
+        if (onNoMoreListener!=null)onNoMoreListener.onNoMoreShow();
+    }
+
+    public void onNoMoreViewClicked() {
+        if (onNoMoreListener!=null)onNoMoreListener.onNoMoreClick();
     }
 
     //-------------------5个状态触发事件-------------------
@@ -108,33 +127,60 @@ public class DefaultEventDelegate implements EventDelegate {
     //-------------------3种View设置-------------------
 
     @Override
-    public void setMore(View view, RecyclerArrayAdapter.OnLoadMoreListener listener) {
+    public void setMore(View view, RecyclerArrayAdapter.OnMoreListener listener) {
         this.footer.setMoreView(view);
-        this.onLoadMoreListener = listener;
+        this.onMoreListener = listener;
         hasMore = true;
         log("setMore");
     }
 
     @Override
-    public void setNoMore(View view) {
+    public void setNoMore(View view, RecyclerArrayAdapter.OnNoMoreListener listener) {
         this.footer.setNoMoreView(view);
+        this.onNoMoreListener = listener;
         hasNoMore = true;
         log("setNoMore");
     }
 
     @Override
-    public void setErrorMore(View view) {
+    public void setErrorMore(View view, RecyclerArrayAdapter.OnErrorListener listener) {
         this.footer.setErrorView(view);
+        this.onErrorListener = listener;
         hasError = true;
         log("setErrorMore");
     }
 
+    @Override
+    public void setMore(int res, RecyclerArrayAdapter.OnMoreListener listener) {
+        this.footer.setMoreViewRes(res);
+        this.onMoreListener = listener;
+        hasMore = true;
+        log("setMore");
+    }
+
+    @Override
+    public void setNoMore(int res, RecyclerArrayAdapter.OnNoMoreListener listener) {
+        this.footer.setNoMoreViewRes(res);
+        this.onNoMoreListener = listener;
+        hasNoMore = true;
+        log("setNoMore");
+    }
+
+    @Override
+    public void setErrorMore(int res, RecyclerArrayAdapter.OnErrorListener listener) {
+        this.footer.setErrorViewRes(res);
+        this.onErrorListener = listener;
+        hasError = true;
+        log("setErrorMore");
+    }
 
     private class EventFooter implements RecyclerArrayAdapter.ItemView {
-        private FrameLayout container;
-        private View moreView;
-        private View noMoreView;
-        private View errorView;
+        private View moreView = null;
+        private View noMoreView = null;
+        private View errorView = null;
+        private int moreViewRes = 0;
+        private int noMoreViewRes = 0;
+        private int errorViewRes = 0;
 
         private int flag = Hide;
         public static final int Hide = 0;
@@ -142,87 +188,139 @@ public class DefaultEventDelegate implements EventDelegate {
         public static final int ShowError = 2;
         public static final int ShowNoMore = 3;
 
+        public boolean skipError = false;
+        public boolean skipNoMore = false;
 
         public EventFooter(){
-            container = new FrameLayout(adapter.getContext());
-            container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
 
         @Override
         public View onCreateView(ViewGroup parent) {
             log("onCreateView");
-            return container;
+            return refreshStatus(parent);
         }
 
         @Override
         public void onBindView(View headerView) {
             log("onBindView");
-            switch (flag){
-                case ShowMore:
-                    onMoreViewShowed();
-                    break;
-                case ShowError:
-                    onErrorViewShowed();
-                    break;
-            }
+            headerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    switch (flag){
+                        case ShowMore:
+                            onMoreViewShowed();
+                            break;
+                        case ShowNoMore:
+                            if (!skipNoMore)onNoMoreViewShowed();skipNoMore = false;
+                            break;
+                        case ShowError:
+                            if (!skipError) onErrorViewShowed();skipError = false;
+                            break;
+                    }
+                }
+            });
         }
 
-        public void refreshStatus(){
-            if (container!=null){
-                if (flag == Hide){
-                    container.setVisibility(View.GONE);
-                    return;
-                }
-                if (container.getVisibility() != View.VISIBLE)container.setVisibility(View.VISIBLE);
-                View view = null;
-                switch (flag){
-                    case ShowMore:view = moreView;break;
-                    case ShowError:view = errorView;break;
-                    case ShowNoMore:view = noMoreView;break;
-                }
-                if (view == null){
-                    hide();
-                    return;
-                }
-                if (view.getParent()==null)container.addView(view);
-                for (int i = 0; i < container.getChildCount(); i++) {
-                    if (container.getChildAt(i) == view)view.setVisibility(View.VISIBLE);
-                    else container.getChildAt(i).setVisibility(View.GONE);
-                }
+        public View refreshStatus(ViewGroup parent){
+            View view = null;
+            switch (flag){
+                case ShowMore:
+                    if (moreView!=null) view = moreView;
+                    else if (moreViewRes!=0)view = LayoutInflater.from(parent.getContext()).inflate(moreViewRes,parent,false);
+                    if (view!=null)view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onMoreViewClicked();
+                        }
+                    });
+                    break;
+                case ShowError:
+                    if (moreView!=null) view = errorView;
+                    else if (errorViewRes!=0)view = LayoutInflater.from(parent.getContext()).inflate(errorViewRes,parent,false);
+                    if (view!=null)view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onErrorViewClicked();
+                        }
+                    });
+                    break;
+                case ShowNoMore:
+                    if (noMoreView!=null) view = noMoreView;
+                    else if (noMoreViewRes!=0)view = LayoutInflater.from(parent.getContext()).inflate(noMoreViewRes,parent,false);
+                    if (view!=null)view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onNoMoreViewClicked();
+                        }
+                    });
+                    break;
             }
+            if (view == null)view = new FrameLayout(parent.getContext());
+            return view;
         }
 
         public void showError(){
+            log("footer showError");
+            skipError = true;
             flag = ShowError;
-            refreshStatus();
+            adapter.notifyItemChanged(adapter.getItemCount()-1);
         }
         public void showMore(){
+            log("footer showMore");
             flag = ShowMore;
-            refreshStatus();
+            adapter.notifyItemChanged(adapter.getItemCount()-1);
         }
         public void showNoMore(){
+            log("footer showNoMore");
+            skipNoMore = true;
             flag = ShowNoMore;
-            refreshStatus();
+            adapter.notifyItemChanged(adapter.getItemCount()-1);
         }
 
         //初始化
         public void hide(){
+            log("footer hide");
             flag = Hide;
-            refreshStatus();
+            adapter.notifyItemChanged(adapter.getCount()-1);
         }
 
         public void setMoreView(View moreView) {
             this.moreView = moreView;
+            this.moreViewRes = 0;
         }
 
         public void setNoMoreView(View noMoreView) {
             this.noMoreView = noMoreView;
+            this.noMoreViewRes = 0;
         }
 
         public void setErrorView(View errorView) {
             this.errorView = errorView;
+            this.errorViewRes = 0;
+        }
+
+        public void setMoreViewRes(int moreViewRes) {
+            this.moreView = null;
+            this.moreViewRes = moreViewRes;
+        }
+
+        public void setNoMoreViewRes(int noMoreViewRes) {
+            this.noMoreView = null;
+            this.noMoreViewRes = noMoreViewRes;
+        }
+
+        public void setErrorViewRes(int errorViewRes) {
+            this.errorView = null;
+            this.errorViewRes = errorViewRes;
+        }
+
+        @Override
+        public int hashCode() {
+            return flag+13589;
         }
     }
+
+
 
     private static void log(String content){
         if (EasyRecyclerView.DEBUG){

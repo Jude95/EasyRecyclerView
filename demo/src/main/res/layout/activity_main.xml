@@ -28,4 +28,9 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/staggered_grid"/>
+    <Button
+        android:id="@+id/horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/horizontal"/>
 </LinearLayout>

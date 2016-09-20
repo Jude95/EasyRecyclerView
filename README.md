@@ -9,7 +9,7 @@ Part of the code modified from [Malinskiy/SuperRecyclerView](https://github.com/
 
 # Dependency
 ```groovy
-compile 'com.jude:easyrecyclerview:4.0.6'
+compile 'com.jude:easyrecyclerview:4.2.0'
 ```
 
 #ScreenShot
@@ -23,33 +23,16 @@ compile 'com.jude:easyrecyclerview:4.0.6'
   android:layout_height="match_parent"
   app:layout_empty="@layout/view_empty"
   app:layout_progress="@layout/view_progress"
+  app:layout_error="@layout/view_error"
+  app:recyclerClipToPadding="true"
+  app:recyclerPadding="8dp"
+  app:recyclerPaddingTop="8dp"
+  app:recyclerPaddingBottom="8dp"
+  app:recyclerPaddingLeft="8dp"
+  app:recyclerPaddingRight="8dp"
+  app:scrollbarStyle="insideOverlay"//insideOverlay or insideInset or outsideOverlay or outsideInset
+  app:scrollbars="none"//none or vertical or horizontal
   />
-```
-
-the custom attr:
-```xml
-<declare-styleable name="superrecyclerview">
-    <attr name="layout_empty" format="reference" />
-    <attr name="layout_progress" format="reference" />
-    <attr name="layout_error" format="reference" />
-    <attr name="recyclerClipToPadding" format="boolean" />
-    <attr name="recyclerPadding" format="dimension" />
-    <attr name="recyclerPaddingTop" format="dimension" />
-    <attr name="recyclerPaddingBottom" format="dimension" />
-    <attr name="recyclerPaddingLeft" format="dimension" />
-    <attr name="recyclerPaddingRight" format="dimension" />
-    <attr name="scrollbarStyle">
-        <enum name="insideOverlay" value="0x0" />
-        <enum name="insideInset" value="0x01000000" />
-        <enum name="outsideOverlay" value="0x02000000" />
-        <enum name="outsideInset" value="0x03000000" />
-    </attr>
-    <attr name="scrollbars">//default show normal scrollbar
-        <enum name="vertical" value="1"/>
-        <enum name="horizontal" value="0"/>
-        <enum name="none" value="2"/>//don't display scrollbar
-    </attr>
-</declare-styleable>
 ```
 
 **Attention** EasyRecyclerView is not a RecyclerView just contain a RecyclerView.use 'getRecyclerView()' to get the RecyclerView;
@@ -152,16 +135,16 @@ if you set listener after RecyclerView has layout.you should use 'notifyDataSetC
 
 **LoadMore**  
 ```java
-void setMore(final int res,OnLoadMoreListener listener);
-void setMore(final View view,OnLoadMoreListener listener);
+void setMore(final int res,OnMoreListener listener);
+void setMore(final View view,OnMoreListener listener);
 ```
 Attention when you add null or the length of data you add is 0 ,it will finish LoadMore and show NoMore;  
 also you can show NoMore manually `adapter.stopMore();`  
  
 **LoadError**  
 ```java
-View setError(final int res)
-View setError(final View view)
+void setError(final int res,OnErrorListener listener)
+void setError(final View view,OnErrorListener listener)
 ```
 use `adapter.pauseMore()` to show Error,when your loading throw an error;  
 if you add data when showing Error.it will resume to load more;  
@@ -171,8 +154,8 @@ you can put resumeMore() into the OnClickListener of ErrorView to realize click 
 
 **NoMore**  
 ```java
-void setNoMore(final int res)
-void setNoMore(final View view)
+void setNoMore(final int res,OnNoMoreListener listener)
+void setNoMore(final View view,OnNoMoreListener listener)
 ```
 when loading is finished(add null or empty or stop manually),it while show in the end.  
 

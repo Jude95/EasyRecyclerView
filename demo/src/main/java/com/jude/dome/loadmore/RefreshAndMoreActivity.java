@@ -46,7 +46,17 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
 
         recyclerView.setAdapterWithProgress(adapter = new PersonAdapter(this));
         adapter.setMore(R.layout.view_more, this);
-        adapter.setNoMore(R.layout.view_nomore);
+        adapter.setNoMore(R.layout.view_nomore, new RecyclerArrayAdapter.OnNoMoreListener() {
+            @Override
+            public void onNoMoreShow() {
+                adapter.resumeMore();
+            }
+
+            @Override
+            public void onNoMoreClick() {
+                adapter.resumeMore();
+            }
+        });
         adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(int position) {
@@ -54,9 +64,14 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
                 return true;
             }
         });
-        adapter.setError(R.layout.view_error).setOnClickListener(new View.OnClickListener() {
+        adapter.setError(R.layout.view_error, new RecyclerArrayAdapter.OnErrorListener() {
             @Override
-            public void onClick(View v) {
+            public void onErrorShow() {
+                adapter.resumeMore();
+            }
+
+            @Override
+            public void onErrorClick() {
                 adapter.resumeMore();
             }
         });
@@ -71,6 +86,7 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
         onRefresh();
     }
 
+    //第四页会返回空,意为数据加载结束
     @Override
     public void onLoadMore() {
         Log.i("EasyRecyclerView","onLoadMore");
@@ -85,7 +101,7 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
                 adapter.addAll(DataProvider.getPersonList(page));
                 page++;
             }
-        }, 1000);
+        }, 2000);
     }
 
     @Override
@@ -103,7 +119,7 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
                 adapter.addAll(DataProvider.getPersonList(page));
                 page=1;
             }
-        }, 1000);
+        }, 2000);
     }
 
 

@@ -35,6 +35,8 @@
             android:label="@string/collapsing"/>
         <activity android:name=".staggeredgrid.StaggeredGridActivity"
             android:label="@string/staggered_grid"/>
+        <activity android:name=".horizontal.HorizontalActivity"
+            android:label="@string/horizontal"/>
     </application>
 
 </manifest>

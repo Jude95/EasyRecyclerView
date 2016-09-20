@@ -21,10 +21,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
 
@@ -70,6 +68,18 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     }
     public interface OnLoadMoreListener{
         void onLoadMore();
+    }
+    public interface OnMoreListener{
+        void onMoreShow();
+        void onMoreClick();
+    }
+    public interface OnNoMoreListener{
+        void onNoMoreShow();
+        void onNoMoreClick();
+    }
+    public interface OnErrorListener{
+        void onErrorShow();
+        void onErrorClick();
     }
 
     public class GridSpanSizeLookup extends GridLayoutManager.SpanSizeLookup{
@@ -219,45 +229,80 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         return mEventDelegate;
     }
 
-    public View setMore(final int res, final OnLoadMoreListener listener){
-        FrameLayout container = new FrameLayout(getContext());
-        container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        LayoutInflater.from(getContext()).inflate(res, container);
-        getEventDelegate().setMore(container, listener);
-        return container;
+    /**
+     * @deprecated Use {@link #setMore(int, OnLoadMoreListener)} instead.
+     */
+    @Deprecated
+    public void setMore(final int res, final OnLoadMoreListener listener){
+        getEventDelegate().setMore(res, new OnMoreListener() {
+            @Override
+            public void onMoreShow() {
+                listener.onLoadMore();
+            }
+
+            @Override
+            public void onMoreClick() {
+
+            }
+        });
+    }
+    /**
+     * @deprecated Use {@link #setMore(View, OnLoadMoreListener)} instead.
+     */
+    public void setMore(final View view,final OnLoadMoreListener listener){
+        getEventDelegate().setMore(view, new OnMoreListener() {
+            @Override
+            public void onMoreShow() {
+                listener.onLoadMore();
+            }
+
+            @Override
+            public void onMoreClick() {
+
+            }
+        });
     }
 
-    public View setMore(final View view,OnLoadMoreListener listener){
+    public void setMore(final int res, final OnMoreListener listener){
+        getEventDelegate().setMore(res, listener);
+    }
+
+    public void setMore(final View view,OnMoreListener listener){
         getEventDelegate().setMore(view, listener);
-        return view;
     }
 
-    public View setNoMore(final int res) {
-        FrameLayout container = new FrameLayout(getContext());
-        container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        LayoutInflater.from(getContext()).inflate(res, container);
-        getEventDelegate().setNoMore(container);
-        return container;
+    public void setNoMore(final int res) {
+        getEventDelegate().setNoMore(res,null);
     }
 
-    public View setNoMore(final View view) {
-        getEventDelegate().setNoMore(view);
-        return view;
+    public void setNoMore(final View view) {
+        getEventDelegate().setNoMore(view,null);
     }
 
-    public View setError(final int res) {
-        FrameLayout container = new FrameLayout(getContext());
-        container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        LayoutInflater.from(getContext()).inflate(res, container);
-        getEventDelegate().setErrorMore(container);
-        return container;
+    public void setNoMore(final View view,OnNoMoreListener listener) {
+        getEventDelegate().setNoMore(view,listener);
     }
 
-    public View setError(final View view) {
-        getEventDelegate().setErrorMore(view);
-        return view;
+    public void setNoMore(final int res,OnNoMoreListener listener) {
+        getEventDelegate().setNoMore(res,listener);
     }
 
+
+    public void setError(final int res) {
+        getEventDelegate().setErrorMore(res,null);
+    }
+
+    public void setError(final View view) {
+        getEventDelegate().setErrorMore(view,null);
+    }
+
+    public void setError(final int res,OnErrorListener listener) {
+        getEventDelegate().setErrorMore(res,listener);
+    }
+
+    public void setError(final View view,OnErrorListener listener) {
+        getEventDelegate().setErrorMore(view,listener);
+    }
 
     @Override
     public void registerAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {

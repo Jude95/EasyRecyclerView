@@ -11,7 +11,7 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 
 ##依赖
 ```groovy
-compile 'com.jude:easyrecyclerview:4.0.6'
+compile 'com.jude:easyrecyclerview:4.2.0'
 ```
 
 ##示例
@@ -23,37 +23,20 @@ compile 'com.jude:easyrecyclerview:4.0.6'
   android:id="@+id/recyclerView"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  app:layout_empty="@layout/view_empty"
+  app:layout_progress="@layout/view_progress"
+  app:layout_error="@layout/view_error"
+  app:recyclerClipToPadding="true"
+  app:recyclerPadding="8dp"
+  app:recyclerPaddingTop="8dp"
+  app:recyclerPaddingBottom="8dp"
+  app:recyclerPaddingLeft="8dp"
+  app:recyclerPaddingRight="8dp"
+  app:scrollbarStyle="insideOverlay"//insideOverlay or insideInset or outsideOverlay or outsideInset
+  app:scrollbars="none"//none or vertical or horizontal
   />
 ```
-
-平常这样就好。
-
-属性列表
-
-```xml
-<declare-styleable name="superrecyclerview">
-    <attr name="layout_empty" format="reference" />
-    <attr name="layout_progress" format="reference" />
-    <attr name="layout_error" format="reference" />
-    <attr name="recyclerClipToPadding" format="boolean" />
-    <attr name="recyclerPadding" format="dimension" />
-    <attr name="recyclerPaddingTop" format="dimension" />
-    <attr name="recyclerPaddingBottom" format="dimension" />
-    <attr name="recyclerPaddingLeft" format="dimension" />
-    <attr name="recyclerPaddingRight" format="dimension" />
-    <attr name="scrollbarStyle">
-        <enum name="insideOverlay" value="0x0" />
-        <enum name="insideInset" value="0x01000000" />
-        <enum name="outsideOverlay" value="0x02000000" />
-        <enum name="outsideInset" value="0x03000000" />
-    </attr>
-    <attr name="scrollbars">//默认是正常模式的scrollbar,这里可以指定模式
-        <enum name="vertical" value="1"/>
-        <enum name="horizontal" value="0"/>
-        <enum name="none" value="2"/>//关闭scrollbar
-    </attr>
-</declare-styleable>
-```
+所有属性都不是必须。
 注意EasyRecyclerView本质并不是一个RecyclerView
 
 **设置空白View&加载View&错误View**  
@@ -152,16 +135,16 @@ adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListe
 
 **加载更多**  
 ```java
-void setMore(final int res,OnLoadMoreListener listener);
-void setMore(final View view,OnLoadMoreListener listener);
+void setMore(final int res,OnMoreListener listener);
+void setMore(final View view,OnMoreListener listener);
 ```
 注意一定当添加0条数据或null时,会结束加载更多,显示没有更多。  
 也可以在最后一页手动调用`adapter.stopMore();`  
  
 **加载错误**  
 ```java
-View setError(final int res)
-View setError(final View view)
+void setError(final int res,OnErrorListener listener)
+void setError(final View view,OnErrorListener listener)
 ```
 `adapter.pauseMore()`暂停加载更多，显示错误View。  
 暂停时如果再次添加数据。自动恢复加载更多。  
@@ -172,8 +155,8 @@ View setError(final View view)
 **没有更多**  
 在adapter里设置，当停止加载后就会显示在最后一个。  
 ```java
-void setNoMore(final int res)
-void setNoMore(final View view)
+void setNoMore(final int res,OnNoMoreListener listener)
+void setNoMore(final View view,OnNoMoreListener listener)
 ```
 
 ##BaseViewHolder\<M\>
