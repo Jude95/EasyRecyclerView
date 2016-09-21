@@ -10,13 +10,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.jude.dome.DataProvider;
 import com.jude.dome.R;
+import com.jude.dome.viewholder.PersonViewHolder;
 import com.jude.easyrecyclerview.EasyRecyclerView;
+import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.jude.rollviewpager.Util;
@@ -25,7 +28,7 @@ import com.jude.rollviewpager.Util;
 public class RefreshAndMoreActivity extends ActionBarActivity implements RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener{
     private EasyRecyclerView recyclerView;
     private FloatingActionButton top;
-    private PersonAdapter adapter;
+    private RecyclerArrayAdapter adapter;
     private Handler handler = new Handler();
 
     private int page = 0;
@@ -44,7 +47,12 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
         recyclerView.addItemDecoration(itemDecoration);
 
 
-        recyclerView.setAdapterWithProgress(adapter = new PersonAdapter(this));
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter(this) {
+            @Override
+            public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+                return new PersonViewHolder(parent);
+            }
+        });
         adapter.setMore(R.layout.view_more, this);
         adapter.setNoMore(R.layout.view_nomore, new RecyclerArrayAdapter.OnNoMoreListener() {
             @Override
@@ -84,6 +92,7 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
         });
         recyclerView.setRefreshListener(this);
         onRefresh();
+
     }
 
     //第四页会返回空,意为数据加载结束

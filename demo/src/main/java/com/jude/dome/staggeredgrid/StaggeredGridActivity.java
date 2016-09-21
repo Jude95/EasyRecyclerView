@@ -3,6 +3,7 @@ package com.jude.dome.staggeredgrid;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -55,6 +56,44 @@ public class StaggeredGridActivity extends AppCompatActivity {
         itemDecoration.setPaddingStart(true);
         itemDecoration.setPaddingHeaderFooter(false);
         recyclerView.addItemDecoration(itemDecoration);
-        adapter.addAll(DataProvider.getPictures(0));
+        adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
+            @Override
+            public void onMoreShow() {
+                recyclerView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.addAll(DataProvider.getPictures(0));
+                    }
+                },1000);
+            }
+
+            @Override
+            public void onMoreClick() {
+
+            }
+        });
+        adapter.setNoMore(R.layout.view_nomore);
+        recyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                recyclerView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.clear();
+                        adapter.addAll(DataProvider.getPictures(0));
+                    }
+                },1000);
+            }
+        });
+        addData();
+    }
+
+    private void addData(){
+        recyclerView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                adapter.addAll(DataProvider.getPictures(0));
+            }
+        },1000);
     }
 }
