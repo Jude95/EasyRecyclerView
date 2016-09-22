@@ -59,12 +59,7 @@ public class StaggeredGridActivity extends AppCompatActivity {
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
-                recyclerView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.addAll(DataProvider.getPictures(0));
-                    }
-                },1000);
+                addData();
             }
 
             @Override

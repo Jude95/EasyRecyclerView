@@ -263,25 +263,29 @@ public class DefaultEventDelegate implements EventDelegate {
             log("footer showError");
             skipError = true;
             flag = ShowError;
-            adapter.notifyItemChanged(adapter.getItemCount()-1);
+            if (adapter.getItemCount()>0)
+                adapter.notifyItemChanged(adapter.getItemCount()-1);
         }
         public void showMore(){
             log("footer showMore");
             flag = ShowMore;
-            adapter.notifyItemChanged(adapter.getItemCount()-1);
+            if (adapter.getItemCount()>0)
+                adapter.notifyItemChanged(adapter.getItemCount()-1);
         }
         public void showNoMore(){
             log("footer showNoMore");
             skipNoMore = true;
             flag = ShowNoMore;
-            adapter.notifyItemChanged(adapter.getItemCount()-1);
+            if (adapter.getItemCount()>0)
+                adapter.notifyItemChanged(adapter.getItemCount()-1);
         }
 
         //初始化
         public void hide(){
             log("footer hide");
             flag = Hide;
-            adapter.notifyItemChanged(adapter.getCount()-1);
+            if (adapter.getItemCount()>0)
+                adapter.notifyItemChanged(adapter.getItemCount()-1);
         }
 
         public void setMoreView(View moreView) {
