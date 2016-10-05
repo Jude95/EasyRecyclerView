@@ -178,7 +178,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     public void addHeader(ItemView view){
         if (view==null)throw new NullPointerException("ItemView can't be null");
         headers.add(view);
-        notifyItemInserted(footers.size()-1);
+        notifyItemInserted(headers.size()-1);
     }
 
     public void addFooter(ItemView view){
