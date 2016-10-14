@@ -1,5 +1,6 @@
 package com.jude.dome.viewholder;
 
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class PersonViewHolder extends BaseViewHolder<Person> {
 
     @Override
     public void setData(final Person person){
+        Log.i("ViewHolder","position"+getDataPosition());
         mTv_name.setText(person.getName());
         mTv_sign.setText(person.getSign());
         Glide.with(getContext())

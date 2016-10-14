@@ -11,7 +11,7 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 
 ##依赖
 ```groovy
-compile 'com.jude:easyrecyclerview:4.2.2'
+compile 'com.jude:easyrecyclerview:4.2.3'
 ```
 
 ##示例
