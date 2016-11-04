@@ -470,7 +470,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         synchronized (mLock) {
             mObjects.clear();
         }
-        if (mObserver!=null)mObserver.onItemRangeRemoved(0,count);
+        if (mObserver!=null)mObserver.onChanged();
         if (mNotifyOnChange) notifyDataSetChanged();
         log("clear notifyItemRangeRemoved "+(headers.size())+","+(count));
     }

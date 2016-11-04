@@ -70,20 +70,20 @@ public class EasyRecyclerView extends FrameLayout {
     }
 
     protected void initAttrs(AttributeSet attrs) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.superrecyclerview);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EasyRecyclerView);
         try {
-            mClipToPadding = a.getBoolean(R.styleable.superrecyclerview_recyclerClipToPadding, false);
-            mPadding = (int) a.getDimension(R.styleable.superrecyclerview_recyclerPadding, -1.0f);
-            mPaddingTop = (int) a.getDimension(R.styleable.superrecyclerview_recyclerPaddingTop, 0.0f);
-            mPaddingBottom = (int) a.getDimension(R.styleable.superrecyclerview_recyclerPaddingBottom, 0.0f);
-            mPaddingLeft = (int) a.getDimension(R.styleable.superrecyclerview_recyclerPaddingLeft, 0.0f);
-            mPaddingRight = (int) a.getDimension(R.styleable.superrecyclerview_recyclerPaddingRight, 0.0f);
-            mScrollbarStyle = a.getInteger(R.styleable.superrecyclerview_scrollbarStyle, -1);
-            mScrollbar = a.getInteger(R.styleable.superrecyclerview_scrollbars, -1);
+            mClipToPadding = a.getBoolean(R.styleable.EasyRecyclerView_recyclerClipToPadding, false);
+            mPadding = (int) a.getDimension(R.styleable.EasyRecyclerView_recyclerPadding, -1.0f);
+            mPaddingTop = (int) a.getDimension(R.styleable.EasyRecyclerView_recyclerPaddingTop, 0.0f);
+            mPaddingBottom = (int) a.getDimension(R.styleable.EasyRecyclerView_recyclerPaddingBottom, 0.0f);
+            mPaddingLeft = (int) a.getDimension(R.styleable.EasyRecyclerView_recyclerPaddingLeft, 0.0f);
+            mPaddingRight = (int) a.getDimension(R.styleable.EasyRecyclerView_recyclerPaddingRight, 0.0f);
+            mScrollbarStyle = a.getInteger(R.styleable.EasyRecyclerView_scrollbarStyle, -1);
+            mScrollbar = a.getInteger(R.styleable.EasyRecyclerView_scrollbars, -1);
 
-            mEmptyId = a.getResourceId(R.styleable.superrecyclerview_layout_empty, 0);
-            mProgressId = a.getResourceId(R.styleable.superrecyclerview_layout_progress, 0);
-            mErrorId = a.getResourceId(R.styleable.superrecyclerview_layout_error, 0);
+            mEmptyId = a.getResourceId(R.styleable.EasyRecyclerView_layout_empty, 0);
+            mProgressId = a.getResourceId(R.styleable.EasyRecyclerView_layout_progress, 0);
+            mErrorId = a.getResourceId(R.styleable.EasyRecyclerView_layout_error, 0);
         } finally {
             a.recycle();
         }
