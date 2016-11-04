@@ -233,7 +233,7 @@ StickyHeaderDecoration decoration = new StickyHeaderDecoration(new StickyHeaderA
 decoration.setIncludeHeader(false);
 recyclerView.addItemDecoration(decoration);
 ```
-for example:  
+for example:   
 <image src="http://7xkr5d.com1.z0.glb.clouddn.com/recyclerview_sticky.png?imageView2/2/w/300" width=300/>
 
 **for detail,see the demo**
