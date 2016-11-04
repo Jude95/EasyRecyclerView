@@ -231,9 +231,17 @@ recyclerView.addItemDecoration(itemDecoration);
 就好了...
 
 
-
 **详细用法请看demo**
+------
 
+
+##qinyang1018新增
+因项目需要实现头部悬浮加MD风格折叠效果，之前使用的listview实现的悬浮效果与CoordinatorLayout嵌套不能兼容5.0以下系统，所以需要RecyclerView实现悬浮效果，项目中又使用了EasyRecyclerView，故不想多导入其他依赖在单独实现刷新和加载，就想在EasyRecyclerView中整合一个悬浮功能。
+<img src="stickyHeader.png" width="300">
+#####因此fork了[Jude95/EasyRecyclerView](https://github.com/Jude95/EasyRecyclerView/blob/master/README_ch.md)，在EasyRecyclerView的基础上借鉴[edubarr/header-decor](https://github.com/edubarr/header-decor) 实现悬浮头部，避免多增加导入库重新实现刷新与加载更多的操作。
+
+###感谢两位作者提供了优秀的开源库
+--------
 License
 -------
 
