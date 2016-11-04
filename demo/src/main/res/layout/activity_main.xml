@@ -32,5 +32,9 @@
         android:id="@+id/horizontal"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/horizontal"/>
+        android:text="@string/horizontal"/> <Button
+        android:id="@+id/stiky_header"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/stiky_header"/>
 </LinearLayout>

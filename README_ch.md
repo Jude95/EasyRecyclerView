@@ -231,8 +231,9 @@ recyclerView.addItemDecoration(itemDecoration);
 就好了...
 
 
-
 **详细用法请看demo**
+------
+
 
 License
 -------

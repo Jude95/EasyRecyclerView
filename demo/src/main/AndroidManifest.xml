@@ -37,6 +37,8 @@
             android:label="@string/staggered_grid"/>
         <activity android:name=".horizontal.HorizontalActivity"
             android:label="@string/horizontal"/>
+        <activity android:name=".sticky.StickyHeaderActivity"
+            android:label="@string/stiky_header"/>
     </application>
 
 </manifest>
