@@ -210,8 +210,7 @@ itemDecoration.setDrawHeaderFooter(false);//whether draw divider for header and 
 recyclerView.addItemDecoration(itemDecoration);
 ```
 this is the demo:  
-![](http://o84n5syhk.bkt.clouddn.com/divider.jpg?imageView2/2/w/300)
-
+<image src="http://o84n5syhk.bkt.clouddn.com/divider.jpg?imageView2/2/w/300" width=300/>
 
 
 **SpaceDecoration**  
@@ -224,7 +223,7 @@ itemDecoration.setPaddingHeaderFooter(false);//whether add space for header and 
 recyclerView.addItemDecoration(itemDecoration);
 ```
 this is the demo:  
-![](http://o84n5syhk.bkt.clouddn.com/space.jpg?imageView2/2/w/300)  
+<image src="http://o84n5syhk.bkt.clouddn.com/space.jpg?imageView2/2/w/300" width=300/>
 
 **StickHeaderDecoration**
 Group the items,add a GroupHeaderView for each group.The usage of StickyHeaderAdapter is the same with RecyclerView.Adapter.
@@ -234,8 +233,8 @@ StickyHeaderDecoration decoration = new StickyHeaderDecoration(new StickyHeaderA
 decoration.setIncludeHeader(false);
 recyclerView.addItemDecoration(decoration);
 ```
-for example:
-![](http://7xkr5d.com1.z0.glb.clouddn.com/recyclerview_sticky.png?imageView2/2/w/300)
+for example:  
+<image src="http://7xkr5d.com1.z0.glb.clouddn.com/recyclerview_sticky.png?imageView2/2/w/300" width=300/>
 
 **for detail,see the demo**
 
