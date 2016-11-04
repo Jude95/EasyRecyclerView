@@ -9,7 +9,7 @@ Part of the code modified from [Malinskiy/SuperRecyclerView](https://github.com/
 
 # Dependency
 ```groovy
-compile 'com.jude:easyrecyclerview:4.2.5'
+compile 'com.jude:easyrecyclerview:4.2.6'
 ```
 
 #ScreenShot
@@ -210,7 +210,8 @@ itemDecoration.setDrawHeaderFooter(false);//whether draw divider for header and 
 recyclerView.addItemDecoration(itemDecoration);
 ```
 this is the demo:  
-<img src="http://o84n5syhk.bkt.clouddn.com/divider.jpg" width="300">
+![](http://o84n5syhk.bkt.clouddn.com/divider.jpg?imageView2/2/w/300)
+
 
 
 **SpaceDecoration**  
@@ -223,20 +224,20 @@ itemDecoration.setPaddingHeaderFooter(false);//whether add space for header and 
 recyclerView.addItemDecoration(itemDecoration);
 ```
 this is the demo:  
-<img src="http://o84n5syhk.bkt.clouddn.com/space.jpg" width="300">
+![](http://o84n5syhk.bkt.clouddn.com/space.jpg?imageView2/2/w/300)  
+
+**StickHeaderDecoration**
+Group the items,add a GroupHeaderView for each group.The usage of StickyHeaderAdapter is the same with RecyclerView.Adapter.
+this part is modified from [edubarr/header-decor](https://github.com/edubarr/header-decor)
+```java
+StickyHeaderDecoration decoration = new StickyHeaderDecoration(new StickyHeaderAdapter(this));
+decoration.setIncludeHeader(false);
+recyclerView.addItemDecoration(decoration);
+```
+for example:
+![](http://7xkr5d.com1.z0.glb.clouddn.com/recyclerview_sticky.png?imageView2/2/w/300)
 
 **for detail,see the demo**
-
-
-
-##qinyang1018新增
-因项目需要实现头部悬浮加MD风格折叠效果，之前使用的listview实现的悬浮效果与CoordinatorLayout嵌套不能兼容5.0以下系统，所以需要RecyclerView实现悬浮效果，项目中又使用了EasyRecyclerView，故不想多导入其他依赖在单独实现刷新和加载，就想在EasyRecyclerView中整合一个悬浮功能。
-
-<img src="stickyHeader.png" width="300">
-
-#####因此fork了[Jude95/EasyRecyclerView](https://github.com/Jude95/EasyRecyclerView/blob/master/README_ch.md)，在EasyRecyclerView的基础上借鉴[edubarr/header-decor](https://github.com/edubarr/header-decor) 实现悬浮头部，避免多增加导入库重新实现刷新与加载更多的操作。
-
-###感谢两位作者提供了优秀的开源库
 
 License
 -------

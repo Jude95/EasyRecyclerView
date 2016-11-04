@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.Menu;
@@ -17,20 +17,20 @@ import android.widget.CompoundButton;
 import com.github.clans.fab.FloatingActionButton;
 import com.jude.dome.DataProvider;
 import com.jude.dome.R;
+import com.jude.dome.entites.Person;
 import com.jude.dome.viewholder.PersonViewHolder;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
-import com.jude.easyrecyclerview.sticky.StickyHeaderDecoration;
+import com.jude.easyrecyclerview.decoration.StickyHeaderDecoration;
 import com.jude.rollviewpager.Util;
 
 
-public class StickyHeaderActivity extends ActionBarActivity implements RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
+public class StickyHeaderActivity extends AppCompatActivity implements RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
     private EasyRecyclerView recyclerView;
     private FloatingActionButton top;
-    private StickyHeaderAdapter adapter;
-    private StickyHeaderDecoration mHeaderDecoration;
+    private RecyclerArrayAdapter<Person> adapter;
     private Handler handler = new Handler();
 
     private int page = 0;
@@ -49,7 +49,7 @@ public class StickyHeaderActivity extends ActionBarActivity implements RecyclerA
         recyclerView.addItemDecoration(itemDecoration);
 
 
-        recyclerView.setAdapterWithProgress(adapter = new StickyHeaderAdapter(this) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Person>(this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 return new PersonViewHolder(parent);
@@ -85,8 +85,10 @@ public class StickyHeaderActivity extends ActionBarActivity implements RecyclerA
                 adapter.resumeMore();
             }
         });
-        mHeaderDecoration = new StickyHeaderDecoration(adapter);
-        recyclerView.addItemDecoration(mHeaderDecoration, 1);
+        // StickyHeader
+        StickyHeaderDecoration decoration = new StickyHeaderDecoration(new StickyHeaderAdapter(this));
+        decoration.setIncludeHeader(false);
+        recyclerView.addItemDecoration(decoration);
         top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

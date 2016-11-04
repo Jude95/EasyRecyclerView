@@ -11,7 +11,7 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 
 ##依赖
 ```groovy
-compile 'com.jude:easyrecyclerview:4.2.5'
+compile 'com.jude:easyrecyclerview:4.2.6'
 ```
 
 ##示例
@@ -210,7 +210,7 @@ itemDecoration.setDrawHeaderFooter(false);//是否对Header于Footer有效,默�
 recyclerView.addItemDecoration(itemDecoration);
 ```
 这是效果:  
-<img src="http://o84n5syhk.bkt.clouddn.com/divider.jpg" width="300">
+![](http://o84n5syhk.bkt.clouddn.com/divider.jpg?imageView2/2/w/300)
 
 **SpaceDecoration**  
 通常用于GridLayoutManager和StaggeredGridLayoutManager。在View之间添加间距。  
@@ -222,7 +222,20 @@ itemDecoration.setPaddingHeaderFooter(false);//是否对Header于Footer有效,�
 recyclerView.addItemDecoration(itemDecoration);
 ```
 这是效果:  
-<img src="http://o84n5syhk.bkt.clouddn.com/space.jpg" width="300">
+![](http://o84n5syhk.bkt.clouddn.com/space.jpg?imageView2/2/w/300)  
+
+**StickHeaderDecoration**
+将Item分组，并添加每一组的Header，Header会悬浮在当前分组上。
+StickyHeaderAdapter用法与RecyclerView.Adapter相同。
+此部分代码修改自[edubarr/header-decor](https://github.com/edubarr/header-decor)
+```java
+StickyHeaderDecoration decoration = new StickyHeaderDecoration(new StickyHeaderAdapter(this));
+decoration.setIncludeHeader(false);
+recyclerView.addItemDecoration(decoration);
+```
+for example:
+![](http://7xkr5d.com1.z0.glb.clouddn.com/recyclerview_sticky.png?imageView2/2/w/300)
+
 
 ## 另外
 虽然与我的库没什么关系，但很多人在问就写一下吧。item的**水波纹效果**  
