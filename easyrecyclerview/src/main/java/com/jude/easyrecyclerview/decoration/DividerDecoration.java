@@ -69,6 +69,9 @@ public class DividerDecoration extends RecyclerView.ItemDecoration{
 
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
 
+        if (parent.getAdapter() == null){
+            return;
+        }
 
         int orientation = 0;
         int headerCount = 0,footerCount = 0,dataCount;

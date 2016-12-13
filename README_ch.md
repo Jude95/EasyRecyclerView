@@ -11,7 +11,7 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 
 ##依赖
 ```groovy
-compile 'com.jude:easyrecyclerview:4.2.6'
+compile 'com.jude:easyrecyclerview:4.3.0'
 ```
 
 ##示例
@@ -81,9 +81,10 @@ void add(T object);
 void addAll(Collection<? extends T> collection);
 void addAll(T ... items);
 void insert(T object, int index);
-void remove(T object)
-void clear()
-void sort(Comparator<? super T> comparator)
+void update(T object, int index);
+void remove(T object);
+void clear();
+void sort(Comparator<? super T> comparator);
 ```
 
 **整合的Header与Footer的实现**  

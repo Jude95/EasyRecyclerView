@@ -17,6 +17,7 @@ import android.widget.CompoundButton;
 import com.github.clans.fab.FloatingActionButton;
 import com.jude.dome.DataProvider;
 import com.jude.dome.R;
+import com.jude.dome.entites.Person;
 import com.jude.dome.viewholder.PersonViewHolder;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
@@ -28,7 +29,7 @@ import com.jude.rollviewpager.Util;
 public class RefreshAndMoreActivity extends ActionBarActivity implements RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener{
     private EasyRecyclerView recyclerView;
     private FloatingActionButton top;
-    private RecyclerArrayAdapter adapter;
+    private RecyclerArrayAdapter<Person> adapter;
     private Handler handler = new Handler();
 
     private int page = 0;
@@ -47,7 +48,7 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
         recyclerView.addItemDecoration(itemDecoration);
 
 
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter(this) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Person>(this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 return new PersonViewHolder(parent);

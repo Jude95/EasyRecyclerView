@@ -58,8 +58,8 @@ public class InsertActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Random random = new Random();
-//        int pos = random.nextInt(adapter.getCount());
-        int pos = 0;
+        int pos = random.nextInt(adapter.getCount());
+//        int pos = 0;
         List<Person> persons = DataProvider.getPersonList(0);
         Person data = persons.get(random.nextInt(persons.size()));
         switch (item.getItemId()){
@@ -68,6 +68,9 @@ public class InsertActivity extends AppCompatActivity{
                 break;
             case R.id.ic_remove:
                 adapter.remove(pos);
+                break;
+            case R.id.ic_refresh:
+                adapter.update(data,pos);
                 break;
         }
         return true;

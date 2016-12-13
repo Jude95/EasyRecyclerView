@@ -204,6 +204,10 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
      */
     @Override
     public void onDrawOver(Canvas canvas, RecyclerView parent, RecyclerView.State state) {
+        if (parent.getAdapter() == null){
+            return;
+        }
+
         final int count = parent.getChildCount();
         long previousHeaderId = -1;
 

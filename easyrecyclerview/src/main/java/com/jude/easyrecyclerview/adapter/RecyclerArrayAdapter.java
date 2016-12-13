@@ -155,7 +155,7 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
 
     private void init(Context context , List<T> objects) {
         mContext = context;
-        mObjects = objects;
+        mObjects = new ArrayList<>(objects);
     }
 
 
@@ -411,6 +411,16 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         if (mObserver!=null)mObserver.onItemRangeInserted(index,dataCount);
         if (mNotifyOnChange) notifyItemRangeInserted(headers.size()+index,dataCount);
         log("insertAll notifyItemRangeInserted "+((headers.size()+index)+","+(dataCount)));
+    }
+
+
+    public void update(T object,int pos){
+        synchronized (mLock) {
+            mObjects.set(pos,object);
+        }
+        if (mObserver!=null)mObserver.onItemRangeChanged(pos,1);
+        if (mNotifyOnChange) notifyItemChanged(pos);
+        log("insertAll notifyItemChanged "+pos);
     }
 
     /**

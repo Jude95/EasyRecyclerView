@@ -9,7 +9,7 @@ Part of the code modified from [Malinskiy/SuperRecyclerView](https://github.com/
 
 # Dependency
 ```groovy
-compile 'com.jude:easyrecyclerview:4.2.6'
+compile 'com.jude:easyrecyclerview:4.3.0'
 ```
 
 #ScreenShot
@@ -82,9 +82,10 @@ void add(T object);
 void addAll(Collection<? extends T> collection);
 void addAll(T ... items);
 void insert(T object, int index);
-void remove(T object)
-void clear()
-void sort(Comparator<? super T> comparator)
+void update(T object, int index);
+void remove(T object);
+void clear();
+void sort(Comparator<? super T> comparator);
 ```
 
 **Header&Footer**
