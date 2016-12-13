@@ -201,7 +201,7 @@ public class PersonAdapter extends RecyclerArrayAdapter<Person> {
 ```
 
 ## Decoration
-这里提供了2种常用Decoration供大家使用。  
+这里提供了3种常用Decoration供大家使用。
 **DividerDecoration**  
 通常用在LinearLayoutManager的情况下。在item之间添加分割线。  
 ```java
@@ -225,7 +225,7 @@ recyclerView.addItemDecoration(itemDecoration);
 这是效果:  
 <image src="http://o84n5syhk.bkt.clouddn.com/space.jpg?imageView2/2/w/300" width=300/> 
 
-**StickHeaderDecoration**
+**StickHeaderDecoration**  
 将Item分组，并添加每一组的Header，Header会悬浮在当前分组上。
 StickyHeaderAdapter用法与RecyclerView.Adapter相同。
 此部分代码修改自[edubarr/header-decor](https://github.com/edubarr/header-decor)

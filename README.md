@@ -201,7 +201,7 @@ public class PersonAdapter extends RecyclerArrayAdapter<Person> {
 ```
 
 ## Decoration
-Now there are tow commonly used decoration provide for you.  
+Now there are three commonly used decoration provide for you.
 **DividerDecoration**  
 Usually used in LinearLayoutManager.add divider between items.
 ```java
@@ -226,7 +226,7 @@ recyclerView.addItemDecoration(itemDecoration);
 this is the demo:  
 <image src="http://o84n5syhk.bkt.clouddn.com/space.jpg?imageView2/2/w/300" width=300/>
 
-**StickHeaderDecoration**
+**StickHeaderDecoration**  
 Group the items,add a GroupHeaderView for each group.The usage of StickyHeaderAdapter is the same with RecyclerView.Adapter.
 this part is modified from [edubarr/header-decor](https://github.com/edubarr/header-decor)
 ```java
