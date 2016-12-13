@@ -1,0 +1,48 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        minSdkVersion 7
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile 'com.android.support:recyclerview-v7:23.3.0'
+}
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'easyrecyclerview'
+
+    publishedGroupId = 'com.jude'
+    artifact = 'easyrecyclerview'
+
+    siteUrl = 'https://github.com/Jude95/EasyRecyclerView'
+    gitUrl = 'https://github.com/Jude95/EasyRecyclerView'
+
+    libraryVersion = '3.5.8'
+    libraryName = 'easyrecyclerview'
+    libraryDescription = 'A tool for Android'
+
+    developerId = 'jude95'
+    developerName = 'jude95'
+    developerEmail = 'jude@helloworld.moe'
+
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+apply from:'https://raw.githubusercontent.com/Jude95/JCenter/master/install.gradle'
+apply from:'https://raw.githubusercontent.com/Jude95/JCenter/master/bintray.gradle'
