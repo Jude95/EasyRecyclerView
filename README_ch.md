@@ -201,7 +201,7 @@ public class PersonAdapter extends RecyclerArrayAdapter<Person> {
 ```
 
 ## Decoration
-这里提供了3种常用Decoration供大家使用。
+这里提供了3种常用Decoration供大家使用。  
 **DividerDecoration**  
 通常用在LinearLayoutManager的情况下。在item之间添加分割线。  
 ```java
