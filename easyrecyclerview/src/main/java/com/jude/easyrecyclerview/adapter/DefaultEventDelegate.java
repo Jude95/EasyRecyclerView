@@ -243,7 +243,7 @@ public class DefaultEventDelegate implements EventDelegate {
                     });
                     break;
                 case ShowError:
-                    if (moreView!=null) view = errorView;
+                    if (errorView!=null) view = errorView;
                     else if (errorViewRes!=0)view = LayoutInflater.from(parent.getContext()).inflate(errorViewRes,parent,false);
                     if (view!=null)view.setOnClickListener(new View.OnClickListener() {
                         @Override
