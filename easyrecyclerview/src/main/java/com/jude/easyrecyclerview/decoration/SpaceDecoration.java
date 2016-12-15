@@ -11,9 +11,12 @@ import android.view.View;
 
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
+import static android.R.attr.gravity;
+import static android.widget.LinearLayout.VERTICAL;
+
 public class SpaceDecoration extends RecyclerView.ItemDecoration {
 
-    private int halfSpace;
+    private int space;
     private int headerCount = -1;
     private int footerCount = Integer.MAX_VALUE;
     private boolean mPaddingEdgeSide = true;
@@ -22,7 +25,7 @@ public class SpaceDecoration extends RecyclerView.ItemDecoration {
 
 
     public SpaceDecoration(int space) {
-        this.halfSpace = space / 2;
+        this.space = space ;
     }
 
     public void setPaddingEdgeSide(boolean mPaddingEdgeSide) {
@@ -67,83 +70,41 @@ public class SpaceDecoration extends RecyclerView.ItemDecoration {
         /**
          * 普通Item的尺寸
          */
-        if ((position>=headerCount&&position<parent.getAdapter().getItemCount()-footerCount)){
-            int gravity;
-            if (spanIndex == 0&&spanCount>1)gravity = Gravity.LEFT;
-            else if (spanIndex == spanCount-1&&spanCount>1)gravity = Gravity.RIGHT;
-            else if (spanCount == 1)gravity = Gravity.FILL_HORIZONTAL;
-            else {
-                gravity = Gravity.CENTER;
-            }
-            if (orientation == OrientationHelper.VERTICAL){
-                switch (gravity){
-                    case Gravity.LEFT:
-                        if (mPaddingEdgeSide)
-                            outRect.left = halfSpace*2;
-                        outRect.right = halfSpace;
-                        break;
-                    case Gravity.RIGHT:
-                        outRect.left = halfSpace;
-                        if (mPaddingEdgeSide)
-                            outRect.right = halfSpace*2;
-                        break;
-                    case Gravity.FILL_HORIZONTAL:
-                        if (mPaddingEdgeSide){
-                            outRect.left = halfSpace*2;
-                            outRect.right = halfSpace*2;
-                        }
-                        break;
-                    case Gravity.CENTER:
-                        outRect.left = halfSpace;
-                        outRect.right = halfSpace;
-                        break;
-                }
-                if (position - headerCount < spanCount && mPaddingStart)outRect.top =  halfSpace*2;
-                outRect.bottom = halfSpace*2;
-            }else {
-                switch (gravity){
-                    case Gravity.LEFT:
-                        if (mPaddingEdgeSide)
-                            outRect.bottom = halfSpace*2;
-                        outRect.top = halfSpace;
-                        break;
-                    case Gravity.RIGHT:
-                        outRect.bottom = halfSpace;
-                        if (mPaddingEdgeSide)
-                            outRect.top = halfSpace*2;
-                        break;
-                    case Gravity.FILL_HORIZONTAL:
-                        if (mPaddingEdgeSide){
-                            outRect.left = halfSpace*2;
-                            outRect.right = halfSpace*2;
-                        }
-                        break;
-                    case Gravity.CENTER:
-                        outRect.bottom = halfSpace;
-                        outRect.top = halfSpace;
-                        break;
-                }
-                if (position - headerCount < spanCount  && mPaddingStart)outRect.left =  halfSpace*2;
-                outRect.right = halfSpace*2;
-            }
-        }else {//只有HeaderFooter进到这里
-                if (mPaddingHeaderFooter) {//并且需要padding Header&Footer
-                    if (orientation == OrientationHelper.VERTICAL){
-                        if (mPaddingEdgeSide) {
-                            outRect.left = halfSpace * 2;
-                            outRect.right = halfSpace * 2;
-                        }
-                        outRect.top =  halfSpace*2;
-                    }else{
-                        if (mPaddingEdgeSide) {
-                            outRect.top = halfSpace * 2;
-                            outRect.bottom = halfSpace * 2;
-                        }
-                        outRect.left =  halfSpace*2;
-                    }
-                }
-        }
-    }
+        if ((position>=headerCount&&position<parent.getAdapter().getItemCount()-footerCount)) {
 
+            if (orientation == VERTICAL) {
+                float expectedWidth = (float) (parent.getWidth() - space * (spanCount + (mPaddingEdgeSide ? 1 : -1))) / spanCount;
+                float originWidth = (float) parent.getWidth() / spanCount;
+                float expectedX = (mPaddingEdgeSide ? space : 0) + (expectedWidth + space) * spanIndex;
+                float originX = originWidth * spanIndex;
+                outRect.left = (int) (expectedX - originX);
+                outRect.right = (int) (originWidth - outRect.left - expectedWidth);
+                if (position - headerCount < spanCount && mPaddingStart) {
+                    outRect.top = space;
+                }
+                outRect.bottom = space;
+                return;
+            } else {
+                float expectedHeight = (float) (parent.getHeight() - space * (spanCount + (mPaddingEdgeSide ? 1 : -1))) / spanCount;
+                float originHeight = (float) parent.getHeight() / spanCount;
+                float expectedY = (mPaddingEdgeSide ? space : 0) + (expectedHeight + space) * spanIndex;
+                float originY = originHeight * spanIndex;
+                outRect.bottom = (int) (expectedY - originY);
+                outRect.top = (int) (originHeight - outRect.bottom - expectedHeight);
+                if (position - headerCount < spanCount && mPaddingStart) {
+                    outRect.left = space;
+                }
+                outRect.right = space;
+                return;
+            }
+        }else if (mPaddingHeaderFooter){
+            if (orientation == VERTICAL){outRect.right = outRect.left = mPaddingEdgeSide ? space : 0;
+                outRect.top = mPaddingStart?space : 0;
+            }else { outRect.top = outRect.bottom = mPaddingEdgeSide ? space : 0;
+                outRect.left = mPaddingStart?space : 0;
+            }
+        }
+
+    }
 
 }

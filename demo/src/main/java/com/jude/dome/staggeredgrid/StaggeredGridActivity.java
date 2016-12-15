@@ -32,7 +32,7 @@ public class StaggeredGridActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyclerview);
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter = new ImageAdapter(this));
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
             @Override
@@ -54,7 +54,7 @@ public class StaggeredGridActivity extends AppCompatActivity {
         SpaceDecoration itemDecoration = new SpaceDecoration((int) Utils.convertDpToPixel(8,this));
         itemDecoration.setPaddingEdgeSide(true);
         itemDecoration.setPaddingStart(true);
-        itemDecoration.setPaddingHeaderFooter(false);
+        itemDecoration.setPaddingHeaderFooter(true);
         recyclerView.addItemDecoration(itemDecoration);
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
