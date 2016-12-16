@@ -245,6 +245,12 @@ public class EasyRecyclerView extends FrameLayout {
         @Override
         public void onItemRangeInserted(int positionStart, int itemCount) {
             super.onItemRangeInserted(positionStart, itemCount);
+            if (recyclerView.getAdapter() instanceof RecyclerArrayAdapter) {
+                RecyclerArrayAdapter adapter = (RecyclerArrayAdapter) recyclerView.getAdapter();
+                if (adapter.getFooterCount()>0 && adapter.getCount() == itemCount){
+                    recyclerView.scrollToPosition(0);
+                }
+            }
             update();
         }
 
