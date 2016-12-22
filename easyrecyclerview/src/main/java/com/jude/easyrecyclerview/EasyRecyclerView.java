@@ -229,67 +229,7 @@ public class EasyRecyclerView extends FrameLayout {
     }
 
 
-    public static class EasyDataObserver extends AdapterDataObserver {
-        private EasyRecyclerView recyclerView;
 
-        public EasyDataObserver(EasyRecyclerView recyclerView) {
-            this.recyclerView = recyclerView;
-        }
-
-        @Override
-        public void onItemRangeChanged(int positionStart, int itemCount) {
-            super.onItemRangeChanged(positionStart, itemCount);
-            update();
-        }
-
-        @Override
-        public void onItemRangeInserted(int positionStart, int itemCount) {
-            super.onItemRangeInserted(positionStart, itemCount);
-            if (recyclerView.getAdapter() instanceof RecyclerArrayAdapter) {
-                RecyclerArrayAdapter adapter = (RecyclerArrayAdapter) recyclerView.getAdapter();
-                if (adapter.getFooterCount()>0 && adapter.getCount() == itemCount){
-                    recyclerView.scrollToPosition(0);
-                }
-            }
-            update();
-        }
-
-        @Override
-        public void onItemRangeRemoved(int positionStart, int itemCount) {
-            super.onItemRangeRemoved(positionStart, itemCount);
-            update();
-        }
-
-        @Override
-        public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-            super.onItemRangeMoved(fromPosition, toPosition, itemCount);
-            update();
-        }
-
-        @Override
-        public void onChanged() {
-            super.onChanged();
-            update();
-        }
-
-        //自动更改Container的样式
-        private void update() {
-            log("update");
-            int count;
-            if (recyclerView.getAdapter() instanceof RecyclerArrayAdapter) {
-                count = ((RecyclerArrayAdapter) recyclerView.getAdapter()).getCount();
-            } else {
-                count = recyclerView.getAdapter().getItemCount();
-            }
-            if (count == 0) {
-                log("no data:"+"show empty");
-                recyclerView.showEmpty();
-            } else{
-                log("has data");
-                recyclerView.showRecycler();
-            }
-        }
-    }
 
     /**
      * 设置适配器，关闭所有副view。展示recyclerView

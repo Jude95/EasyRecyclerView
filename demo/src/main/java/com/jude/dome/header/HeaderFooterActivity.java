@@ -57,7 +57,6 @@ public class HeaderFooterActivity extends AppCompatActivity {
                 },1500);
             }
         });
-        adapter.addAll(DataProvider.getPersonList(0));
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
             @Override
             public View onCreateView(ViewGroup parent) {
@@ -128,6 +127,7 @@ public class HeaderFooterActivity extends AppCompatActivity {
 
             }
         });
+        adapter.addAll(DataProvider.getPersonList(0));
     }
 
 
