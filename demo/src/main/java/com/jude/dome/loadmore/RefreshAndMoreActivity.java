@@ -42,11 +42,11 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
 
         top = (FloatingActionButton) findViewById(R.id.top);
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
         DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY,Util.dip2px(this,0.5f), Util.dip2px(this,72),0);
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
-
 
         recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Person>(this) {
             @Override

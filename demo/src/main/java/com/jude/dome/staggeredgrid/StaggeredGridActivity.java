@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
@@ -34,6 +35,9 @@ public class StaggeredGridActivity extends AppCompatActivity {
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter = new ImageAdapter(this));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,4);
+        gridLayoutManager.setSpanSizeLookup(adapter.obtainGridSpanSizeLookUp(4));
+        recyclerView.setLayoutManager(gridLayoutManager);
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
             @Override
             public View onCreateView(ViewGroup parent) {
