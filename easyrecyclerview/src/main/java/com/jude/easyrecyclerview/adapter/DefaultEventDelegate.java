@@ -79,10 +79,8 @@ public class DefaultEventDelegate implements EventDelegate {
                 }
             }else {
                 //当Error或初始时。添加数据，如果有More则还原。
-                if (hasMore && (status == STATUS_INITIAL || status == STATUS_ERROR || status == STATUS_NOMORE)){
-                    footer.showMore();
-                    status = STATUS_MORE;
-                }
+                footer.showMore();
+                status = STATUS_MORE;
                 hasData = true;
             }
         }else{
