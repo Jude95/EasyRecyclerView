@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorRes;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.AdapterDataObserver;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
