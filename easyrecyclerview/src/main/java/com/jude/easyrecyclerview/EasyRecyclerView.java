@@ -182,7 +182,6 @@ public class EasyRecyclerView extends FrameLayout {
                     for (RecyclerView.OnScrollListener listener : mExternalOnScrollListenerList) {
                         listener.onScrolled(recyclerView, dx, dy);
                     }
-
                 }
 
                 @Override
@@ -389,6 +388,8 @@ public class EasyRecyclerView extends FrameLayout {
      */
 
     /**
+     * Set scroll listener to the recycler
+     *
      * @deprecated Use {@link #addOnScrollListener(RecyclerView.OnScrollListener)} instead.
      */
     @Deprecated
