@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         minSdkVersion 11
@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    provided 'com.android.support:recyclerview-v7:25.0.1'
+    provided 'com.android.support:recyclerview-v7:25.1.1'
 }
 ext {
     bintrayRepo = 'maven'
@@ -31,7 +31,7 @@ ext {
     siteUrl = 'https://github.com/Jude95/EasyRecyclerView'
     gitUrl = 'https://github.com/Jude95/EasyRecyclerView'
 
-    libraryVersion = '4.3.8'
+    libraryVersion = '4.3.9'
     libraryName = 'easyrecyclerview'
     libraryDescription = 'A tool for Android'
 

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -93,7 +94,6 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
         });
         recyclerView.setRefreshListener(this);
         onRefresh();
-
     }
 
     //第四页会返回空,意为数据加载结束
