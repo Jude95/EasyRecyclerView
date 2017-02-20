@@ -93,7 +93,6 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
         });
         recyclerView.setRefreshListener(this);
         onRefresh();
-
     }
 
     //第四页会返回空,意为数据加载结束

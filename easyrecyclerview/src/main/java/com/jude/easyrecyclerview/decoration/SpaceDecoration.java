@@ -3,15 +3,12 @@ package com.jude.easyrecyclerview.decoration;
 import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.Gravity;
 import android.view.View;
 
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
-import static android.R.attr.gravity;
 import static android.widget.LinearLayout.VERTICAL;
 
 public class SpaceDecoration extends RecyclerView.ItemDecoration {

@@ -23,9 +23,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 
-import com.jude.easyrecyclerview.EasyDataObserver;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 
 import java.util.ArrayList;

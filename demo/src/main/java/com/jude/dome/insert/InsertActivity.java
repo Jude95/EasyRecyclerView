@@ -8,20 +8,16 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 
 import com.jude.dome.DataProvider;
 import com.jude.dome.R;
 import com.jude.dome.entites.Person;
 import com.jude.dome.loadmore.PersonAdapter;
-import com.jude.dome.viewholder.PersonViewHolder;
 import com.jude.easyrecyclerview.EasyRecyclerView;
-import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.jude.rollviewpager.Util;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
