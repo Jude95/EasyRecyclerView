@@ -55,17 +55,7 @@ public class RefreshAndMoreActivity extends ActionBarActivity implements Recycle
             }
         });
         adapter.setMore(R.layout.view_more, this);
-        adapter.setNoMore(R.layout.view_nomore, new RecyclerArrayAdapter.OnNoMoreListener() {
-            @Override
-            public void onNoMoreShow() {
-                adapter.resumeMore();
-            }
-
-            @Override
-            public void onNoMoreClick() {
-                adapter.resumeMore();
-            }
-        });
+        adapter.setNoMore(R.layout.view_nomore);
         adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(int position) {
