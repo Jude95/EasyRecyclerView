@@ -9,6 +9,11 @@
         android:layout_height="48dp"
         android:text="@string/refresh_and_more"/>
     <Button
+        android:id="@+id/insert"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/insert"/>
+    <Button
         android:id="@+id/header_footer"
         android:layout_width="match_parent"
         android:layout_height="48dp"

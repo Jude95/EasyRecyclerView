@@ -75,12 +75,12 @@ public class DefaultEventDelegate implements EventDelegate {
                 //当添加0个时，认为已结束加载到底
                 if (status==STATUS_INITIAL || status == STATUS_MORE){
                     footer.showNoMore();
+                    status = STATUS_NOMORE;
                 }
             }else {
                 //当Error或初始时。添加数据，如果有More则还原。
-                if (hasMore && (status == STATUS_INITIAL || status == STATUS_ERROR)){
-                    footer.showMore();
-                }
+                footer.showMore();
+                status = STATUS_MORE;
                 hasData = true;
             }
         }else{
@@ -121,6 +121,7 @@ public class DefaultEventDelegate implements EventDelegate {
     public void resumeLoadMore() {
         isLoadingMore = false;
         footer.showMore();
+        status = STATUS_MORE;
         onMoreViewShowed();
     }
 
@@ -243,7 +244,7 @@ public class DefaultEventDelegate implements EventDelegate {
                     });
                     break;
                 case ShowError:
-                    if (moreView!=null) view = errorView;
+                    if (errorView!=null) view = errorView;
                     else if (errorViewRes!=0)view = LayoutInflater.from(parent.getContext()).inflate(errorViewRes,parent,false);
                     if (view!=null)view.setOnClickListener(new View.OnClickListener() {
                         @Override

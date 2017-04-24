@@ -39,6 +39,8 @@
             android:label="@string/horizontal"/>
         <activity android:name=".sticky.StickyHeaderActivity"
             android:label="@string/stiky_header"/>
+        <activity android:name=".insert.InsertActivity"
+            android:label="@string/insert"/>
     </application>
 
 </manifest>

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jude.easyrecyclerview.sticky;
+package com.jude.easyrecyclerview.decoration;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -23,8 +23,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jude.easyrecyclerview.adapter.BaseViewHolder;
-import com.jude.easyrecyclerview.adapter.StickyHeaderAdapterImp;
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,19 +32,54 @@ import java.util.Map;
  * A sticky header decoration for android's RecyclerView.
  */
 public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
+    /**
+     * The adapter to assist the {@link StickyHeaderDecoration} in creating and binding the header views.
+     *
+     * @param <T> the header view holder
+     */
+    public interface IStickyHeaderAdapter<T extends RecyclerView.ViewHolder> {
+
+        /**
+         * Returns the header id for the item at the given position.
+         * The item in one group should return the same HeaderId.
+         *
+         * @param position the item position
+         * @return the header id
+         */
+        long getHeaderId(int position);
+
+        /**
+         * Creates a new header ViewHolder.
+         *
+         * @param parent the header's view parent
+         * @return a view holder for the created view
+         */
+        T onCreateHeaderViewHolder(ViewGroup parent);
+
+        /**
+         * Updates the header view to reflect the header data for the given position
+         * @param viewholder the header view holder
+         * @param position the header's item position
+         */
+        void onBindHeaderViewHolder(T viewholder, int position);
+    }
+
+
     public static final long NO_HEADER_ID = -1L;
 
     private Map<Long, RecyclerView.ViewHolder> mHeaderCache;
 
-    private StickyHeaderAdapterImp mAdapter;
+    private IStickyHeaderAdapter mAdapter;
 
     private boolean mRenderInline;
+
+    private boolean mIncludeHeader = false;
 
     /**
      * @param adapter
      *         the sticky header adapter to use
      */
-    public StickyHeaderDecoration(StickyHeaderAdapterImp adapter) {
+    public StickyHeaderDecoration(IStickyHeaderAdapter adapter) {
         this(adapter, false);
     }
 
@@ -53,10 +87,14 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
      * @param adapter
      *         the sticky header adapter to use
      */
-    public StickyHeaderDecoration(StickyHeaderAdapterImp adapter, boolean renderInline) {
+    public StickyHeaderDecoration(IStickyHeaderAdapter adapter, boolean renderInline) {
         mAdapter = adapter;
         mHeaderCache = new HashMap<>();
         mRenderInline = renderInline;
+    }
+
+    public void setIncludeHeader(boolean mIncludeHeader) {
+        this.mIncludeHeader = mIncludeHeader;
     }
 
     /**
@@ -66,6 +104,24 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int position = parent.getChildAdapterPosition(view);
         int headerHeight = 0;
+
+        if (!mIncludeHeader){
+            if (parent.getAdapter() instanceof RecyclerArrayAdapter){
+                int headerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getHeaderCount();
+                int footerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getFooterCount();
+                int dataCount = ((RecyclerArrayAdapter) parent.getAdapter()).getCount();
+                if (position<headerCount){
+                    return;
+                }
+                if (position>=headerCount+dataCount){
+                    return ;
+                }
+                if (position>=headerCount){
+                    position-=headerCount;
+                }
+
+            }
+        }
 
         if (position != RecyclerView.NO_POSITION
                 && hasHeader(position)
@@ -120,7 +176,7 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         if (mHeaderCache.containsKey(key)) {
             return mHeaderCache.get(key);
         } else {
-            final BaseViewHolder holder = mAdapter.onCreateHeaderViewHolder(parent);
+            final RecyclerView.ViewHolder holder = mAdapter.onCreateHeaderViewHolder(parent);
             final View header = holder.itemView;
 
             //noinspection unchecked
@@ -148,12 +204,34 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
      */
     @Override
     public void onDrawOver(Canvas canvas, RecyclerView parent, RecyclerView.State state) {
+        if (parent.getAdapter() == null){
+            return;
+        }
+
         final int count = parent.getChildCount();
         long previousHeaderId = -1;
 
         for (int layoutPos = 0; layoutPos < count; layoutPos++) {
             final View child = parent.getChildAt(layoutPos);
-            final int adapterPos = parent.getChildAdapterPosition(child);
+            int adapterPos = parent.getChildAdapterPosition(child);
+
+            if (!mIncludeHeader){
+                if (parent.getAdapter() instanceof RecyclerArrayAdapter){
+                    int headerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getHeaderCount();
+                    int footerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getFooterCount();
+                    int dataCount = ((RecyclerArrayAdapter) parent.getAdapter()).getCount();
+                    if (adapterPos<headerCount){
+                        continue;
+                    }
+                    if (adapterPos>=headerCount+dataCount){
+                        continue ;
+                    }
+                    if (adapterPos>=headerCount){
+                        adapterPos-=headerCount;
+                    }
+
+                }
+            }
 
             if (adapterPos != RecyclerView.NO_POSITION && hasHeader(adapterPos)) {
                 long headerId = mAdapter.getHeaderId(adapterPos);

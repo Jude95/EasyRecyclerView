@@ -3,17 +3,14 @@
 package com.jude.dome.sticky;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jude.dome.R;
-import com.jude.dome.entites.Person;
-import com.jude.dome.viewholder.PersonViewHolder;
-import com.jude.easyrecyclerview.adapter.BaseViewHolder;
-import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import com.jude.easyrecyclerview.adapter.StickyHeaderAdapterImp;
+import com.jude.easyrecyclerview.decoration.StickyHeaderDecoration;
 
 /**
  * 当前类注释：悬浮headerAdapter
@@ -21,21 +18,13 @@ import com.jude.easyrecyclerview.adapter.StickyHeaderAdapterImp;
  * Created by Qyang on 16/11/4
  * Email: yczx27@163.com
  */
-public class StickyHeaderAdapter extends RecyclerArrayAdapter<Person> implements StickyHeaderAdapterImp<StickyHeaderAdapter.HeaderHolder> {
+public class StickyHeaderAdapter implements StickyHeaderDecoration.IStickyHeaderAdapter<StickyHeaderAdapter.HeaderHolder> {
 
     private LayoutInflater mInflater;
 
     public StickyHeaderAdapter(Context context) {
-        super(context);
         mInflater = LayoutInflater.from(context);
     }
-
-
-    @Override
-    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-        return new PersonViewHolder(parent);
-    }
-
 
     @Override
     public long getHeaderId(int position) {
@@ -50,10 +39,10 @@ public class StickyHeaderAdapter extends RecyclerArrayAdapter<Person> implements
 
     @Override
     public void onBindHeaderViewHolder(HeaderHolder viewholder, int position) {
-        viewholder.header.setText("Header " + getHeaderId(position));
+        viewholder.header.setText("第"+getHeaderId(position)+"组");
     }
 
-    class HeaderHolder extends BaseViewHolder {
+    class HeaderHolder extends RecyclerView.ViewHolder {
         public TextView header;
 
         public HeaderHolder(View itemView) {

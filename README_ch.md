@@ -11,7 +11,7 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 
 ##依赖
 ```groovy
-compile 'com.jude:easyrecyclerview:4.2.5'
+compile 'com.jude:easyrecyclerview:4.4.0'
 ```
 
 ##示例
@@ -81,9 +81,10 @@ void add(T object);
 void addAll(Collection<? extends T> collection);
 void addAll(T ... items);
 void insert(T object, int index);
-void remove(T object)
-void clear()
-void sort(Comparator<? super T> comparator)
+void update(T object, int index);
+void remove(T object);
+void clear();
+void sort(Comparator<? super T> comparator);
 ```
 
 **整合的Header与Footer的实现**  
@@ -200,7 +201,7 @@ public class PersonAdapter extends RecyclerArrayAdapter<Person> {
 ```
 
 ## Decoration
-这里提供了2种常用Decoration供大家使用。  
+这里提供了3种常用Decoration供大家使用。  
 **DividerDecoration**  
 通常用在LinearLayoutManager的情况下。在item之间添加分割线。  
 ```java
@@ -210,7 +211,7 @@ itemDecoration.setDrawHeaderFooter(false);//是否对Header于Footer有效,默�
 recyclerView.addItemDecoration(itemDecoration);
 ```
 这是效果:  
-<img src="http://o84n5syhk.bkt.clouddn.com/divider.jpg" width="300">
+<image src="http://o84n5syhk.bkt.clouddn.com/divider.jpg?imageView2/2/w/300" width=300/>
 
 **SpaceDecoration**  
 通常用于GridLayoutManager和StaggeredGridLayoutManager。在View之间添加间距。  
@@ -222,7 +223,20 @@ itemDecoration.setPaddingHeaderFooter(false);//是否对Header于Footer有效,�
 recyclerView.addItemDecoration(itemDecoration);
 ```
 这是效果:  
-<img src="http://o84n5syhk.bkt.clouddn.com/space.jpg" width="300">
+<image src="http://o84n5syhk.bkt.clouddn.com/space.jpg?imageView2/2/w/300" width=300/> 
+
+**StickHeaderDecoration**  
+将Item分组，并添加每一组的Header，Header会悬浮在当前分组上。
+StickyHeaderAdapter用法与RecyclerView.Adapter相同。
+此部分代码修改自[edubarr/header-decor](https://github.com/edubarr/header-decor)
+```java
+StickyHeaderDecoration decoration = new StickyHeaderDecoration(new StickyHeaderAdapter(this));
+decoration.setIncludeHeader(false);
+recyclerView.addItemDecoration(decoration);
+```
+for example:
+<image src="http://7xkr5d.com1.z0.glb.clouddn.com/recyclerview_sticky.png?imageView2/2/w/300" width=300/>
+
 
 ## 另外
 虽然与我的库没什么关系，但很多人在问就写一下吧。item的**水波纹效果**  

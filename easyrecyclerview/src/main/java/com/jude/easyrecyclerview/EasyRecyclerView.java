@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorRes;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.AdapterDataObserver;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +14,8 @@ import android.widget.FrameLayout;
 
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.swipe.SwipeRefreshLayout;
+
+import java.util.ArrayList;
 
 
 public class EasyRecyclerView extends FrameLayout {
@@ -39,10 +40,10 @@ public class EasyRecyclerView extends FrameLayout {
 
     protected RecyclerView.OnScrollListener mInternalOnScrollListener;
     protected RecyclerView.OnScrollListener mExternalOnScrollListener;
+    protected ArrayList<RecyclerView.OnScrollListener> mExternalOnScrollListenerList = new ArrayList<>();
 
     protected SwipeRefreshLayout mPtrLayout;
     protected android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener mRefreshListener;
-
 
     public SwipeRefreshLayout getSwipeToRefresh() {
         return mPtrLayout;
@@ -177,7 +178,9 @@ public class EasyRecyclerView extends FrameLayout {
                     super.onScrolled(recyclerView, dx, dy);
                     if (mExternalOnScrollListener != null)
                         mExternalOnScrollListener.onScrolled(recyclerView, dx, dy);
-
+                    for (RecyclerView.OnScrollListener listener : mExternalOnScrollListenerList) {
+                        listener.onScrolled(recyclerView, dx, dy);
+                    }
                 }
 
                 @Override
@@ -185,7 +188,9 @@ public class EasyRecyclerView extends FrameLayout {
                     super.onScrollStateChanged(recyclerView, newState);
                     if (mExternalOnScrollListener != null)
                         mExternalOnScrollListener.onScrollStateChanged(recyclerView, newState);
-
+                    for (RecyclerView.OnScrollListener listener : mExternalOnScrollListenerList) {
+                        listener.onScrollStateChanged(recyclerView, newState);
+                    }
                 }
             };
             mRecycler.addOnScrollListener(mInternalOnScrollListener);
@@ -229,61 +234,7 @@ public class EasyRecyclerView extends FrameLayout {
     }
 
 
-    public static class EasyDataObserver extends AdapterDataObserver {
-        private EasyRecyclerView recyclerView;
 
-        public EasyDataObserver(EasyRecyclerView recyclerView) {
-            this.recyclerView = recyclerView;
-        }
-
-        @Override
-        public void onItemRangeChanged(int positionStart, int itemCount) {
-            super.onItemRangeChanged(positionStart, itemCount);
-            update();
-        }
-
-        @Override
-        public void onItemRangeInserted(int positionStart, int itemCount) {
-            super.onItemRangeInserted(positionStart, itemCount);
-            update();
-        }
-
-        @Override
-        public void onItemRangeRemoved(int positionStart, int itemCount) {
-            super.onItemRangeRemoved(positionStart, itemCount);
-            update();
-        }
-
-        @Override
-        public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-            super.onItemRangeMoved(fromPosition, toPosition, itemCount);
-            update();
-        }
-
-        @Override
-        public void onChanged() {
-            super.onChanged();
-            update();
-        }
-
-        //自动更改Container的样式
-        private void update() {
-            log("update");
-            int count;
-            if (recyclerView.getAdapter() instanceof RecyclerArrayAdapter) {
-                count = ((RecyclerArrayAdapter) recyclerView.getAdapter()).getCount();
-            } else {
-                count = recyclerView.getAdapter().getItemCount();
-            }
-            if (count == 0) {
-                log("no data:"+"show empty");
-                recyclerView.showEmpty();
-            } else{
-                log("has data");
-                recyclerView.showRecycler();
-            }
-        }
-    }
 
     /**
      * 设置适配器，关闭所有副view。展示recyclerView
@@ -434,8 +385,41 @@ public class EasyRecyclerView extends FrameLayout {
      *
      * @param listener
      */
+
+    /**
+     * Set scroll listener to the recycler
+     *
+     * @deprecated Use {@link #addOnScrollListener(RecyclerView.OnScrollListener)} instead.
+     */
+    @Deprecated
     public void setOnScrollListener(RecyclerView.OnScrollListener listener) {
         mExternalOnScrollListener = listener;
+    }
+
+    /**
+     * Add scroll listener to the recycler
+     *
+     * @param listener
+     */
+    public void addOnScrollListener(RecyclerView.OnScrollListener listener) {
+        mExternalOnScrollListenerList.add(listener);
+    }
+
+    /**
+     * Remove scroll listener from the recycler
+     *
+     * @param listener
+     */
+    public void removeOnScrollListener(RecyclerView.OnScrollListener listener) {
+        mExternalOnScrollListenerList.remove(listener);
+    }
+
+    /**
+     * Remove all scroll listeners from the recycler
+     *
+     */
+    public void removeAllOnScrollListeners() {
+        mExternalOnScrollListenerList.clear();
     }
 
     /**

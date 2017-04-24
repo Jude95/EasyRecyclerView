@@ -13,7 +13,7 @@ import java.util.List;
 public class DataProvider {
     public static List<Person> getPersonList(int page){
         ArrayList<Person> arr = new ArrayList<>();
-        if (page == 4)return arr;
+        if (page >= 4)return arr;
 
         arr.add(new Person("http://i2.hdslb.com/52_52/user/61175/6117592/myface.jpg", "月の星く雪" + "————————第" + page + "页", "完结来补"));
         arr.add(new Person("http://i1.hdslb.com/52_52/user/6738/673856/myface.jpg", "影·蓝玉", "一看评论被***了一脸，伐开心。"));

@@ -4,10 +4,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="40dp"
-    android:background="#E8E8D0"
-    android:paddingLeft="10dp"
+    android:background="#e6e6e6"
+    android:paddingLeft="16dp"
     android:gravity="center_vertical"
     android:textAppearance="?android:attr/textAppearanceMedium"
-    android:textColor="#FFF">
+    android:textColor="#000">
 
 </TextView>
