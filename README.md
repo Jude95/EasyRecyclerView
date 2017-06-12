@@ -12,10 +12,10 @@ Part of the code modified from [Malinskiy/SuperRecyclerView](https://github.com/
 compile 'com.jude:easyrecyclerview:4.4.0'
 ```
 
-#ScreenShot
+# ScreenShot
 ![recycler.gif](recycler3.gif)
-#Usage
-##EasyRecyclerView
+# Usage
+## EasyRecyclerView
 ```xml
 <com.jude.easyrecyclerview.EasyRecyclerView
   android:id="@+id/recyclerView"
@@ -160,7 +160,7 @@ void setNoMore(final View view,OnNoMoreListener listener)
 ```
 when loading is finished(add null or empty or stop manually),it while show in the end.  
 
-##BaseViewHolder\<M\>
+## BaseViewHolder\<M\>
 decoupling the ViewHolder and Adapter,new ViewHolder in Adapter and inflate view in ViewHolder.  
 Example:
 
