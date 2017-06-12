@@ -9,14 +9,14 @@ viewholder负责View展示与Adapter没有任何耦合，将可以到处复用�
 使用了部分[Malinskiy/SuperRecyclerView](https://github.com/Malinskiy/SuperRecyclerView)的代码，将更多功能交给了adapter实现。    
 
 
-##依赖
+## 依赖
 ```groovy
 compile 'com.jude:easyrecyclerview:4.4.0'
 ```
 
-##示例
+## 示例
 ![recycler.gif](recycler3.gif)
-##EasyRecyclerView的使用
+## EasyRecyclerView的使用
 
 ```xml
 <com.jude.easyrecyclerview.EasyRecyclerView
@@ -132,7 +132,7 @@ adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListe
 与在ViewHolder中给itemView设置OnClickListener等效。若重复设置ViewHolder中的设置会被替换。  
 如果在RecyclerView布局以后再设置。需要再使用'notifyDataSetChange()'。
 
-###下面的功能是在adapter最后添加一个footer。来显示各种状态。
+### 下面的功能是在adapter最后添加一个footer。来显示各种状态。
 
 **加载更多**  
 ```java
@@ -160,7 +160,7 @@ void setNoMore(final int res,OnNoMoreListener listener)
 void setNoMore(final View view,OnNoMoreListener listener)
 ```
 
-##BaseViewHolder\<M\>
+## BaseViewHolder\<M\>
 这个ViewHolder将每个item与adapter解耦。adapter只管实例化对应ViewHolder.每个Item的view生成,findviewbyid,UI修改都由viewHolder自己管理。  
 列如:
 
