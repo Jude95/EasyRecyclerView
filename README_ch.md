@@ -70,7 +70,7 @@ void scrollToPosition(int position);
 **下拉刷新的控制**  
 ```java
 void setRefreshing(boolean isRefreshing);
-void setRefreshing(final boolean isRefreshing, final boolean isCallback); //第二个参数控制是否立即回调
+void setRefreshing(final boolean isRefreshing, final boolean isCallback); //第二个参数控制是否回调更新数据方法
 ```
 ##RecyclerArrayAdapter<T>  
 这个Adapter与本RecyclerView没有任何耦合。你可以使用其他adapter。也可以把本adapter用于其他RecyclerView  
