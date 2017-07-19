@@ -58,8 +58,9 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
 
         /**
          * Updates the header view to reflect the header data for the given position
+         *
          * @param viewholder the header view holder
-         * @param position the header's item position
+         * @param position   the header's item position
          */
         void onBindHeaderViewHolder(T viewholder, int position);
     }
@@ -76,16 +77,14 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
     private boolean mIncludeHeader = false;
 
     /**
-     * @param adapter
-     *         the sticky header adapter to use
+     * @param adapter the sticky header adapter to use
      */
     public StickyHeaderDecoration(IStickyHeaderAdapter adapter) {
         this(adapter, false);
     }
 
     /**
-     * @param adapter
-     *         the sticky header adapter to use
+     * @param adapter the sticky header adapter to use
      */
     public StickyHeaderDecoration(IStickyHeaderAdapter adapter, boolean renderInline) {
         mAdapter = adapter;
@@ -105,19 +104,19 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         int position = parent.getChildAdapterPosition(view);
         int headerHeight = 0;
 
-        if (!mIncludeHeader){
-            if (parent.getAdapter() instanceof RecyclerArrayAdapter){
+        if (!mIncludeHeader) {
+            if (parent.getAdapter() instanceof RecyclerArrayAdapter) {
                 int headerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getHeaderCount();
                 int footerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getFooterCount();
                 int dataCount = ((RecyclerArrayAdapter) parent.getAdapter()).getCount();
-                if (position<headerCount){
+                if (position < headerCount) {
                     return;
                 }
-                if (position>=headerCount+dataCount){
-                    return ;
+                if (position >= headerCount + dataCount) {
+                    return;
                 }
-                if (position>=headerCount){
-                    position-=headerCount;
+                if (position >= headerCount) {
+                    position -= headerCount;
                 }
 
             }
@@ -166,6 +165,36 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         return null;
     }
 
+    /**
+     * @param x      : getX
+     * @param y      : getY
+     * @param viewId : resource id of view you clicked.
+     * @return
+     */
+    public boolean isViewClicked(float x, float y, int viewId) {
+        for (RecyclerView.ViewHolder holder : mHeaderCache.values()) {
+            final View itemView = findHeaderViewUnder(x, y);
+            if (itemView == null) {
+                return false;
+            }
+            final float translationX = ViewCompat.getTranslationX(itemView);
+            final float translationY = ViewCompat.getTranslationY(itemView);
+
+            final View child = itemView.findViewById(viewId);
+            if (child == null) {
+                return false;
+            }
+
+            if (x >= child.getLeft() + translationX &&
+                    x <= child.getRight() + translationX &&
+                    y >= child.getTop() + translationY &&
+                    y <= child.getBottom() + translationY) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean hasHeader(int position) {
         return mAdapter.getHeaderId(position) != NO_HEADER_ID;
     }
@@ -204,7 +233,7 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
      */
     @Override
     public void onDrawOver(Canvas canvas, RecyclerView parent, RecyclerView.State state) {
-        if (parent.getAdapter() == null){
+        if (parent.getAdapter() == null) {
             return;
         }
 
@@ -215,19 +244,19 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
             final View child = parent.getChildAt(layoutPos);
             int adapterPos = parent.getChildAdapterPosition(child);
 
-            if (!mIncludeHeader){
-                if (parent.getAdapter() instanceof RecyclerArrayAdapter){
+            if (!mIncludeHeader) {
+                if (parent.getAdapter() instanceof RecyclerArrayAdapter) {
                     int headerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getHeaderCount();
                     int footerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getFooterCount();
                     int dataCount = ((RecyclerArrayAdapter) parent.getAdapter()).getCount();
-                    if (adapterPos<headerCount){
+                    if (adapterPos < headerCount) {
                         continue;
                     }
-                    if (adapterPos>=headerCount+dataCount){
-                        continue ;
+                    if (adapterPos >= headerCount + dataCount) {
+                        continue;
                     }
-                    if (adapterPos>=headerCount){
-                        adapterPos-=headerCount;
+                    if (adapterPos >= headerCount) {
+                        adapterPos -= headerCount;
                     }
 
                 }

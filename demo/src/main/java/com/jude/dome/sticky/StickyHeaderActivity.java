@@ -6,9 +6,11 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -86,7 +88,7 @@ public class StickyHeaderActivity extends AppCompatActivity implements RecyclerA
             }
         });
         // StickyHeader
-        StickyHeaderDecoration decoration = new StickyHeaderDecoration(new StickyHeaderAdapter(this));
+        final StickyHeaderDecoration decoration = new StickyHeaderDecoration(new StickyHeaderAdapter(this));
         decoration.setIncludeHeader(false);
         recyclerView.addItemDecoration(decoration);
         top.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +100,34 @@ public class StickyHeaderActivity extends AppCompatActivity implements RecyclerA
         recyclerView.setRefreshListener(this);
         onRefresh();
 
+        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Log.e("TAG", "点击");
+            }
+        });
+        recyclerView.getRecyclerView().addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                if (e.getAction() == MotionEvent.ACTION_UP) {
+                    if (decoration.isViewClicked(e.getX(), e.getY(), R.id.head_tv)) {
+                        Log.e("TAG", "点击head");
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
     }
 
     //第四页会返回空,意为数据加载结束
