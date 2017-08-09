@@ -60,7 +60,9 @@ public class EasyDataObserver extends RecyclerView.AdapterDataObserver {
     private void update() {
         int count;
         if (recyclerView.getAdapter() instanceof RecyclerArrayAdapter) {
-            count = ((RecyclerArrayAdapter) recyclerView.getAdapter()).getCount();
+            RecyclerArrayAdapter adapter = ((RecyclerArrayAdapter) recyclerView.getAdapter());
+            // 有Header Footer就不显示Empty,但排除EventFooter。
+            count = adapter.getCount()+adapter.getHeaderCount()+adapter.getFooterCount()-(adapter.hasEventFooter()?1:0);
         } else {
             count = recyclerView.getAdapter().getItemCount();
         }

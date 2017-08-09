@@ -313,6 +313,9 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         registerAdapterDataObserver(new FixDataObserver(mRecyclerView));
     }
 
+    public boolean hasEventFooter(){
+        return mEventDelegate != null;
+    }
     /**
      * Adds the specified object at the end of the array.
      *
