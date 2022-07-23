@@ -53,7 +53,7 @@ void setProgressView(View progressView)
 void setErrorView(View errorView)
 ```
 
-then you can show it by this whenever:  
+You can show it by using this:  
 
 ```java
 void showEmpty()
@@ -74,7 +74,7 @@ void setRefreshing(final boolean isRefreshing, final boolean isCallback); //seco
 ```
 
 
-## RecyclerArrayAdapter 
+### RecyclerArrayAdapter 
 There is no relation between RecyclerArrayAdapter and EasyRecyclerView.you can user any Adapter for the EasyRecyclerView,and use the RecyclerArrayAdapter for any RecyclerView.
 
 ### Data Manage
@@ -95,7 +95,7 @@ void addHeader(ItemView view)
 void addFooter(ItemView view)  
 ```
 
-ItemView is not a view but a view creator;  
+ItemView is not a view but a view creator  
 
 ```java
 public interface ItemView {
@@ -143,7 +143,7 @@ void setMore(final View view,OnMoreListener listener);
 When you add null or the length of data you add is 0 ,it will finish LoadMore and show NoMore;  
 also you can show NoMore manually `adapter.stopMore();`  
  
-**LoadError**  
+# LoadError  
 ```java
 void setError(final int res,OnErrorListener listener)
 void setError(final View view,OnErrorListener listener)
