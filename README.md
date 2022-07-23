@@ -36,7 +36,7 @@ compile 'com.jude:easyrecyclerview:4.4.2'
   app:scrollbars="none"//none or vertical or horizontal
   />
 ```
-EasyRecyclerView is not a RecyclerView, it just contains a RecyclerView.use 'getRecyclerView()' to get the RecyclerView;
+- EasyRecyclerView is not a RecyclerView, it just contains a RecyclerView.use 'getRecyclerView()' to get the RecyclerView;
 
 ### EmptyView&LoadingView&ErrorView  
 xml:  
@@ -75,7 +75,7 @@ void setRefreshing(final boolean isRefreshing, final boolean isCallback); //seco
 
 
 ### RecyclerArrayAdapter 
-There is no relation between RecyclerArrayAdapter and EasyRecyclerView.you can user any Adapter for the EasyRecyclerView,and use the RecyclerArrayAdapter for any RecyclerView.
+- There is no relation between RecyclerArrayAdapter and EasyRecyclerView.you can user any Adapter for the EasyRecyclerView,and use the RecyclerArrayAdapter for any RecyclerView.
 
 ### Data Manage
 ```java
@@ -104,8 +104,9 @@ public interface ItemView {
 }
 ```
 
-The onCreateView and onBindView corresponds the callback in RecyclerView's Adapter. The adapter will call `onCreateView` once and `onBindView` more than once.  
-It is recommended that adding the ItemView to Adapter after the data is loaded. Initialize View in onCreateView and do nothing in onBindView. 
+- The onCreateView and onBindView corresponds the callback in RecyclerView's Adapter. The adapter will call `onCreateView` once and `onBindView` more than once. 
+- It is recommended that adding the ItemView to Adapter after the data is loaded. 
+- Initialize View in onCreateView and do nothing in onBindView. 
  
  Header and Footer support `LinearLayoutManager`,`GridLayoutManager`,`StaggeredGridLayoutManager`.  
  In `GridLayoutManager` you must add this:
@@ -130,39 +131,38 @@ adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListe
     }
 });
 ```
-equal 'itemview.setOnClickListener()' in ViewHolder.  
-if you set listener after RecyclerView has layout.you should use 'notifyDataSetChange()';
+- equal 'itemview.setOnClickListener()' in ViewHolder.  
+- if you set listener after RecyclerView has layout.you should use 'notifyDataSetChange()';
 
-###the API below realized by add a Footer。
 
 ### LoadMore 
 ```java
 void setMore(final int res,OnMoreListener listener);
 void setMore(final View view,OnMoreListener listener);
 ```
-When you add null or the length of data you add is 0 ,it will finish LoadMore and show NoMore;  
-also you can show NoMore manually `adapter.stopMore();`  
+- When you add null or the length of data you add is 0 ,it will finish LoadMore and show NoMore.  
+- You can show NoMore manually `adapter.stopMore();`  
  
 # LoadError  
 ```java
 void setError(final int res,OnErrorListener listener)
 void setError(final View view,OnErrorListener listener)
 ```
-use `adapter.pauseMore()` to show Error,when your loading throw an error;  
-if you add data when showing Error.it will resume to load more;  
-when the ErrorView display to screen again,it will resume to load more too,and callback the OnLoadMoreListener(retry).  
-`adapter.resumeMore()`you can resume to load more manually,it will callback the OnLoadMoreListener immediately.   
-you can put resumeMore() into the OnClickListener of ErrorView to realize click to retry.  
+- Use `adapter.pauseMore()` to show Error,when your loading throw an error.  
+- If you add data when showing Error.it will resume to load more.  
+- When the ErrorView display to screen again,it will resume to load more too,and callback the OnLoadMoreListener(retry).  
+- `adapter.resumeMore()`can resume to load more manually,it will callback the OnLoadMoreListener immediately.   
+- You can put resumeMore() into the OnClickListener of ErrorView to realize click to retry.  
 
 ### NoMore  
 ```java
 void setNoMore(final int res,OnNoMoreListener listener)
 void setNoMore(final View view,OnNoMoreListener listener)
 ```
-when loading is finished(add null or empty or stop manually),it while show in the end.  
+- When loading is finished(add null or empty or stop manually),it while show in the end.  
 
 ## BaseViewHolder\<M\>
-decoupling the ViewHolder and Adapter,new ViewHolder in Adapter and inflate view in ViewHolder.  
+Decoupling the ViewHolder and Adapter,new ViewHolder in Adapter and inflate view in ViewHolder.  
 Example:
 
 ```java
