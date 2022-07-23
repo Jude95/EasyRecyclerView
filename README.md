@@ -1,7 +1,7 @@
 # EasyRecyclerView
 [中文](https://github.com/Jude95/EasyRecyclerView/blob/master/README_ch.md) ｜ [English](https://github.com/Jude95/EasyRecyclerView/blob/master/README.md)
 
-##Overview
+## Overview
 
 The EasyRecyclerView encapsulates many APIs into the library such as an arrayAdapter, pull to refresh, frequent auto load,headers/footers and puts errors in the end.
 The library uses a new useage of ViewHolder where it decouples the ViewHolder and Adapter.The Adapter is more efficient and directs the ViewHolder. If you use MVP, you can put the Adapter into the presenter. The ViewHolder only shows the item and you can use one ViewHolder for many Adapters.
