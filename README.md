@@ -104,7 +104,7 @@ public interface ItemView {
 }
 ```
 
-The onCreateView and onBindView corresponds the callback in RecyclerView's Adapter. The adapter will call `onCreateView` once and `onBindView` more than once;  
+The onCreateView and onBindView corresponds the callback in RecyclerView's Adapter. The adapter will call `onCreateView` once and `onBindView` more than once.  
 It is recommended that adding the ItemView to Adapter after the data is loaded. Initialize View in onCreateView and do nothing in onBindView. 
  
  Header and Footer support `LinearLayoutManager`,`GridLayoutManager`,`StaggeredGridLayoutManager`.  
