@@ -4,7 +4,7 @@
 ## Overview
 
 The EasyRecyclerView encapsulates many APIs into the library such as arrayAdapter, pull to refresh, loadMore,noMore,error in the end, and Header&Footer.
-The library uses a new useage of ViewHolder and decoupling of the ViewHolder and Adapter.The Adapter is more efficient and directs the ViewHolder. If you use MVP, you can put the Adapter into the presenter. The ViewHolder will show the item and you can use one ViewHolder for many Adapters.
+The library uses a new usage of ViewHolder and decoupling of the ViewHolder and Adapter.The Adapter is more efficient and directs the ViewHolder. If you use MVP, you can put the Adapter into the presenter. The ViewHolder will show the item and you can use one ViewHolder for many Adapters.
 
 Part of the code is modified from [Malinskiy/SuperRecyclerView](https://github.com/Malinskiy/SuperRecyclerView),which makes more functions handed by Adapter.   
 
