@@ -143,7 +143,7 @@ void setMore(final View view,OnMoreListener listener);
 - When you add null or the length of data you add is 0 ,it will finish LoadMore and show NoMore.  
 - You can show NoMore manually `adapter.stopMore();`  
  
-# LoadError  
+### LoadError  
 ```java
 void setError(final int res,OnErrorListener listener)
 void setError(final View view,OnErrorListener listener)
