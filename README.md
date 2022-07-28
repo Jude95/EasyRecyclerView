@@ -1,11 +1,12 @@
 # EasyRecyclerView
 [中文](https://github.com/Jude95/EasyRecyclerView/blob/master/README_ch.md) ｜ [English](https://github.com/Jude95/EasyRecyclerView/blob/master/README.md)
 
-Encapsulate many API about RecyclerView into the library,such as arrayAdapter,pull to refresh,auto load more,no more and error in the end,header&footer.  
-The library uses a new usage of ViewHolder,decoupling the ViewHolder and Adapter.  
-Adapter will do less work,adapter only direct the ViewHolder,if you use MVP,you can put adapter into presenter.ViewHolder only show the item,then you can use one ViewHolder for many Adapter.   
-Part of the code modified from [Malinskiy/SuperRecyclerView](https://github.com/Malinskiy/SuperRecyclerView),make more functions handed by Adapter.    
+## Overview
 
+The EasyRecyclerView encapsulates many APIs into the library such as arrayAdapter, pull to refresh, loadMore,noMore,error in the end, and Header&Footer.
+The library uses a new usage of ViewHolder and decoupling of the ViewHolder and Adapter.The Adapter is more efficient and directs the ViewHolder. If you use MVP, you can put the Adapter into the presenter. The ViewHolder will show the item and you can use one ViewHolder for many Adapters.
+
+Part of the code is modified from [Malinskiy/SuperRecyclerView](https://github.com/Malinskiy/SuperRecyclerView),which makes more functions handled by Adapter.   
 
 # Dependency
 ```groovy
@@ -16,6 +17,7 @@ compile 'com.jude:easyrecyclerview:4.4.2'
 ![recycler.gif](recycler3.gif)
 # Usage
 ## EasyRecyclerView
+
 ```xml
 <com.jude.easyrecyclerview.EasyRecyclerView
   android:id="@+id/recyclerView"
@@ -34,10 +36,9 @@ compile 'com.jude:easyrecyclerview:4.4.2'
   app:scrollbars="none"//none or vertical or horizontal
   />
 ```
+- EasyRecyclerView is not a RecyclerView, it just contains a RecyclerView.use 'getRecyclerView()' to get the RecyclerView;
 
-**Attention** EasyRecyclerView is not a RecyclerView just contain a RecyclerView.use 'getRecyclerView()' to get the RecyclerView;
-
-**EmptyView&LoadingView&ErrorView**  
+### EmptyView&LoadingView&ErrorView  
 xml:  
 ```xml
 app:layout_empty="@layout/view_empty"
@@ -52,7 +53,7 @@ void setProgressView(View progressView)
 void setErrorView(View errorView)
 ```
 
-then you can show it by this whenever:  
+You can show it by using this:  
 
 ```java
 void showEmpty()
@@ -61,22 +62,22 @@ void showError()
 void showRecycler()
 ```
 
-**scrollToPosition**  
+### scrollToPosition  
 ```java
 void scrollToPosition(int position); // such as scroll to top
 ```
 
-**control the pullToRefresh**  
+### control the pullToRefresh
 ```java
 void setRefreshing(boolean isRefreshing);
 void setRefreshing(final boolean isRefreshing, final boolean isCallback); //second params is callback immediately
 ```
 
 
-##RecyclerArrayAdapter<T>  
-there is no relation between RecyclerArrayAdapter and EasyRecyclerView.you can user any Adapter for the EasyRecyclerView,and use the RecyclerArrayAdapter for any RecyclerView.
+### RecyclerArrayAdapter 
+- There is no relation between RecyclerArrayAdapter and EasyRecyclerView.you can user any Adapter for the EasyRecyclerView,and use the RecyclerArrayAdapter for any RecyclerView.
 
-**Data Manage**
+### Data Manage
 ```java
 void add(T object);
 void addAll(Collection<? extends T> collection);
@@ -88,13 +89,13 @@ void clear();
 void sort(Comparator<? super T> comparator);
 ```
 
-**Header&Footer**
+### Header&Footer
 ```java
 void addHeader(ItemView view)
 void addFooter(ItemView view)  
 ```
 
-ItemView is not a view but a view creator;  
+ItemView is not a view but a view creator  
 
 ```java
 public interface ItemView {
@@ -103,8 +104,9 @@ public interface ItemView {
 }
 ```
 
-The onCreateView and onBindView correspond the callback in RecyclerView's Adapter,so adapter will call `onCreateView` once and `onBindView` more than once;  
-It recommend that add the ItemView to Adapter after the data is loaded,initialization View in onCreateView and nothing in onBindView. 
+- The onCreateView and onBindView corresponds the callback in RecyclerView's Adapter. The adapter will call `onCreateView` once and `onBindView` more than once. 
+- It is recommended that adding the ItemView to Adapter after the data is loaded. 
+- Initialize View in onCreateView and do nothing in onBindView. 
  
  Header and Footer support `LinearLayoutManager`,`GridLayoutManager`,`StaggeredGridLayoutManager`.  
  In `GridLayoutManager` you must add this:
@@ -113,7 +115,7 @@ It recommend that add the ItemView to Adapter after the data is loaded,initializ
 gridLayoutManager.setSpanSizeLookup(adapter.obtainGridSpanSizeLookUp(2));
 ```
 
-**OnItemClickListener&OnItemLongClickListener**  
+### OnItemClickListener&OnItemLongClickListener 
 ```java
 adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
     @Override
@@ -129,39 +131,38 @@ adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListe
     }
 });
 ```
-equal 'itemview.setOnClickListener()' in ViewHolder.  
-if you set listener after RecyclerView has layout.you should use 'notifyDataSetChange()';
+- equal 'itemview.setOnClickListener()' in ViewHolder.  
+- if you set listener after RecyclerView has layout.you should use 'notifyDataSetChange()';
 
-###the API below realized by add a Footer。
 
-**LoadMore**  
+### LoadMore 
 ```java
 void setMore(final int res,OnMoreListener listener);
 void setMore(final View view,OnMoreListener listener);
 ```
-Attention when you add null or the length of data you add is 0 ,it will finish LoadMore and show NoMore;  
-also you can show NoMore manually `adapter.stopMore();`  
+- When you add null or the length of data you add is 0 ,it will finish LoadMore and show NoMore.  
+- You can show NoMore manually `adapter.stopMore();`  
  
-**LoadError**  
+### LoadError  
 ```java
 void setError(final int res,OnErrorListener listener)
 void setError(final View view,OnErrorListener listener)
 ```
-use `adapter.pauseMore()` to show Error,when your loading throw an error;  
-if you add data when showing Error.it will resume to load more;  
-when the ErrorView display to screen again,it will resume to load more too,and callback the OnLoadMoreListener(retry).  
-`adapter.resumeMore()`you can resume to load more manually,it will callback the OnLoadMoreListener immediately.   
-you can put resumeMore() into the OnClickListener of ErrorView to realize click to retry.  
+- Use `adapter.pauseMore()` to show Error,when your loading throw an error.  
+- If you add data when showing Error.it will resume to load more.  
+- When the ErrorView display to screen again,it will resume to load more too,and callback the OnLoadMoreListener(retry).  
+- `adapter.resumeMore()`can resume to load more manually,it will callback the OnLoadMoreListener immediately.   
+- You can put resumeMore() into the OnClickListener of ErrorView to realize click to retry.  
 
-**NoMore**  
+### NoMore  
 ```java
 void setNoMore(final int res,OnNoMoreListener listener)
 void setNoMore(final View view,OnNoMoreListener listener)
 ```
-when loading is finished(add null or empty or stop manually),it while show in the end.  
+- When loading is finished(add null or empty or stop manually),it while show in the end.  
 
 ## BaseViewHolder\<M\>
-decoupling the ViewHolder and Adapter,new ViewHolder in Adapter and inflate view in ViewHolder.  
+Decoupling the ViewHolder and Adapter,new ViewHolder in Adapter and inflate view in ViewHolder.  
 Example:
 
 ```java
@@ -201,8 +202,9 @@ public class PersonAdapter extends RecyclerArrayAdapter<Person> {
 ```
 
 ## Decoration
-Now there are three commonly used decoration provide for you.  
-**DividerDecoration**  
+Three commonly used decoration provided for you.  
+
+### DividerDecoration 
 Usually used in LinearLayoutManager.add divider between items.
 ```java
 DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY, Util.dip2px(this,0.5f), Util.dip2px(this,72),0);//color & height & paddingLeft & paddingRight
@@ -214,8 +216,8 @@ this is the demo:
 <image src="http://o84n5syhk.bkt.clouddn.com/divider.jpg?imageView2/2/w/300" width=300/>
 
 
-**SpaceDecoration**  
-Usually used in GridLayoutManager and StaggeredGridLayoutManager.add space between items.  
+### SpaceDecoration  
+Usually used in GridLayoutManager and StaggeredGridLayoutManager.It add space between items.  
 ```java
 SpaceDecoration itemDecoration = new SpaceDecoration((int) Utils.convertDpToPixel(8,this));//params is height
 itemDecoration.setPaddingEdgeSide(true);//whether add space for left and right adge.default is true.
@@ -226,9 +228,9 @@ recyclerView.addItemDecoration(itemDecoration);
 this is the demo:  
 <image src="http://o84n5syhk.bkt.clouddn.com/space.jpg?imageView2/2/w/300" width=300/>
 
-**StickHeaderDecoration**  
+### StickHeaderDecoration 
 Group the items,add a GroupHeaderView for each group.The usage of StickyHeaderAdapter is the same with RecyclerView.Adapter.
-this part is modified from [edubarr/header-decor](https://github.com/edubarr/header-decor)
+This part is modified from [edubarr/header-decor](https://github.com/edubarr/header-decor)
 ```java
 StickyHeaderDecoration decoration = new StickyHeaderDecoration(new StickyHeaderAdapter(this));
 decoration.setIncludeHeader(false);
@@ -237,7 +239,7 @@ recyclerView.addItemDecoration(decoration);
 for example:   
 <image src="http://7xkr5d.com1.z0.glb.clouddn.com/recyclerview_sticky.png?imageView2/2/w/300" width=300/>
 
-**for detail,see the demo**
+**for more details,see the demo**
 
 License
 -------
